@@ -4,7 +4,7 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
-import javafx.scene.paint.Color;
+import view.colors.Color;
 
 /**
  * A Builder Pattern to build in-game text
@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 public class TextBuilder implements Builder<HUDElement> {
 
     private String name, text, font;
-    private Coordinates coords;
+    private Coordinates<Double> coords;
     private Dimension dimension;
     private int size;
     private Color color;
@@ -20,7 +20,7 @@ public class TextBuilder implements Builder<HUDElement> {
     public TextBuilder(String text) {
         this.name = text;
         this.text = text;
-        this.coords = new Coordinates(0, 0);
+        this.coords = new Coordinates<>(0.0, 0.0);
         this.dimension = new Dimension(1, 1);
         this.color = Color.WHITE;
     }
@@ -36,22 +36,12 @@ public class TextBuilder implements Builder<HUDElement> {
     }
 
     public TextBuilder setCoordinates(double x, double y) {
-        this.coords = new Coordinates(x, y);
+        this.coords = new Coordinates<>(x, y);
         return this;
     }
 
-    public TextBuilder setCoordinates(Coordinates coords) {
+    public TextBuilder setCoordinates(Coordinates<Double> coords) {
         this.coords = coords;
-        return this;
-    }
-
-    public TextBuilder setDimension(double width, double height) {
-        this.dimension = new Dimension(width, height);
-        return this;
-    }
-
-    public TextBuilder setDimension(Dimension dimension) {
-        this.dimension = dimension;
         return this;
     }
 
@@ -68,7 +58,7 @@ public class TextBuilder implements Builder<HUDElement> {
     @Override
     public HUDElement build() {
         Text textGUI = new Text(this.text);
-        textGUI.setColor(color);
+        textGUI.setColor(color.getEngineColor());
 
         if (font != null)
             textGUI.setFont(font);
