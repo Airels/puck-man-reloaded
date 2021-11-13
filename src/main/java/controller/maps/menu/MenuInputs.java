@@ -4,8 +4,8 @@ import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import model.Game;
+import model.levels.fixed_levels.menu.MenuSelector;
 import view.maps.menu.MenuMap;
-import model.levels.menu.MenuSelector;
 import model.loadables.LoadableInput;
 
 public class MenuInputs implements LoadableInput {
@@ -36,6 +36,8 @@ public class MenuInputs implements LoadableInput {
     public void unload(KernelEngine engine) {
         engine.clearInput(Key.Z);
         engine.clearInput(Key.S);
+        engine.clearInput(Key.ARROW_UP);
+        engine.clearInput(Key.ARROW_DOWN);
         engine.clearInput(Key.ENTER);
     }
 }

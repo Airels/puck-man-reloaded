@@ -2,16 +2,13 @@ package view.maps.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
-import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
-import fr.r1r0r0.deltaengine.model.elements.Entity;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import main.Main;
 import model.builders.TextBuilder;
 import model.loadables.LoadableMap;
@@ -56,7 +53,7 @@ public class MenuMap implements LoadableMap {
         quitText = textBuilder.build();
 
 
-        mainImg = new HUDElement("main_img", new Coordinates<>(15.0, 6.0), Image.MAIN_IMG.getImage(), new Dimension(1, 1));
+        mainImg = new HUDElement("main_img", new Coordinates<>(15.0, 6.0), Image.MAIN_IMG.getSprite(), new Dimension(1, 1));
 
         try {
             deltaEngine.setCurrentMap("menu");

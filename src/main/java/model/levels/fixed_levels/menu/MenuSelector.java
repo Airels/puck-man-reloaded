@@ -1,4 +1,4 @@
-package model.levels.menu;
+package model.levels.fixed_levels.menu;
 
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
 import fr.r1r0r0.deltaengine.model.events.Trigger;

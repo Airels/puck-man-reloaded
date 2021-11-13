@@ -3,7 +3,7 @@ package controller;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableInput;
 
-public class InputsLoader {
+public final class InputsLoader {
 
     private LoadableInput currentInputs;
     private KernelEngine deltaEngine;

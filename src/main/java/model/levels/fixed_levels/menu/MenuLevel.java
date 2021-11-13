@@ -1,11 +1,14 @@
-package model.levels.menu;
+package model.levels.fixed_levels.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
+import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import main.Main;
 import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import sounds.Sounds;
+
+import java.awt.image.Kernel;
 
 public class MenuLevel implements Level {
 
@@ -18,10 +21,10 @@ public class MenuLevel implements Level {
     }
 
     @Override
-    public void load() {
+    public void load(KernelEngine deltaEngine) {
         try {
             Sounds.MAIN_THEME.play();
-            Main.getEngine().getSoundEngine().setLoop(Sounds.MAIN_THEME.getName(), true);
+            deltaEngine.getSoundEngine().setLoop(Sounds.MAIN_THEME.getName(), true);
         } catch (SoundDoesNotExistException e) {
             e.printStackTrace();
             System.exit(1);
@@ -29,7 +32,7 @@ public class MenuLevel implements Level {
     }
 
     @Override
-    public void unload() {
+    public void unload(KernelEngine deltaEngine) {
         Sounds.MAIN_THEME.stop();
     }
 

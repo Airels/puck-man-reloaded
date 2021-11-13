@@ -2,15 +2,16 @@ package model;
 
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.levels.Level;
+import model.levels.fixed_levels.original_level.OriginalLevel;
 import sounds.SoundLoader;
 
 public final class Game {
 
-    private KernelEngine engine;
-    private LevelLoader levelLoader;
+    private final KernelEngine deltaEngine;
+    private final LevelLoader levelLoader;
 
     public Game(KernelEngine engine, int fps) {
-        this.engine = engine;
+        this.deltaEngine = engine;
         engine.setFrameRate(fps);
         engine.printFrameRate(false);
 
@@ -26,6 +27,8 @@ public final class Game {
     public void launchSinglePlayerGame() {
         // TODO Launch game
         System.out.println("LAUNCHING SINGLEPLAYER MODE!");
+        OriginalLevel originalLevel = new OriginalLevel();
+        levelLoader.load(originalLevel);
     }
 
     public void launchMultiPlayerGame() {

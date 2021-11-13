@@ -1,10 +1,9 @@
 package view.images;
 
-import fr.r1r0r0.deltaengine.model.Sound;
-
 public enum Image {
 
     MAIN_IMG("main.jpg");
+    // TODO PAC_MAN("");
 
     private fr.r1r0r0.deltaengine.model.sprites.Image image;
 
@@ -18,7 +17,7 @@ public enum Image {
         }
     }
 
-    public fr.r1r0r0.deltaengine.model.sprites.Image getImage() {
+    public fr.r1r0r0.deltaengine.model.sprites.Image getSprite() {
         return image;
     }
 }
