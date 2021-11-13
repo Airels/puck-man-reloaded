@@ -51,8 +51,6 @@ public class MenuSelector {
         Sounds.MENU_SELECTION.stop();
         Sounds.MENU_SELECTION.play();
 
-        System.out.println("currentSelected = " + currentSelected);
-
         switch (currentSelected) {
             case 0 -> menuMap.selectSinglePlayer();
             case 1 -> menuMap.selectMultiPlayer();
