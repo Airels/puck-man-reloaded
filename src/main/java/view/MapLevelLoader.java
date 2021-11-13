@@ -1,21 +1,27 @@
 package view;
 
+import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableMap;
 
 public class MapLevelLoader {
 
     private LoadableMap currentInputs;
+    private KernelEngine deltaEngine;
 
-    public void loadInputs(LoadableMap inputs) {
+    public MapLevelLoader(KernelEngine deltaEngine) {
+        this.deltaEngine = deltaEngine;
+    }
+
+    public void loadMapLevel(LoadableMap inputs) {
         if (currentInputs != null)
-            this.unloadInputs(currentInputs);
+            this.unloadMapLevel(currentInputs);
 
-        inputs.load();
+        inputs.load(deltaEngine);
         currentInputs = inputs;
     }
 
-    public void unloadInputs(LoadableMap inputs) {
-        inputs.unload();
+    public void unloadMapLevel(LoadableMap inputs) {
+        inputs.unload(deltaEngine);
         currentInputs = null;
     }
 }

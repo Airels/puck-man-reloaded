@@ -3,21 +3,13 @@ package model.levels;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 
-public class Level {
+public interface Level {
 
-    private LoadableMap mapLevel;
-    private LoadableInput inputs;
+    void load();
 
-    public Level(LoadableMap map, LoadableInput inputs) {
-        this.mapLevel = map;
-        this.inputs = inputs;
-    }
+    void unload();
 
-    public LoadableMap getMapLevelLoadable() {
-        return mapLevel;
-    }
+    LoadableMap getMapLevelLoadable();
 
-    public LoadableInput getInputsLoadable() {
-        return inputs;
-    }
+    LoadableInput getInputsLoadable();
 }
