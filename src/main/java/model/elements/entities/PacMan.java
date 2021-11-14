@@ -24,7 +24,7 @@ public class PacMan extends Entity {
     }
 
     public PacMan() {
-        this(4, 4);
+        this(9, 16);
     }
 
     public void energize() {

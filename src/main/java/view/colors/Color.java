@@ -7,7 +7,8 @@ public enum Color {
     RED(fr.r1r0r0.deltaengine.view.colors.Color.RED),
     GREEN(fr.r1r0r0.deltaengine.view.colors.Color.GREEN),
     BLUE(fr.r1r0r0.deltaengine.view.colors.Color.BLUE),
-    GOLD(255, 215, 0);
+    GOLD(255, 215, 0),
+    GAINSBORO(220, 220, 220);
 
     private final fr.r1r0r0.deltaengine.view.colors.Color color;
 
