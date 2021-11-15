@@ -15,7 +15,7 @@ public class Ghost extends Entity {
     private boolean isScared;
 
     public Ghost(String name, MapLevel currentMap, Sprite normalSprite, Sprite scaredSprite, GhostAI ghostAI) {
-        super(name, new Coordinates<>(0.0, 0.0), normalSprite, new Dimension(1, 1));
+        super(name, new Coordinates<>(0.0, 0.0), normalSprite, new Dimension(0.9, 0.9));
         this.currentMap = currentMap;
         this.normalSprite = normalSprite;
         this.scaredSprite = scaredSprite;

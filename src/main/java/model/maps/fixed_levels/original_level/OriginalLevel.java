@@ -2,10 +2,12 @@ package model.maps.fixed_levels.original_level;
 
 import controller.maps.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import main.Main;
 import model.elements.entities.PacMan;
 import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
+import sounds.Sounds;
 import view.maps.original_level.OriginalLevelMap;
 
 public class OriginalLevel implements Level {
@@ -23,7 +25,7 @@ public class OriginalLevel implements Level {
 
     @Override
     public void load(KernelEngine deltaEngine) {
-
+        Sounds.GAME_BEGIN.play();
     }
 
     @Override

@@ -16,6 +16,9 @@ public class PacGum extends Entity {
         super("PacGum" + counter, coords, new Circle(1, Color.WHITE), new Dimension(0.1, 0.1));
         counter++;
 
+        double scale = 0.4;
+        setCoordinates(new Coordinates<>(coords.getX() + scale, coords.getY() + scale));
+
         isSuper = false;
     }
 
@@ -23,7 +26,9 @@ public class PacGum extends Entity {
         this(coords);
 
         if (isSuper) {
-            setDimension(new Dimension(0.3, 0.3));
+            setDimension(new Dimension(0.5, 0.5));
+            double scale = 0.25;
+            setCoordinates(new Coordinates<>(coords.getX() + scale, coords.getY() + scale));
             this.isSuper = true;
         }
     }

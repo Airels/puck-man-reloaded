@@ -12,7 +12,7 @@ public class PacMan extends Entity {
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super("PacMan", coordinates, new Circle(1, Color.YELLOW), new Dimension(1, 1));
+        super("PacMan", coordinates, new Circle(1, Color.YELLOW), new Dimension(0.9, 0.9));
 
         isEnergized = false;
     }
@@ -22,7 +22,7 @@ public class PacMan extends Entity {
     }
 
     public PacMan() {
-        this(9, 16);
+        this(9 + 0.05, 16 + 0.05);
     }
 
     public void energize() {

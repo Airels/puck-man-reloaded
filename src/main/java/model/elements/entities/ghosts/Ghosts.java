@@ -1,5 +1,6 @@
 package model.elements.entities.ghosts;
 
+import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
@@ -26,5 +27,11 @@ public enum Ghosts {
 
     public Ghost build(MapLevel currentMap) {
         return new Ghost(name, currentMap, normalSprite, scaredSprite, ai);
+    }
+
+    public Ghost build(MapLevel currentMap, Coordinates<Double> coords) {
+        Ghost g = build(currentMap);
+        g.setCoordinates(coords);
+        return g;
     }
 }

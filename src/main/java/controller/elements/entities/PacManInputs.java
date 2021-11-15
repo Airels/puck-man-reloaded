@@ -11,7 +11,7 @@ import model.loadables.LoadableInput;
 
 public class PacManInputs implements LoadableInput {
 
-    public final static double DEFAULT_SPEED = 5;
+    public final static double DEFAULT_SPEED = 7.5;
 
     private PacMan pacMan;
     private InputEvent upEvent, downEvent, leftEvent, rightEvent;
