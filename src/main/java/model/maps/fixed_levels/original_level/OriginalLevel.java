@@ -1,9 +1,9 @@
-package model.levels.fixed_levels.original_level;
+package model.maps.fixed_levels.original_level;
 
 import controller.maps.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.PacMan;
-import model.levels.Level;
+import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import view.maps.original_level.OriginalLevelMap;

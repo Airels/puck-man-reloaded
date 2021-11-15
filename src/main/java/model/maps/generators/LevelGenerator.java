@@ -1,6 +1,6 @@
-package model.levels.generators;
+package model.maps.generators;
 
-import model.levels.Level;
+import model.maps.Level;
 
 public class LevelGenerator {
 

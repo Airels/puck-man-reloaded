@@ -4,7 +4,7 @@ import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import model.Game;
-import model.levels.fixed_levels.menu.MenuSelector;
+import model.maps.fixed_levels.menu.MenuSelector;
 import view.maps.menu.MenuMap;
 import model.loadables.LoadableInput;
 

@@ -1,8 +1,8 @@
 package model;
 
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import model.levels.Level;
-import model.levels.fixed_levels.original_level.OriginalLevel;
+import model.maps.Level;
+import model.maps.fixed_levels.original_level.OriginalLevel;
 import sounds.SoundLoader;
 
 public final class Game {

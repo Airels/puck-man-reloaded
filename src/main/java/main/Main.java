@@ -6,7 +6,7 @@ import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
 import controller.maps.menu.MenuInputs;
-import model.levels.fixed_levels.menu.MenuLevel;
+import model.maps.fixed_levels.menu.MenuLevel;
 import view.maps.menu.MenuMap;
 
 public class Main {

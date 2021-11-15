@@ -2,7 +2,7 @@ package model;
 
 import controller.InputsLoader;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import model.levels.Level;
+import model.maps.Level;
 import view.maps.MapLevelLoader;
 
 public final class LevelLoader {

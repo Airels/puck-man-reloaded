@@ -1,14 +1,11 @@
-package model.levels.fixed_levels.menu;
+package model.maps.fixed_levels.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import main.Main;
-import model.levels.Level;
+import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import sounds.Sounds;
-
-import java.awt.image.Kernel;
 
 public class MenuLevel implements Level {
 
