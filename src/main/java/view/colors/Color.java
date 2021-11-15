@@ -8,7 +8,9 @@ public enum Color {
     GREEN(fr.r1r0r0.deltaengine.view.colors.Color.GREEN),
     BLUE(fr.r1r0r0.deltaengine.view.colors.Color.BLUE),
     GOLD(255, 215, 0),
-    GAINSBORO(220, 220, 220);
+    GAINSBORO(220, 220, 220),
+    PINK(255, 192, 203),
+    ORANGE(255, 127, 0);
 
     private final fr.r1r0r0.deltaengine.view.colors.Color color;
 
