@@ -134,7 +134,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     private void generateWalls(KernelEngine engine) {
         int width = 19, height = 22;
-        MapLevelBuilder levelBuilder = new MapLevelBuilder("OriginalMap", width, height);
+        MapLevelBuilder levelBuilder = new MapLevelBuilder("PuckMan - Original Map", width, height);
 
         List<Cell> walls = new ArrayList<>();
 

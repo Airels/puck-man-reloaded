@@ -22,7 +22,7 @@ public class MenuMap implements LoadableMap {
 
     public MenuMap() {
         // this.mapLevel = new MapLevel("menu", 20, 10);
-        this.mapLevel = new MapLevelBuilder("menu", 30, 15).build();
+        this.mapLevel = new MapLevelBuilder("PuckMan Reloaded", 30, 15).build();
         try {
             Main.getEngine().addMap(mapLevel);
         } catch (MapLevelAlreadyExistException e) {
@@ -56,7 +56,7 @@ public class MenuMap implements LoadableMap {
         mainImg = new HUDElement("main_img", new Coordinates<>(15.0, 6.0), Image.MAIN_IMG.getSprite(), new Dimension(1, 1));
 
         try {
-            deltaEngine.setCurrentMap("menu");
+            deltaEngine.setCurrentMap("PuckMan Reloaded");
         } catch (MapLevelDoesNotExistException e) {
             e.printStackTrace();
             System.exit(1);
