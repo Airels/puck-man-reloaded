@@ -5,23 +5,23 @@ import model.loadables.LoadableMap;
 
 public class MapLevelLoader {
 
-    private LoadableMap currentInputs;
+    private LoadableMap currentMap;
     private KernelEngine deltaEngine;
 
     public MapLevelLoader(KernelEngine deltaEngine) {
         this.deltaEngine = deltaEngine;
     }
 
-    public void loadMapLevel(LoadableMap inputs) {
-        if (currentInputs != null)
-            this.unloadMapLevel(currentInputs);
+    public void loadMapLevel(LoadableMap map) {
+        if (currentMap != null)
+            this.unloadMapLevel(currentMap);
 
-        inputs.load(deltaEngine);
-        currentInputs = inputs;
+        map.load(deltaEngine);
+        currentMap = map;
     }
 
     public void unloadMapLevel(LoadableMap inputs) {
         inputs.unload(deltaEngine);
-        currentInputs = null;
+        currentMap = null;
     }
 }

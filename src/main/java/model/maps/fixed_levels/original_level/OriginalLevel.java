@@ -25,7 +25,18 @@ public class OriginalLevel implements Level {
 
     @Override
     public void load(KernelEngine deltaEngine) {
-        Sounds.GAME_BEGIN.play();
+        new Thread(() -> {
+            deltaEngine.haltCurrentMap();
+            Sounds.GAME_BEGIN.play();
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                deltaEngine.resumeCurrentMap();
+            }
+        }).start();
     }
 
     @Override

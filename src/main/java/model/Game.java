@@ -4,6 +4,7 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.maps.Level;
 import model.maps.fixed_levels.original_level.OriginalLevel;
 import sounds.SoundLoader;
+import sounds.Sounds;
 
 public final class Game {
 
