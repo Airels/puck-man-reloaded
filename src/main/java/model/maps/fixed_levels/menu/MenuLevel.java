@@ -19,7 +19,6 @@ public class MenuLevel implements Level {
 
     @Override
     public void load(KernelEngine deltaEngine) {
-        /*
         try {
             Sounds.MAIN_THEME.play();
             deltaEngine.getSoundEngine().setLoop(Sounds.MAIN_THEME.getName(), true);
@@ -27,8 +26,6 @@ public class MenuLevel implements Level {
             e.printStackTrace();
             System.exit(1);
         }
-
-         */
     }
 
     @Override
