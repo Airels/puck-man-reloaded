@@ -27,7 +27,7 @@ public class OriginalLevel implements Level {
     public void load(KernelEngine deltaEngine) {
         new Thread(() -> {
             deltaEngine.haltCurrentMap();
-            Sounds.GAME_BEGIN.play();
+            //Sounds.GAME_BEGIN.play();
 
             try {
                 Thread.sleep(4000);
