@@ -13,7 +13,7 @@ public class PacMan extends Entity {
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super("PacMan", coordinates, Image.PAC_MAN.getSprite(),new Dimension(1,1));
+        super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
 
         isEnergized = false;
     }
