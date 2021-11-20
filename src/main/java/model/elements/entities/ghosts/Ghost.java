@@ -3,7 +3,7 @@ package model.elements.entities.ghosts;
 import fr.r1r0r0.deltaengine.exceptions.AIAlreadyAttachedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
-import fr.r1r0r0.deltaengine.model.elements.Entity;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.ai.ghosts.GhostAI;
