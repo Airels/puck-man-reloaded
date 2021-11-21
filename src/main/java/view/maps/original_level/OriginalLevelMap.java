@@ -89,7 +89,8 @@ public class OriginalLevelMap implements LoadableMap {
         addForbiddenZones();
         addSuperPacGumsZones();
 
-        int width = originalLevel.getWidth(), height = originalLevel.getHeight();
+        // TODO
+        int nbPacGums = 0;
 
         try {
             for (Cell cell : originalLevel.getCells()) {
@@ -100,11 +101,15 @@ public class OriginalLevelMap implements LoadableMap {
                 PacGum pacGum = new PacGum(new Coordinates<>(cellCoords.getX().doubleValue(), cellCoords.getY().doubleValue()), superPacGum);
                 pacGum.setCollisionEvent(pacMan, new PacGumEatEvent(originalLevel, pacGum, superPacGum));
                 originalLevel.addEntity(pacGum);
+                nbPacGums += 1;
             }
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
         }
+
+        System.out.println("nbPacGums = " + nbPacGums);
+        // TODO
     }
 
     private void addSuperPacGumsZones() {

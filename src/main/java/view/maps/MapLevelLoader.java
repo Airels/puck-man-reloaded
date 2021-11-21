@@ -5,8 +5,8 @@ import model.loadables.LoadableMap;
 
 public class MapLevelLoader {
 
+    private final KernelEngine deltaEngine;
     private LoadableMap currentMap;
-    private KernelEngine deltaEngine;
 
     public MapLevelLoader(KernelEngine deltaEngine) {
         this.deltaEngine = deltaEngine;

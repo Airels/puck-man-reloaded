@@ -1,15 +1,16 @@
 package model;
 
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import model.events.MapLevelChanger;
 import model.maps.Level;
 import model.maps.fixed_levels.original_level.OriginalLevel;
 import sounds.SoundLoader;
-import sounds.Sounds;
 
 public final class Game {
 
     private final KernelEngine deltaEngine;
     private final LevelLoader levelLoader;
+    private MapLevelChanger mapLevelChanger;
 
     public Game(KernelEngine engine, int fps) {
         this.deltaEngine = engine;
@@ -30,6 +31,9 @@ public final class Game {
         System.out.println("LAUNCHING SINGLEPLAYER MODE!");
         OriginalLevel originalLevel = new OriginalLevel();
         levelLoader.load(originalLevel);
+
+        mapLevelChanger = new MapLevelChanger(this, deltaEngine.getCurrentMap());
+        deltaEngine.addGlobalEvent(mapLevelChanger);
     }
 
     public void launchMultiPlayerGame() {
@@ -39,5 +43,14 @@ public final class Game {
 
     public void quitGame() {
         System.exit(0);
+    }
+
+    public void nextLevel() {
+        deltaEngine.removeGlobalEvent(mapLevelChanger);
+
+        // TODO generate new level
+
+        mapLevelChanger = new MapLevelChanger(this, deltaEngine.getCurrentMap());
+        deltaEngine.addGlobalEvent(mapLevelChanger);
     }
 }

@@ -21,7 +21,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(getEngine(), 60);
+        Game game = new Game(getEngine(), 144);
 
         MenuMap menuMap = new MenuMap();
         MenuInputs menuInputs = new MenuInputs(menuMap, game);
