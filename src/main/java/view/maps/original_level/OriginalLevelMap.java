@@ -5,7 +5,7 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesS
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.elements.Cell;
+import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
@@ -17,7 +17,6 @@ import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.loadables.LoadableMap;
-import sounds.WakaSound;
 
 import java.util.ArrayList;
 import java.util.Collection;
