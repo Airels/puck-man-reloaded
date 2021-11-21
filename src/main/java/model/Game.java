@@ -32,7 +32,8 @@ public final class Game {
         OriginalLevel originalLevel = new OriginalLevel();
         levelLoader.load(originalLevel);
 
-        mapLevelChanger = new MapLevelChanger(this, deltaEngine.getCurrentMap());
+        mapLevelChanger = new MapLevelChanger(deltaEngine.getCurrentMap());
+        mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
     }
 
@@ -50,7 +51,8 @@ public final class Game {
 
         // TODO generate new level
 
-        mapLevelChanger = new MapLevelChanger(this, deltaEngine.getCurrentMap());
+        mapLevelChanger = new MapLevelChanger(deltaEngine.getCurrentMap());
+        mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
     }
 }
