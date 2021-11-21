@@ -3,9 +3,9 @@ package model.elements.entities;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Circle;
-import fr.r1r0r0.deltaengine.view.colors.Color;
-import view.images.Image;
+
+import static config.pacman.PacManConfiguration.CONF_PACMAN_NAME;
+import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
 
 public class PacMan extends Entity {
 
@@ -13,7 +13,7 @@ public class PacMan extends Entity {
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
+        super(CONF_PACMAN_NAME, coordinates, CONF_PACMAN_SPRITE, new Dimension(0.9, 0.9));
 
         isEnergized = false;
     }
@@ -31,11 +31,11 @@ public class PacMan extends Entity {
         // TODO Un event qui contient PacMan pour supprimer le energize ?
     }
 
-    public void setEnergized(boolean isEnergized) {
-        this.isEnergized = isEnergized;
-    }
-
     public boolean isEnergized() {
         return isEnergized;
+    }
+
+    public void setEnergized(boolean isEnergized) {
+        this.isEnergized = isEnergized;
     }
 }

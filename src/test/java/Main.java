@@ -87,29 +87,15 @@ public class Main {
         */
         //pacman.setAI(new BasicAI(pacman));
 
-        deltaEngine.setCurrentMap("test2");
-
         mapLevel.addEntity(red);
 
 
         Ghost ghost = Ghosts.CLYDE.build(mapLevel);
         ghost.setCoordinates(new Coordinates<>(8., 8.));
-        ghost.setSpeed(30);
+        ghost.setSpeed(5);
         mapLevel.addEntity(ghost);
 
-
-
-        try {
-
-            for (; ; Thread.sleep(1000/60)) {
-                ghost.getAI().tick();
-                //System.out.println(ghost.getCoordinates());
-                //System.out.println(pacman.getCoordinates() + " -- " + red.getCoordinates());
-            }
-
-        } catch (Exception e) {
-
-        }
+        deltaEngine.setCurrentMap("test2");
     }
 
     private static MapLevel createMapLevelDamier (String name, int width, int height) {

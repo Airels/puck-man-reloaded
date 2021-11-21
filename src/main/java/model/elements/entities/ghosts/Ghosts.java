@@ -3,16 +3,16 @@ package model.elements.entities.ghosts;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
-import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.ai.ghosts.*;
+
+import static config.ghosts.GhostConfiguration.*;
 
 public enum Ghosts {
 
-    BLINKY("Blinky", new Rectangle(Color.RED), new Rectangle(Color.BLUE), new BlinkyAI()),
-    PINKY("Pinky", new Rectangle(view.colors.Color.PINK.getEngineColor()), new Rectangle(Color.BLUE), new PinkyAI()),
-    INKY("Inky", new Rectangle(Color.CYAN), new Rectangle(Color.BLUE), new InkyAI()),
-    CLYDE("Clyde", new Rectangle(view.colors.Color.ORANGE.getEngineColor()), new Rectangle(Color.BLUE), new ClydeAI());
+    BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITE, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_AI),
+    PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITE, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_AI),
+    INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITE, CONF_INKY_SCARED_SPRITE, CONF_INKY_AI),
+    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITE, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_AI);
 
     private final String name;
     private final Sprite normalSprite, scaredSprite;
