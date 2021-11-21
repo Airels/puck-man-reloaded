@@ -1,6 +1,18 @@
 package model.ai.ghosts;
 
-public class BlinkyAI extends GhostAI {
+/**
+ * TODO
+ */
+public final class BlinkyAI extends GhostAI {
+
+    /**
+     * Red - Shadow
+     * follow pac-man
+     */
+
+    public BlinkyAI () {
+
+    }
 
     @Override
     public void tick() {
