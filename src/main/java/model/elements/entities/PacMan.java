@@ -14,7 +14,6 @@ import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
 public class PacMan extends Entity {
 
     private boolean isEnergized;
-    private Direction current;
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
