@@ -9,6 +9,7 @@ import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
+import javafx.application.Platform;
 import model.actions.events.PacGumEatEvent;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
