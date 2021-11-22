@@ -9,11 +9,13 @@ import view.images.Image;
 
 public class PacMan extends Entity {
 
+    public static final String NAME =  "PacMan";
+
     private boolean isEnergized;
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
+        super(NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
 
         isEnergized = false;
     }

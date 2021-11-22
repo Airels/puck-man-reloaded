@@ -45,8 +45,9 @@ public final class ClydeAI extends BasicGhostAI {
     @Override
     protected void chaseModeTick (Ghost ghost){
         if (target == null || isTargetReach(ghost)) {
-            direction = chooseDirection(ghost);
-            target = selectTarget(ghost);
+            MapLevel mapLevel = ghost.getMapLevel();
+            direction = chooseDirection(ghost,mapLevel);
+            target = selectTarget(ghost,mapLevel);
             ghost.setDirection(direction);
         }
     }
@@ -56,12 +57,10 @@ public final class ClydeAI extends BasicGhostAI {
      * @param ghost a ghost
      * @return a direction
      */
-    private Direction chooseDirection (Ghost ghost) {
-        MapLevel mapLevel = ghost.getMapLevel();
+    private Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         Coordinates<Double> position = ghost.getCoordinates();
         int positionX = position.getX().intValue();
         int positionY = position.getY().intValue();
-
         ArrayList<Direction> directions = new ArrayList<>();
         for (Direction direction : Direction.values()) {
             Coordinates<Integer> coordinates = direction.getCoordinates();
@@ -76,11 +75,11 @@ public final class ClydeAI extends BasicGhostAI {
     /**
      * Select and return the target, the next coordinates where the ghost must go
      * @param ghost a ghost
+     * @param mapLevel a mapLevel
      * @return a coordinates
      */
-    private Coordinates<Integer> selectTarget (Ghost ghost) {
+    private Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
         if (direction == Direction.IDLE) return null;
-        MapLevel mapLevel = ghost.getMapLevel();
         Coordinates<Integer> directionCoordinate = direction.getCoordinates();
         Coordinates<Double> position = ghost.getCoordinates();
         int x = position.getX().intValue();

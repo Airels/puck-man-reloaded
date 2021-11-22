@@ -19,6 +19,7 @@ import fr.r1r0r0.deltaengine.model.sprites.shapes.Circle;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.ai.ghosts.ClydeAI;
+import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 
@@ -33,29 +34,24 @@ public class Main {
 
 
         MapLevel mapLevel;
-        //mapLevel = createMapLevelDamier("mapTest", 10,10);
-        mapLevel = createMapLevelPrison("mapTest", 10, 10, 6, 8, 6, 8);
-        mapLevel.replaceCell(new Wall(7, 7));
+        mapLevel = createMapLevelDamier("mapTest", 10,10);
+        //mapLevel = createMapLevelPrison("mapTest", 10, 10, 6, 8, 6, 8);
+        //mapLevel.replaceCell(new Wall(7, 7));
         deltaEngine.addMap(mapLevel);
 
-        /*
-        Entity pacman = new Entity("pacman", new Coordinates<>(5., 5.), new Circle(1, Color.YELLOW), new Dimension(1, 1));
+
+        Entity pacman = new Entity(PacMan.NAME, new Coordinates<>(5., 5.), new Circle(1, Color.YELLOW), new Dimension(1, 1));
         pacman.setSpeed(0);
         mapLevel.addEntity(pacman);
-        */
 
-        Entity red = new Entity("red", new Coordinates<>(8., 8.), new Rectangle(0.5, 0.5, Color.RED), new Dimension(0.8, 0.8)) {
-            Sprite p1 = new Rectangle(0.5, 0.5, Color.GREEN);
-            Sprite p2 = new Rectangle(0.5, 0.5, Color.RED);
-            @Override
-            public Sprite getSprite () {
-                return (getCoordinates().getX() < 7) ? p1 : p2;
-            }
-        };
-        red.setSpeed(0);
-        mapLevel.addEntity(red);
 
         /*
+        Entity red = new Entity("red", new Coordinates<>(8., 8.), new Rectangle(0.5, 0.5, Color.RED), new Dimension(0.8, 0.8));
+        red.setSpeed(0);
+        mapLevel.addEntity(red);
+        */
+
+
         InputEvent moveUpEvent = new InputEvent(new ChangeMove(pacman, Direction.UP), new ChangeMove(pacman, Direction.IDLE));
         InputEvent moveDownEvent = new InputEvent(new ChangeMove(pacman, Direction.DOWN), new ChangeMove(pacman, Direction.IDLE));
         InputEvent moveLeftEvent = new InputEvent(new ChangeMove(pacman, Direction.LEFT), new ChangeMove(pacman, Direction.IDLE));
@@ -64,8 +60,8 @@ public class Main {
         deltaEngine.setInput(Key.Q, moveLeftEvent);
         deltaEngine.setInput(Key.S, moveDownEvent);
         deltaEngine.setInput(Key.D, moveRightEvent);
-        */
 
+        /*
         InputEvent moveUpEventRed = new InputEvent(new ChangeMove(red, Direction.UP), new ChangeMove(red, Direction.IDLE));
         InputEvent moveDownEventRed = new InputEvent(new ChangeMove(red, Direction.DOWN), new ChangeMove(red, Direction.IDLE));
         InputEvent moveLeftEventRed = new InputEvent(new ChangeMove(red, Direction.LEFT), new ChangeMove(red, Direction.IDLE));
@@ -74,16 +70,22 @@ public class Main {
         deltaEngine.setInput(Key.ARROW_LEFT, moveLeftEventRed);
         deltaEngine.setInput(Key.ARROW_DOWN, moveDownEventRed);
         deltaEngine.setInput(Key.ARROW_RIGHT, moveRightEventRed);
+        */
 
         InputEvent exitEvent = new InputEvent(() -> System.exit(0), null);
         deltaEngine.setInput(Key.ESCAPE, exitEvent);
         InputEvent pauseEvent = new InputEvent(deltaEngine::haltCurrentMap, deltaEngine::resumeCurrentMap);
         deltaEngine.setInput(Key.P, pauseEvent);
 
-        Ghost ghost = Ghosts.CLYDE.build(mapLevel);
-        ghost.setCoordinates(new Coordinates<>(8., 8.));
-        ghost.setSpeed(10);
-        //mapLevel.addEntity(ghost);
+        Ghost ghostClyde = Ghosts.CLYDE.build(mapLevel);
+        ghostClyde.setCoordinates(new Coordinates<>(8., 8.));
+        ghostClyde.setSpeed(10);
+        //mapLevel.addEntity(ghostClyde);
+
+        Ghost ghostBlinky = Ghosts.BLINKY.build(mapLevel);
+        ghostBlinky.setCoordinates(new Coordinates<>(8., 8.));
+        ghostBlinky.setSpeed(0.5);
+        mapLevel.addEntity(ghostBlinky);
 
         deltaEngine.setCurrentMap("mapTest");
 
