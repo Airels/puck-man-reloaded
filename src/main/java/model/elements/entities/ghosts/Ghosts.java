@@ -15,30 +15,31 @@ import static config.ghosts.GhostConfiguration.*;
 
 public enum Ghosts {
 
-    BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITES, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_AI, CONF_BLINKY_SPEED),
-    PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITES, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_AI, CONF_PINKY_SPEED),
-    INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITES, CONF_INKY_SCARED_SPRITE, CONF_INKY_AI, CONF_INKY_SPEED),
-    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_AI, CONF_CLYDE_SPEED);
+    BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITES, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_AI, CONF_BLINKY_SPEED, CONF_BLINKY_SCARED_SPEED),
+    PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITES, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_AI, CONF_PINKY_SPEED, CONF_PINKY_SCARED_SPEED),
+    INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITES, CONF_INKY_SCARED_SPRITE, CONF_INKY_AI, CONF_INKY_SPEED, CONF_INKY_SCARED_SPEED),
+    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED);
 
     private final String name;
     private final Sprite scaredSprite;
     private final GhostAI ai;
     private final List<Sprite> normalSprites;
-    private final double speed;
+    private final double normalSpeed, scaredSpeed;
 
-    Ghosts(String name, List<Sprite> normalSprites, Sprite scaredSprite, GhostAI ai, double speed) {
+    Ghosts(String name, List<Sprite> normalSprites, Sprite scaredSprite, GhostAI ai, double normalSpeed, double scaredSpeed) {
         this.name = name;
         this.normalSprites = normalSprites;
         this.scaredSprite = scaredSprite;
         this.ai = ai;
-        this.speed = speed;
+        this.normalSpeed = normalSpeed;
+        this.scaredSpeed = scaredSpeed;
     }
 
     public Ghost build(Level currentLevel) {
         MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
         Game game = currentLevel.getGame();
 
-        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, ai, speed);
+        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, ai, normalSpeed, scaredSpeed);
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
 
         return ghost;
