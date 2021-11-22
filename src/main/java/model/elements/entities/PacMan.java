@@ -21,6 +21,29 @@ public class PacMan extends Entity {
 
         isEnergized = false;
 
+        this.getAttributes().addDirectionListener((direction, t1) -> {
+            Sprite s = CONF_PACMAN_SPRITE;
+            switch (this.getAttributes().getDirection()) {
+                case UP -> {
+                    s.getNode().setScaleX(1);
+                    s.getNode().setRotate(-90);
+                }
+                case DOWN -> {
+                    s.getNode().setScaleX(1);
+                    s.getNode().setRotate(90);
+                }
+                case RIGHT -> {
+                    s.getNode().setScaleX(1);
+                    s.getNode().setRotate(0);
+                }
+                case LEFT -> {
+                    s.getNode().setScaleX(-1);
+                    s.getNode().setRotate(0);
+                }
+            }
+
+            this.setSprite(s);
+        });
     }
 
     public PacMan(double x, double y) {
@@ -42,29 +65,5 @@ public class PacMan extends Entity {
 
     public void setEnergized(boolean isEnergized) {
         this.isEnergized = isEnergized;
-    }
-
-    @Override
-    public Sprite getSprite(){
-        Sprite rotated = CONF_PACMAN_SPRITE;
-        switch (this.getAttributes().getDirection()){
-            case UP:
-                rotated.getNode().setScaleX(1);
-                rotated.getNode().setRotate(-90);
-                break;
-            case DOWN:
-                rotated.getNode().setScaleX(1);
-                rotated.getNode().setRotate(90);
-                break;
-            case RIGHT:
-                rotated.getNode().setScaleX(1);
-                rotated.getNode().setRotate(0);
-                break;
-            case LEFT:
-                rotated.getNode().setScaleX(-1);
-                rotated.getNode().setRotate(0);
-                break;
-        }
-        return rotated;
     }
 }
