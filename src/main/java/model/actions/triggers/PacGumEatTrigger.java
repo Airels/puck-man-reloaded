@@ -1,13 +1,16 @@
 package model.actions.triggers;
 
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import model.elements.entities.PacMan;
 import model.elements.entities.items.PacGum;
 import model.maps.Level;
 import sounds.WakaSound;
 
 public class PacGumEatTrigger implements Trigger {
 
+    private final PacMan pacMan;
     private final PacGum pacGum;
     private final Level level;
     private final MapLevel mapLevel;
@@ -20,6 +23,8 @@ public class PacGumEatTrigger implements Trigger {
         this.pacGum = pacGum;
         this.wakaSound = wakaSound;
         isSuper = false;
+
+        this.pacMan = (PacMan) this.mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
     }
 
     public PacGumEatTrigger(Level level, PacGum pacGum, WakaSound wakaSound, boolean isSuper) {
@@ -30,7 +35,7 @@ public class PacGumEatTrigger implements Trigger {
     @Override
     public void trigger() {
         if (isSuper)
-            System.out.println("SUPAPOWA!"); // TODO
+            level.getGame().runEnergizeMode();
 
         mapLevel.removeEntity(pacGum);
         wakaSound.play();
