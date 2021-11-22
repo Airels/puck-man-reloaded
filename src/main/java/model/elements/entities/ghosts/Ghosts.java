@@ -1,9 +1,13 @@
 package model.elements.entities.ghosts;
 
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
+import model.Game;
+import model.actions.events.PacManTouchedByGhostEvent;
 import model.ai.ghosts.*;
+import model.maps.Level;
 
 import java.util.List;
 
@@ -30,12 +34,18 @@ public enum Ghosts {
         this.speed = speed;
     }
 
-    public Ghost build(MapLevel currentMap) {
-        return new Ghost(name, currentMap, normalSprites, scaredSprite, ai, speed);
+    public Ghost build(Level currentLevel) {
+        MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
+        Game game = currentLevel.getGame();
+
+        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, ai, speed);
+        ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
+
+        return ghost;
     }
 
-    public Ghost build(MapLevel currentMap, Coordinates<Double> coords) {
-        Ghost g = build(currentMap);
+    public Ghost build(Level currentLevel, Coordinates<Double> coords) {
+        Ghost g = build(currentLevel);
         g.setCoordinates(coords);
         return g;
     }
