@@ -14,6 +14,9 @@ import java.util.Random;
 /**
  * An AI corresponding to the orange ghost in the game PacMan
  * His movement are randomly choose, but he can only change direction when he reach a junction
+ *
+ * In the original game, his movement was not totally random, he used to chase pacMan exactly like
+ * Blinky, and he started to retreat to the lower left corner when he was too close to pacMan
  */
 public final class ClydeAI extends GhostAI {
 
@@ -37,23 +40,23 @@ public final class ClydeAI extends GhostAI {
     @Override
     public void tick() {
         Ghost ghost = getGhost();
-        if (ghost.isScared()) scaryTick(ghost);
-        else offensiveTick(ghost);
+        if (ghost.isScared()) scaryModeTick(ghost);
+        else chaseModeTick(ghost);
     }
 
     /**
      * Action when the ghost is in scary mode
      * @param ghost a ghost
      */
-    private void scaryTick (Ghost ghost) {
+    private void scaryModeTick (Ghost ghost) {
         //TODO
     }
 
     /**
-     * Action when the ghost is in offensive mode (when he is not in scary mode)
+     * Action when the ghost is in chase mode (when he is not in scary mode)
      * @param ghost a ghost
      */
-    private void offensiveTick (Ghost ghost){
+    private void chaseModeTick (Ghost ghost){
         if (target == null || isTargetReach(ghost)) {
             direction = chooseDirection(ghost);
             target = selectTarget(ghost);
