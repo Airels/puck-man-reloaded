@@ -6,19 +6,14 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import view.images.Image;
 
+import static config.pacman.PacManConfiguration.CONF_PACMAN_NAME;
 import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
 
 public class PacMan extends Entity {
 
-    public static final String NAME =  "PacMan";
-
-    private boolean isEnergized;
-
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super(NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
-
-        isEnergized = false;
+        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
 
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
@@ -51,18 +46,5 @@ public class PacMan extends Entity {
 
     public PacMan() {
         this(9 + 0.05, 16 + 0.05);
-    }
-
-    public void energize() {
-        // TODO Energize mais timer, a la fin du timer, plus energized
-        // TODO Un event qui contient PacMan pour supprimer le energize ?
-    }
-
-    public void setEnergized(boolean isEnergized) {
-        this.isEnergized = isEnergized;
-    }
-
-    public boolean isEnergized() {
-        return isEnergized;
     }
 }
