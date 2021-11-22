@@ -12,16 +12,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class GhostTest {
 
     @Test
-    void scared() {
+    void state() {
         Sprite normalSprite = new Rectangle(Color.RED);
         Sprite scaredSprite = new Rectangle(Color.BLUE);
 
-        Ghost ghost = new Ghost("Ghost", null, Arrays.asList(normalSprite), scaredSprite, null, 0.0);
+        Ghost ghost = new Ghost("Ghost", null, Arrays.asList(normalSprite), scaredSprite, null, 2.0, 1.0, 4.0);
 
         assertFalse(ghost.isScared());
         assertEquals(normalSprite, ghost.getSprite());
 
-        ghost.setScared(true);
+        ghost.setState(GhostState.SCARED);
 
         assertTrue(ghost.isScared());
         assertEquals(scaredSprite, ghost.getSprite());

@@ -14,19 +14,16 @@ public class Ghost extends Entity {
 
     private final MapLevel currentMap;
     private final Sprite scaredSprite;
-    private final List<Sprite> normalSprites, deadSprites;
-    private boolean isScared, isDead;
-    private final double normalSpeed, scaredSpeed;
+    private final List<Sprite> normalSprites, fleeingSprites;
+    private final double normalSpeed, scaredSpeed, fleeingSpeed;
+    private GhostState ghostState;
 
-    public Ghost(String name, MapLevel currentMap, List<Sprite> normalSprites, Sprite scaredSprite, GhostAI ghostAI, double normalSpeed, double scaredSpeed) {
+    public Ghost(String name, MapLevel currentMap, List<Sprite> normalSprites, Sprite scaredSprite, List<Sprite> fleeingSprites, GhostAI ghostAI, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
         super(name, new Coordinates<>(0.0, 0.0), normalSprites.get(0), new Dimension(0.9, 0.9));
         this.currentMap = currentMap;
-        this.scaredSprite = scaredSprite;
-        this.deadSprites = GhostConfiguration.CONF_DEAD_GHOST_EYES_SPRITES;
         this.normalSprites = normalSprites;
-        this.isScared = false;
-        this.isDead = false;
-
+        this.scaredSprite = scaredSprite;
+        this.fleeingSprites = fleeingSprites;
 
         try {
             setAI(ghostAI);
@@ -37,18 +34,33 @@ public class Ghost extends Entity {
 
         this.normalSpeed = normalSpeed;
         this.scaredSpeed = scaredSpeed;
+        this.fleeingSpeed = fleeingSpeed;
 
-        setSpeed(normalSpeed);
+        setState(GhostState.NORMAL);
     }
 
-    public void setScared(boolean isScared) {
-        this.isScared = isScared;
+    public void setState(GhostState ghostState) {
+        this.ghostState = ghostState;
 
-        setSpeed((isScared) ? scaredSpeed : normalSpeed);
+        double speed = switch (ghostState) {
+            case NORMAL -> normalSpeed;
+            case SCARED -> scaredSpeed;
+            case FLEEING -> fleeingSpeed;
+        };
+
+        setSpeed(speed);
+    }
+
+    public GhostState getGhostState() {
+        return ghostState;
     }
 
     public boolean isScared() {
-        return isScared;
+        return getGhostState() == GhostState.SCARED;
+    }
+
+    public boolean isFleeing() {
+        return getGhostState() == GhostState.FLEEING;
     }
 
     public MapLevel getMapLevel() {
@@ -57,12 +69,12 @@ public class Ghost extends Entity {
 
     @Override
     public Sprite getSprite() {
-        if (isScared) return scaredSprite;
-        if (isDead) return switch(this.getDirection()){
-                case RIGHT -> deadSprites.get(1);
-                case UP -> deadSprites.get(2);
-                case DOWN -> deadSprites.get(3);
-                default -> deadSprites.get(0);
+        if (isScared()) return scaredSprite;
+        if (isFleeing()) return switch(this.getDirection()){
+                case RIGHT -> fleeingSprites.get(1);
+                case UP -> fleeingSprites.get(2);
+                case DOWN -> fleeingSprites.get(3);
+                default -> fleeingSprites.get(0);
         };
         else return switch (this.getDirection()) {
                 case RIGHT -> normalSprites.get(1);

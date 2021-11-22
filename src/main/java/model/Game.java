@@ -3,6 +3,7 @@ package model;
 import config.game.GameConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
+import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
 import model.events.TimedEvent;
 import model.maps.Level;
@@ -67,10 +68,10 @@ public final class Game {
         timedEvent.addTrigger(() -> {
             inEnergizedMode = false;
             deltaEngine.removeGlobalEvent(timedEvent);
-            levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setScared(false));
+            levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setState(GhostState.NORMAL));
         });
 
-        levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setScared(true));
+        levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setState(GhostState.SCARED));
         deltaEngine.addGlobalEvent(timedEvent);
     }
 
