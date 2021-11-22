@@ -84,9 +84,20 @@ public final class ClydeAI extends BasicGhostAI {
         Coordinates<Double> position = ghost.getCoordinates();
         int x = position.getX().intValue();
         int y = position.getY().intValue();
+        boolean findCross;
         while (mapLevel.getCell(x,y).isCrossableBy(ghost)) {
             x += directionCoordinate.getX();
             y += directionCoordinate.getY();
+            findCross = false;
+            for (Direction other : Direction.values()) {
+                if (other == direction || other == Direction.IDLE) continue;
+                Coordinates<Integer> coordinates = other.getCoordinates();
+                if (mapLevel.getCell(x+coordinates.getX(),y+coordinates.getY()).isCrossableBy(ghost)){
+                    findCross = true;
+                    break;
+                }
+            }
+            if (findCross) break;
         }
         return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
     }
