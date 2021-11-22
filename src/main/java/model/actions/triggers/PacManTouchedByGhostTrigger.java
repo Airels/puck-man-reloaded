@@ -3,6 +3,7 @@ package model.actions.triggers;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
+import model.elements.entities.ghosts.GhostState;
 
 public class PacManTouchedByGhostTrigger implements Trigger {
 
@@ -16,9 +17,10 @@ public class PacManTouchedByGhostTrigger implements Trigger {
 
     @Override
     public void trigger() {
-        if (ghost.isScared())
+        if (ghost.isScared()) {
+            ghost.setState(GhostState.FLEEING);
             System.out.println("EAT IT"); // TODO
-        else
+        } else
             game.gameOver();
     }
 }

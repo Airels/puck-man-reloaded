@@ -1,6 +1,5 @@
 package model.elements.entities.ghosts;
 
-import config.ghosts.GhostConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.AIAlreadyAttachedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
@@ -51,16 +50,16 @@ public class Ghost extends Entity {
         setSpeed(speed);
     }
 
-    public GhostState getGhostState() {
+    public GhostState getState() {
         return ghostState;
     }
 
     public boolean isScared() {
-        return getGhostState() == GhostState.SCARED;
+        return getState() == GhostState.SCARED;
     }
 
     public boolean isFleeing() {
-        return getGhostState() == GhostState.FLEEING;
+        return getState() == GhostState.FLEEING;
     }
 
     public MapLevel getMapLevel() {
