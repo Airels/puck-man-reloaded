@@ -27,12 +27,11 @@ public final class LevelLoader {
         if (currentLevel != null)
             unload(currentLevel);
 
-        level.load(deltaEngine);
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
-        currentLevel = level;
+        level.load(deltaEngine);
 
-        level.setNbOfPacGums(level.getMapLevelLoadable().getNbOfGeneratedPacGums());
+        currentLevel = level;
     }
 
     public void unload(Level level) {

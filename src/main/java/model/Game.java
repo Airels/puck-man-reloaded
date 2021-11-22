@@ -1,7 +1,10 @@
 package model;
 
+import config.game.GameConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.Trigger;
 import model.events.MapLevelChanger;
+import model.events.TimedEvent;
 import model.maps.Level;
 import model.maps.fixed_levels.original_level.OriginalLevel;
 import sounds.SoundLoader;
@@ -11,6 +14,7 @@ public final class Game {
     private final KernelEngine deltaEngine;
     private final LevelLoader levelLoader;
     private MapLevelChanger mapLevelChanger;
+    private boolean inEnergizedMode;
 
     public Game(KernelEngine engine, int fps) {
         this.deltaEngine = engine;
@@ -27,9 +31,7 @@ public final class Game {
     }
 
     public void launchSinglePlayerGame() {
-        // TODO Launch game
-        System.out.println("LAUNCHING SINGLEPLAYER MODE!");
-        OriginalLevel originalLevel = new OriginalLevel();
+        OriginalLevel originalLevel = new OriginalLevel(this);
         levelLoader.load(originalLevel);
 
         mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
@@ -57,9 +59,22 @@ public final class Game {
         mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
         mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
-
          */
     }
 
+    public void runEnergizeMode() {
+        TimedEvent timedEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
+        timedEvent.addTrigger(() -> {
+            inEnergizedMode = false;
+            deltaEngine.removeGlobalEvent(timedEvent);
+            levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setScared(false));
+        });
 
+        levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> ghost.setScared(true));
+        deltaEngine.addGlobalEvent(timedEvent);
+    }
+
+    public void gameOver() {
+        System.out.println("GAME OVER"); // TODO
+    }
 }

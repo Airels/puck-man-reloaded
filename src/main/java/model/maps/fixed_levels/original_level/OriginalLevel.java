@@ -3,7 +3,9 @@ package model.maps.fixed_levels.original_level;
 import controller.maps.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.AttributeListener;
+import model.Game;
 import model.elements.entities.PacMan;
+import model.elements.entities.ghosts.Ghost;
 import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
@@ -15,14 +17,16 @@ import java.util.LinkedList;
 
 public class OriginalLevel implements Level {
 
+    private final Game game;
     private final LoadableMap mapLevel;
     private final LoadableInput inputLevel;
     private final PacMan pacMan;
     private int nbOfPacGums;
-    private Collection<AttributeListener<Integer>> pacgumListeners;
+    private final Collection<AttributeListener<Integer>> pacgumListeners;
 
-    public OriginalLevel() {
+    public OriginalLevel(Game game) {
         this.pacMan = new PacMan();
+        this.game = game;
 
         this.mapLevel = new OriginalLevelMap(this, pacMan);
         this.inputLevel = new OriginalLevelInputs(pacMan);
@@ -32,6 +36,8 @@ public class OriginalLevel implements Level {
 
     @Override
     public void load(KernelEngine deltaEngine) {
+
+
         new Thread(() -> {
             deltaEngine.haltCurrentMap();
             Sounds.GAME_BEGIN.play();
@@ -62,11 +68,6 @@ public class OriginalLevel implements Level {
     }
 
     @Override
-    public void setNbOfPacGums(int nbOfPacGums) {
-        this.nbOfPacGums = nbOfPacGums;
-    }
-
-    @Override
     public int getNbOfPacGums() {
         return this.nbOfPacGums;
     }
@@ -74,6 +75,16 @@ public class OriginalLevel implements Level {
     @Override
     public void addPacGumValueListener(AttributeListener<Integer> listener) {
         pacgumListeners.add(listener);
+    }
+
+    @Override
+    public Collection<Ghost> getGhosts() {
+        return mapLevel.getGeneratedGhosts();
+    }
+
+    @Override
+    public Game getGame() {
+        return game;
     }
 
     @Override

@@ -11,9 +11,13 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
 import main.Main;
 import model.builders.TextBuilder;
+import model.elements.entities.ghosts.Ghost;
 import model.loadables.LoadableMap;
 import view.colors.Color;
 import view.images.Image;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class MenuMap implements LoadableMap {
 
@@ -116,5 +120,10 @@ public class MenuMap implements LoadableMap {
     @Override
     public int getNbOfGeneratedPacGums() {
         return 0;
+    }
+
+    @Override
+    public Collection<Ghost> getGeneratedGhosts() {
+        return new ArrayList<>();
     }
 }

@@ -25,7 +25,7 @@ public class Main {
 
         MenuMap menuMap = new MenuMap();
         MenuInputs menuInputs = new MenuInputs(menuMap, game);
-        MenuLevel menuLevel = new MenuLevel(menuMap, menuInputs);
+        MenuLevel menuLevel = new MenuLevel(game, menuMap, menuInputs);
 
         game.start(menuLevel);
     }

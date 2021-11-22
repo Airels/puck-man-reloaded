@@ -21,6 +21,7 @@ import model.maps.Level;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 public class OriginalLevelMap implements LoadableMap {
@@ -29,13 +30,17 @@ public class OriginalLevelMap implements LoadableMap {
     private Level level;
     private MapLevel originalMapLevel;
     private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
+
     private int nbOfGeneratedPacGums;
+    private final Collection<Ghost> generatedGhosts;
 
     public OriginalLevelMap(Level level, PacMan pacMan) {
         this.level = level;
         this.pacMan = pacMan;
         zonesSpawnPacGumsProhibited = new ArrayList<>();
         zonesSpawnSuperPacGum = new ArrayList<>();
+
+        generatedGhosts = new LinkedList<>();
     }
 
     @Override
@@ -71,17 +76,21 @@ public class OriginalLevelMap implements LoadableMap {
 
     private void generateGhosts() {
         try {
-            Ghost blinky = Ghosts.BLINKY.build(originalMapLevel, new Coordinates<>(9.05, 8.05));
+            Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9.05, 8.05));
             originalMapLevel.addEntity(blinky);
+            generatedGhosts.add(blinky);
 
-            Ghost pinky = Ghosts.PINKY.build(originalMapLevel, new Coordinates<>(9.05, 10.05));
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9.05, 10.05));
             originalMapLevel.addEntity(pinky);
+            generatedGhosts.add(pinky);
 
-            Ghost inky = Ghosts.INKY.build(originalMapLevel, new Coordinates<>(8.05, 10.05));
+            Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8.05, 10.05));
             originalMapLevel.addEntity(inky);
+            generatedGhosts.add(inky);
 
-            Ghost clyde = Ghosts.CLYDE.build(originalMapLevel, new Coordinates<>(10.05, 10.05));
+            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10.05, 10.05));
             originalMapLevel.addEntity(clyde);
+            generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
@@ -92,7 +101,6 @@ public class OriginalLevelMap implements LoadableMap {
         addForbiddenZones();
         addSuperPacGumsZones();
 
-        // TODO
         nbOfGeneratedPacGums = 0;
 
         try {
@@ -340,5 +348,10 @@ public class OriginalLevelMap implements LoadableMap {
     @Override
     public int getNbOfGeneratedPacGums() {
         return nbOfGeneratedPacGums;
+    }
+
+    @Override
+    public Collection<Ghost> getGeneratedGhosts() {
+        return generatedGhosts;
     }
 }
