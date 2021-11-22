@@ -20,7 +20,7 @@ public class GhostConfiguration {
                 Image.BLINKY_UP.getSprite(),
                 Image.BLINKY_DOWN.getSprite());
 
-    public final static Sprite CONF_BLINKY_SCARED_SPRITE = new Rectangle(Color.BLUE);
+    public final static Sprite CONF_BLINKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
     public final static GhostAI CONF_BLINKY_AI = new BlinkyAI();
 
 
@@ -48,7 +48,7 @@ public class GhostConfiguration {
             Image.INKY_RIGHT.getSprite(),
             Image.INKY_UP.getSprite(),
             Image.INKY_DOWN.getSprite());
-    public final static Sprite CONF_INKY_SCARED_SPRITE = new Rectangle(Color.BLUE);
+    public final static Sprite CONF_INKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
     public final static GhostAI CONF_INKY_AI = new InkyAI();
 
 
@@ -56,12 +56,11 @@ public class GhostConfiguration {
     public final static double CONF_CLYDE_SPEED = 5.1;
     // public final static String CONF_CLYDE_NORMAL_SPRITE_PATH
     // public final static String CONF_CLYDE_SCARED_SPRITE_PATH
-    public final static Sprite CONF_CLYDE_NORMAL_SPRITE = new Rectangle(view.colors.Color.ORANGE.getEngineColor());
     public final static List<Sprite> CONF_CLYDE_NORMAL_SPRITES = Arrays.asList(
             Image.CLYDE_LEFT.getSprite(),
             Image.CLYDE_RIGHT.getSprite(),
             Image.CLYDE_UP.getSprite(),
             Image.CLYDE_DOWN.getSprite());
-    public final static Sprite CONF_CLYDE_SCARED_SPRITE = new Rectangle(Color.BLUE);
+    public final static Sprite CONF_CLYDE_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
     public final static GhostAI CONF_CLYDE_AI = new ClydeAI();
 }
