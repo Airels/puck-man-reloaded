@@ -16,6 +16,11 @@ import model.Game;
 import model.elements.entities.PacMan;
 import model.maps.Level;
 
+/**
+ * Level Changer Handler.
+ * When PacMan collected all PacGums, activates a Teleporter Entity, and when it enters it, activates associated trigger
+ * given by the Game manager (aka to transfert him to the next level)
+ */
 public final class MapLevelChanger extends Event {
 
     private final Level level;
@@ -24,6 +29,10 @@ public final class MapLevelChanger extends Event {
     private final PacMan pacMan;
     private boolean isActivated;
 
+    /**
+     * Default constructor
+     * @param level attached level
+     */
     public MapLevelChanger(Level level) {
         this.level = level;
         this.mapLevel = level.getMapLevelLoadable().getMapLevel();
@@ -31,11 +40,6 @@ public final class MapLevelChanger extends Event {
         teleporter = new Entity("teleporter", coords, MapLevelChangerConfiguration.CONF_ACTIVATED_TELEPORTER_CELL, MapLevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_DIMENSION);
 
         pacMan = (PacMan) mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
-
-        level.addPacGumValueListener((oldValue, newValue) -> {
-            if (newValue == 0)
-                setPortalActivated(true);
-        });
 
         Event collisionEvent = new Event() {
             @Override
@@ -50,18 +54,31 @@ public final class MapLevelChanger extends Event {
 
     @Override
     public void checkEvent() {
-
+        if (level.getNbOfPacGums() == 0)
+            setPortalActivated(true);
     }
 
+    /**
+     * Returns if portal is activated or not
+     * @return boolean true if portal activated, false otherwise
+     */
     public boolean isPortalActivated() {
         return isActivated;
     }
 
+    /**
+     * Set portal activation
+     * @param isActivated true to activate it, false otherwise
+     */
     public void setPortalActivated(boolean isActivated) {
+        boolean previousValue = this.isActivated;
         this.isActivated = isActivated;
 
         try {
-            mapLevel.addEntity(teleporter);
+            if (isActivated && !previousValue)
+                mapLevel.addEntity(teleporter);
+            else if (!isActivated && previousValue)
+                mapLevel.removeEntity(teleporter);
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace(); // Should never happen
             System.exit(1);

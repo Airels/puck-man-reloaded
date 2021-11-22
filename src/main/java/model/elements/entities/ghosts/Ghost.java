@@ -9,6 +9,9 @@ import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.ai.ghosts.GhostAI;
 import java.util.List;
 
+/**
+ * A PacMan's Ghost.
+ */
 public class Ghost extends Entity {
 
     private final MapLevel currentMap;
@@ -17,6 +20,18 @@ public class Ghost extends Entity {
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
     private GhostState ghostState;
 
+    /**
+     * Default ghost constructor.
+     * @param name String name of the Ghost
+     * @param currentMap Current Map who Ghost resides
+     * @param normalSprites Sprites when Ghost is in Normal state
+     * @param scaredSprite Sprite when Ghost is in Scared state (energized mode)
+     * @param fleeingSprites Sprites when Ghost is in Fleeing state (when PacMan eat it)
+     * @param ghostAI Ghost AI
+     * @param normalSpeed double speed when Ghost is in Normal state
+     * @param scaredSpeed double speed when Ghost is in Scared state
+     * @param fleeingSpeed double speed when Ghost is in Fleeing state
+     */
     public Ghost(String name, MapLevel currentMap, List<Sprite> normalSprites, Sprite scaredSprite, List<Sprite> fleeingSprites, GhostAI ghostAI, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
         super(name, new Coordinates<>(0.0, 0.0), normalSprites.get(0), new Dimension(0.9, 0.9));
         this.currentMap = currentMap;
@@ -38,6 +53,10 @@ public class Ghost extends Entity {
         setState(GhostState.NORMAL);
     }
 
+    /**
+     * Set new ghost state
+     * @param ghostState new state of the ghost
+     */
     public void setState(GhostState ghostState) {
         this.ghostState = ghostState;
 
@@ -50,18 +69,34 @@ public class Ghost extends Entity {
         setSpeed(speed);
     }
 
+    /**
+     * Get current state of the Ghost
+     * @return GhostState current Ghost state
+     */
     public GhostState getState() {
         return ghostState;
     }
 
+    /**
+     * Returns if Ghost is in Scared state
+     * @return true if Ghost is in Scared state, false otherwise
+     */
     public boolean isScared() {
         return getState() == GhostState.SCARED;
     }
 
+    /**
+     * Returns if Ghost is in Fleeing state
+     * @return true if Ghost is in Fleeing state, false otherwise
+     */
     public boolean isFleeing() {
         return getState() == GhostState.FLEEING;
     }
 
+    /**
+     * Get the Map of the Level where Ghost resides
+     * @return MapLevel current map of the ghost
+     */
     public MapLevel getMapLevel() {
         return currentMap;
     }

@@ -1,8 +1,8 @@
 package sounds;
 
-import fr.r1r0r0.deltaengine.model.Sound;
-import model.elements.cells.Wall;
-
+/**
+ * WakaSound handler, played when PacMan eats PacGums.
+ */
 public class WakaSound {
 
     private final static Sounds wa = Sounds.PACMAN_WA;
@@ -21,6 +21,6 @@ public class WakaSound {
             wa.stop();
             ka.play();
         }
-        step = (step +1) % 2;
+        step = (step + 1) % 2;
     }
 }

@@ -1,5 +1,8 @@
 package view.images;
 
+/**
+ * All games Images
+ */
 public enum Image {
 
     MAIN_IMG("main.jpg"),

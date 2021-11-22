@@ -9,6 +9,9 @@ import controller.maps.menu.MenuInputs;
 import model.maps.fixed_levels.menu.MenuLevel;
 import view.maps.menu.MenuMap;
 
+/**
+ * Main class of the program.
+ */
 public class Main {
 
     static {
@@ -22,11 +25,7 @@ public class Main {
 
     public static void main(String[] args) {
         Game game = new Game(getEngine(), 144);
-
-        MenuMap menuMap = new MenuMap();
-        MenuInputs menuInputs = new MenuInputs(menuMap, game);
-        MenuLevel menuLevel = new MenuLevel(game, menuMap, menuInputs);
-
+        MenuLevel menuLevel = new MenuLevel(game);
         game.start(menuLevel);
     }
 

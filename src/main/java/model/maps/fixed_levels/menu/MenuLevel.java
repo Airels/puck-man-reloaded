@@ -1,5 +1,6 @@
 package model.maps.fixed_levels.menu;
 
+import controller.maps.menu.MenuInputs;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.AttributeListener;
@@ -9,19 +10,30 @@ import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import sounds.Sounds;
+import view.maps.menu.MenuMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The Main Menu Level
+ */
 public class MenuLevel implements Level {
 
     private Game game;
     private LoadableMap map;
     private LoadableInput inputs;
 
-    public MenuLevel(Game game, LoadableMap map, LoadableInput inputs) {
+    /**
+     * Default constructor.
+     * @param game the Game
+     */
+    public MenuLevel(Game game) {
+        MenuMap map = new MenuMap();
+
+        this.game = game;
         this.map = map;
-        this.inputs = inputs;
+        this.inputs = new MenuInputs(map, game);
     }
 
     @Override
@@ -58,11 +70,6 @@ public class MenuLevel implements Level {
     @Override
     public int getAndDecreasePacGums() {
         return 0;
-    }
-
-    @Override
-    public void addPacGumValueListener(AttributeListener<Integer> listener) {
-
     }
 
     @Override

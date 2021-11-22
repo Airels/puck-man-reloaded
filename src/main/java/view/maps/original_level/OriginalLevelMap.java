@@ -29,6 +29,9 @@ import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The Original PacMan map.
+ */
 public class OriginalLevelMap implements LoadableMap {
 
     private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
@@ -38,6 +41,11 @@ public class OriginalLevelMap implements LoadableMap {
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
 
+    /**
+     * Default constructor
+     * @param level The Level of the Map
+     * @param pacMan PacMan
+     */
     public OriginalLevelMap(Level level, PacMan pacMan) {
         this.level = level;
         this.pacMan = pacMan;

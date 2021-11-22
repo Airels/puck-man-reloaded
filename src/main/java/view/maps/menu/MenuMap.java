@@ -19,14 +19,20 @@ import view.images.Image;
 import java.util.ArrayList;
 import java.util.Collection;
 
+/**
+ * The Map of the Game Main Menu, only loads HUD elements such image or title.
+ */
 public class MenuMap implements LoadableMap {
 
     private final MapLevel mapLevel;
     private HUDElement title, singlePlayerText, multiPlayerText, quitText, selectedText, mainImg;
 
+    /**
+     * Default constructor
+     */
     public MenuMap() {
-        // this.mapLevel = new MapLevel("menu", 20, 10);
         this.mapLevel = new MapLevelBuilder("PuckMan Reloaded", 30, 15).build();
+
         try {
             Main.getEngine().addMap(mapLevel);
         } catch (MapLevelAlreadyExistException e) {
@@ -85,29 +91,44 @@ public class MenuMap implements LoadableMap {
         deltaEngine.removeHUDElement(mainImg);
     }
 
+    /**
+     * Called when user select singleplayer in menu
+     */
     public void selectSinglePlayer() {
         unselectCurrent();
         selectedText = singlePlayerText;
         selectCurrent();
     }
 
+    /**
+     * Called when user select multiplayer in menu
+     */
     public void selectMultiPlayer() {
         unselectCurrent();
         selectedText = multiPlayerText;
         selectCurrent();
     }
 
+    /**
+     * Called when user select quit in menu
+     */
     public void selectQuit() {
         unselectCurrent();
         selectedText = quitText;
         selectCurrent();
     }
 
+    /**
+     * Unselect current selection
+     */
     private void unselectCurrent() {
         if (selectedText != null)
             ((Text) selectedText.getSprite()).setColor(Color.WHITE.getEngineColor());
     }
 
+    /**
+     * Select wanted user selection
+     */
     private void selectCurrent() {
         ((Text) selectedText.getSprite()).setColor(Color.GOLD.getEngineColor());
     }

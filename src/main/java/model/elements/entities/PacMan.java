@@ -9,10 +9,17 @@ import view.images.Image;
 import static config.pacman.PacManConfiguration.CONF_PACMAN_NAME;
 import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
 
+/**
+ * PacMan, the main Character.
+ * Controlled by the Player.
+ */
 public class PacMan extends Entity {
 
+    /**
+     * Another constructor. Sets PacMan initial coordinates
+     * @param coordinates initial coordinates
+     */
     public PacMan(Coordinates<Double> coordinates) {
-        // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
         super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
 
         this.getAttributes().addDirectionListener((direction, t1) -> {
@@ -40,10 +47,19 @@ public class PacMan extends Entity {
         });
     }
 
+    /**
+     * Another constructor. Sets PacMan initial location with doubles
+     * @param x abscissa initial PacMan position
+     * @param y ordinate initial PacMan position
+     */
     public PacMan(double x, double y) {
         this(new Coordinates<>(x, y));
     }
 
+    /**
+     * Default builder.
+     * Set PacMan coordinates to its original position
+     */
     public PacMan() {
         this(9 + 0.05, 16 + 0.05);
     }
