@@ -9,6 +9,11 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GhostConfiguration {
+    public final static List<Sprite> CONF_DEAD_GHOST_EYES_SPRITES = Arrays.asList(
+            Image.EYES_LEFT.getSprite(),
+            Image.EYES_RIGHT.getSprite(),
+            Image.EYES_UP.getSprite(),
+            Image.EYES_DOWN.getSprite());
     public final static String CONF_BLINKY_NAME = "Blinky";
     public final static double CONF_BLINKY_SPEED = 5.1;
     public final static double CONF_BLINKY_SCARED_SPEED = CONF_BLINKY_SPEED/2;
@@ -20,6 +25,7 @@ public class GhostConfiguration {
                 Image.BLINKY_RIGHT.getSprite(),
                 Image.BLINKY_UP.getSprite(),
                 Image.BLINKY_DOWN.getSprite());
+
 
     public final static Sprite CONF_BLINKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
     public final static GhostAI CONF_BLINKY_AI = new BlinkyAI();

@@ -20,7 +20,11 @@ public enum Image {
     PINKY_RIGHT("pinky_right.png"),
     PINKY_UP("pinky_up.png"),
     PINKY_DOWN("pinky_down.png"),
-    SCARED_GHOST("scared.png");
+    SCARED_GHOST("scared.png"),
+    EYES_LEFT("eyes_left.png"),
+    EYES_RIGHT("eyes_left.png"),
+    EYES_UP("eyes_left.png"),
+    EYES_DOWN("eyes_left.png");
 
     private final String path;
 
