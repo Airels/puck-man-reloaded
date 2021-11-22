@@ -1,9 +1,8 @@
 package model.loadables;
 
-public interface LoadableMap extends Loadable {
+import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 
-    /*
-    int getNbPacGums();
-    void addPacGumEatListener(AttributeListener<Integer> update); // TODO Ou un appel lors du trigger pac-gomme
-     */
+public interface LoadableMap extends Loadable {
+    MapLevel getMapLevel();
+    int getNbOfGeneratedPacGums();
 }

@@ -2,7 +2,7 @@ package model.maps.fixed_levels.original_level;
 
 import controller.maps.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import main.Main;
+import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.elements.entities.PacMan;
 import model.maps.Level;
 import model.loadables.LoadableInput;
@@ -10,17 +10,24 @@ import model.loadables.LoadableMap;
 import sounds.Sounds;
 import view.maps.original_level.OriginalLevelMap;
 
+import java.util.Collection;
+import java.util.LinkedList;
+
 public class OriginalLevel implements Level {
 
     private final LoadableMap mapLevel;
     private final LoadableInput inputLevel;
     private final PacMan pacMan;
+    private int nbOfPacGums;
+    private Collection<AttributeListener<Integer>> pacgumListeners;
 
     public OriginalLevel() {
         this.pacMan = new PacMan();
 
-        this.mapLevel = new OriginalLevelMap(pacMan);
+        this.mapLevel = new OriginalLevelMap(this, pacMan);
         this.inputLevel = new OriginalLevelInputs(pacMan);
+
+        pacgumListeners = new LinkedList<>();
     }
 
     @Override
@@ -52,5 +59,33 @@ public class OriginalLevel implements Level {
     @Override
     public LoadableInput getInputsLoadable() {
         return inputLevel;
+    }
+
+    @Override
+    public void setNbOfPacGums(int nbOfPacGums) {
+        this.nbOfPacGums = nbOfPacGums;
+    }
+
+    @Override
+    public int getNbOfPacGums() {
+        return this.nbOfPacGums;
+    }
+
+    @Override
+    public void addPacGumValueListener(AttributeListener<Integer> listener) {
+        pacgumListeners.add(listener);
+    }
+
+    @Override
+    public int getAndDecreasePacGums() {
+        int before = getNbOfPacGums();
+
+        this.nbOfPacGums--;
+
+        try {
+            return getNbOfPacGums();
+        } finally {
+            pacgumListeners.forEach(e -> e.attributeUpdated(before, getNbOfPacGums()));
+        }
     }
 }

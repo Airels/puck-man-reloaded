@@ -17,7 +17,7 @@ import view.images.Image;
 
 public class MenuMap implements LoadableMap {
 
-    private MapLevel mapLevel;
+    private final MapLevel mapLevel;
     private HUDElement title, singlePlayerText, multiPlayerText, quitText, selectedText, mainImg;
 
     public MenuMap() {
@@ -106,5 +106,15 @@ public class MenuMap implements LoadableMap {
 
     private void selectCurrent() {
         ((Text) selectedText.getSprite()).setColor(Color.GOLD.getEngineColor());
+    }
+
+    @Override
+    public MapLevel getMapLevel() {
+        return mapLevel;
+    }
+
+    @Override
+    public int getNbOfGeneratedPacGums() {
+        return 0;
     }
 }

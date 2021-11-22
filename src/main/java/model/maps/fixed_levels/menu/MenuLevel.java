@@ -2,6 +2,7 @@ package model.maps.fixed_levels.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.maps.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
@@ -41,5 +42,25 @@ public class MenuLevel implements Level {
     @Override
     public LoadableInput getInputsLoadable() {
         return inputs;
+    }
+
+    @Override
+    public void setNbOfPacGums(int nbOfPacGums) {
+
+    }
+
+    @Override
+    public int getNbOfPacGums() {
+        return 0;
+    }
+
+    @Override
+    public int getAndDecreasePacGums() {
+        return 0;
+    }
+
+    @Override
+    public void addPacGumValueListener(AttributeListener<Integer> listener) {
+
     }
 }
