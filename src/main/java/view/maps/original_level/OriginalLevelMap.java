@@ -7,9 +7,14 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingExcep
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
+import model.actions.events.OriginalLevelLeftTunnelEvent;
+import model.actions.events.OriginalLevelRightTunnelEvent;
 import model.actions.events.PacGumEatEvent;
+import model.actions.triggers.OriginalLevelLeftTunnelTrigger;
+import model.actions.triggers.OriginalLevelRightTunnelTrigger;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -26,13 +31,12 @@ import java.util.List;
 
 public class OriginalLevelMap implements LoadableMap {
 
+    private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
+    private final Collection<Ghost> generatedGhosts;
     private PacMan pacMan;
     private Level level;
     private MapLevel originalMapLevel;
-    private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
-
     private int nbOfGeneratedPacGums;
-    private final Collection<Ghost> generatedGhosts;
 
     public OriginalLevelMap(Level level, PacMan pacMan) {
         this.level = level;
@@ -65,6 +69,7 @@ public class OriginalLevelMap implements LoadableMap {
         generateWalls(engine);
         generatePacGums();
         generateGhosts();
+        generateBorderTunnel();
 
         try {
             engine.addMap(originalMapLevel);
@@ -72,6 +77,16 @@ public class OriginalLevelMap implements LoadableMap {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private void generateBorderTunnel() {
+        Event leftTunnelEvent = new OriginalLevelLeftTunnelEvent(pacMan);
+        leftTunnelEvent.addTrigger(new OriginalLevelLeftTunnelTrigger(pacMan));
+        originalMapLevel.addEvent(leftTunnelEvent);
+
+        Event rightTunnelEvent = new OriginalLevelRightTunnelEvent(originalMapLevel.getWidth(), pacMan);
+        rightTunnelEvent.addTrigger(new OriginalLevelRightTunnelTrigger(pacMan));
+        originalMapLevel.addEvent(rightTunnelEvent);
     }
 
     private void generateGhosts() {
@@ -153,13 +168,13 @@ public class OriginalLevelMap implements LoadableMap {
 
         for (int x = 0; x < width; x++) {
             walls.add(new Wall(x, 0)); // Upper border
-            walls.add(new Wall(x, height-1)); // Down border
+            walls.add(new Wall(x, height - 1)); // Down border
         }
 
-        for (int y = 1; y < height-1; y++) {
+        for (int y = 1; y < height - 1; y++) {
             if (y == 10 || y == 8 || y == 12) continue;
             walls.add(new Wall(0, y)); // Left border
-            walls.add(new Wall(width-1, y)); // Right border
+            walls.add(new Wall(width - 1, y)); // Right border
         }
 
         // y = 1
