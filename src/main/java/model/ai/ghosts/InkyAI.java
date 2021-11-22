@@ -1,9 +1,11 @@
 package model.ai.ghosts;
 
+import model.elements.entities.ghosts.Ghost;
+
 /**
  * TODO
  */
-public final class InkyAI extends GhostAI {
+public final class InkyAI extends BasicGhostAI {
 
     /**
      * Blue - Bashful
@@ -15,7 +17,13 @@ public final class InkyAI extends GhostAI {
     }
 
     @Override
-    public void tick() {
-        // TODO
+    protected void scaryModeTick(Ghost ghost) {
+        //TODO
     }
+
+    @Override
+    protected void chaseModeTick(Ghost ghost) {
+        //TODO
+    }
+
 }
