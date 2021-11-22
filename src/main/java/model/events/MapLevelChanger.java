@@ -16,7 +16,7 @@ import model.Game;
 import model.elements.entities.PacMan;
 import model.maps.Level;
 
-public class MapLevelChanger extends Event {
+public final class MapLevelChanger extends Event {
 
     private final Level level;
     private final MapLevel mapLevel;

@@ -1,11 +1,8 @@
 package model.elements.entities;
 
-import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
-import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
-import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 
 import static config.pacman.PacManConfiguration.CONF_PACMAN_NAME;
@@ -17,7 +14,7 @@ public class PacMan extends Entity {
 
     public PacMan(Coordinates<Double> coordinates) {
         // TODO super("PacMan", coordinates, Image.PAC_MAN.getSprite(), new Dimension(1, 1));
-        super(CONF_PACMAN_NAME, coordinates, CONF_PACMAN_SPRITE, new Dimension(0.9, 0.9));
+        super(CONF_PACMAN_NAME, coordinates, CONF_PACMAN_SPRITE, new Dimension(0.95, 0.95));
 
         isEnergized = false;
 
@@ -51,7 +48,7 @@ public class PacMan extends Entity {
     }
 
     public PacMan() {
-        this(9 + 0.05, 16 + 0.05);
+        this(9.025, 16.025);
     }
 
     public void energize() {
