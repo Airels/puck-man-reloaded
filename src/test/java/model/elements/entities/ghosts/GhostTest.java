@@ -16,7 +16,7 @@ class GhostTest {
         Sprite normalSprite = new Rectangle(Color.RED);
         Sprite scaredSprite = new Rectangle(Color.BLUE);
 
-        Ghost ghost = new Ghost("Ghost", null, Arrays.asList(normalSprite), scaredSprite, null);
+        Ghost ghost = new Ghost("Ghost", null, Arrays.asList(normalSprite), scaredSprite, null, 0.0);
 
         assertFalse(ghost.isScared());
         assertEquals(normalSprite, ghost.getSprite());
