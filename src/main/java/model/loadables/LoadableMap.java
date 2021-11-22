@@ -1,7 +1,8 @@
 package model.loadables;
 
-import model.loadables.Loadable;
+import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 
 public interface LoadableMap extends Loadable {
-
+    MapLevel getMapLevel();
+    int getNbOfGeneratedPacGums();
 }

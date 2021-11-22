@@ -17,6 +17,7 @@ import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.loadables.LoadableMap;
+import model.maps.Level;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -25,10 +26,13 @@ import java.util.List;
 public class OriginalLevelMap implements LoadableMap {
 
     private PacMan pacMan;
-    private MapLevel originalLevel;
+    private Level level;
+    private MapLevel originalMapLevel;
     private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
+    private int nbOfGeneratedPacGums;
 
-    public OriginalLevelMap(PacMan pacMan) {
+    public OriginalLevelMap(Level level, PacMan pacMan) {
+        this.level = level;
         this.pacMan = pacMan;
         zonesSpawnPacGumsProhibited = new ArrayList<>();
         zonesSpawnSuperPacGum = new ArrayList<>();
@@ -36,11 +40,11 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void load(KernelEngine engine) {
-        if (originalLevel == null)
+        if (originalMapLevel == null)
             generateLevel(engine);
 
         try {
-            engine.setCurrentMap(originalLevel.getName());
+            engine.setCurrentMap(originalMapLevel.getName());
         } catch (MapLevelDoesNotExistException e) {
             e.printStackTrace();
             System.exit(1);
@@ -58,7 +62,7 @@ public class OriginalLevelMap implements LoadableMap {
         generateGhosts();
 
         try {
-            engine.addMap(originalLevel);
+            engine.addMap(originalMapLevel);
         } catch (MapLevelAlreadyExistException e) {
             e.printStackTrace();
             System.exit(1);
@@ -67,17 +71,17 @@ public class OriginalLevelMap implements LoadableMap {
 
     private void generateGhosts() {
         try {
-            Ghost blinky = Ghosts.BLINKY.build(originalLevel, new Coordinates<>(9.05, 8.05));
-            originalLevel.addEntity(blinky);
+            Ghost blinky = Ghosts.BLINKY.build(originalMapLevel, new Coordinates<>(9.05, 8.05));
+            originalMapLevel.addEntity(blinky);
 
-            Ghost pinky = Ghosts.PINKY.build(originalLevel, new Coordinates<>(9.05, 10.05));
-            originalLevel.addEntity(pinky);
+            Ghost pinky = Ghosts.PINKY.build(originalMapLevel, new Coordinates<>(9.05, 10.05));
+            originalMapLevel.addEntity(pinky);
 
-            Ghost inky = Ghosts.INKY.build(originalLevel, new Coordinates<>(8.05, 10.05));
-            originalLevel.addEntity(inky);
+            Ghost inky = Ghosts.INKY.build(originalMapLevel, new Coordinates<>(8.05, 10.05));
+            originalMapLevel.addEntity(inky);
 
-            Ghost clyde = Ghosts.CLYDE.build(originalLevel, new Coordinates<>(10.05, 10.05));
-            originalLevel.addEntity(clyde);
+            Ghost clyde = Ghosts.CLYDE.build(originalMapLevel, new Coordinates<>(10.05, 10.05));
+            originalMapLevel.addEntity(clyde);
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
@@ -88,17 +92,19 @@ public class OriginalLevelMap implements LoadableMap {
         addForbiddenZones();
         addSuperPacGumsZones();
 
-        int width = originalLevel.getWidth(), height = originalLevel.getHeight();
+        // TODO
+        nbOfGeneratedPacGums = 0;
 
         try {
-            for (Cell cell : originalLevel.getCells()) {
+            for (Cell cell : originalMapLevel.getCells()) {
                 if (zonesSpawnPacGumsProhibited.contains(cell.getCoordinates())) continue;
                 boolean superPacGum = (zonesSpawnSuperPacGum.contains(cell.getCoordinates()));
 
                 Coordinates<Integer> cellCoords = cell.getCoordinates();
                 PacGum pacGum = new PacGum(new Coordinates<>(cellCoords.getX().doubleValue(), cellCoords.getY().doubleValue()), superPacGum);
-                pacGum.setCollisionEvent(pacMan, new PacGumEatEvent(originalLevel, pacGum, superPacGum));
-                originalLevel.addEntity(pacGum);
+                pacGum.setCollisionEvent(pacMan, new PacGumEatEvent(level, pacGum, superPacGum));
+                originalMapLevel.addEntity(pacGum);
+                nbOfGeneratedPacGums += 1;
             }
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
@@ -316,13 +322,23 @@ public class OriginalLevelMap implements LoadableMap {
             System.exit(1);
         }
 
-        originalLevel = levelBuilder.build();
+        originalMapLevel = levelBuilder.build();
 
         try {
-            originalLevel.addEntity(pacMan);
+            originalMapLevel.addEntity(pacMan);
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    @Override
+    public MapLevel getMapLevel() {
+        return originalMapLevel;
+    }
+
+    @Override
+    public int getNbOfGeneratedPacGums() {
+        return nbOfGeneratedPacGums;
     }
 }

@@ -18,6 +18,11 @@ public final class LevelLoader {
         this.inputsLoader = new InputsLoader(deltaEngine);
     }
 
+    /**
+     * Loads level, its map and its inputs,
+     * and set number of PacGums in level according to retrieved value in associated Map.
+     * @param level level to load
+     */
     public void load(Level level) {
         if (currentLevel != null)
             unload(currentLevel);
@@ -26,6 +31,8 @@ public final class LevelLoader {
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
         currentLevel = level;
+
+        level.setNbOfPacGums(level.getMapLevelLoadable().getNbOfGeneratedPacGums());
     }
 
     public void unload(Level level) {
@@ -33,5 +40,9 @@ public final class LevelLoader {
         mapLoader.unloadMapLevel(level.getMapLevelLoadable());
         inputsLoader.unloadInputs(level.getInputsLoadable());
         currentLevel = null;
+    }
+
+    public Level getCurrentLevel() {
+        return currentLevel;
     }
 }
