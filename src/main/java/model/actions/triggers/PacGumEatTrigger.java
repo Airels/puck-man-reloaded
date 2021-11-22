@@ -10,7 +10,6 @@ import sounds.WakaSound;
 
 public class PacGumEatTrigger implements Trigger {
 
-    private final PacMan pacMan;
     private final PacGum pacGum;
     private final Level level;
     private final MapLevel mapLevel;
@@ -23,8 +22,6 @@ public class PacGumEatTrigger implements Trigger {
         this.pacGum = pacGum;
         this.wakaSound = wakaSound;
         isSuper = false;
-
-        this.pacMan = (PacMan) this.mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
     }
 
     public PacGumEatTrigger(Level level, PacGum pacGum, WakaSound wakaSound, boolean isSuper) {
