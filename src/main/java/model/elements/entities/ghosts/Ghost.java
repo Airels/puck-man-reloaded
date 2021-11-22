@@ -16,7 +16,7 @@ public class Ghost extends Entity {
     private final List<Sprite> normalSprites;
     private boolean isScared;
 
-    public Ghost(String name, MapLevel currentMap, List<Sprite> normalSprites, Sprite scaredSprite, GhostAI ghostAI) {
+    public Ghost(String name, MapLevel currentMap, List<Sprite> normalSprites, Sprite scaredSprite, GhostAI ghostAI, double speed) {
         super(name, new Coordinates<>(0.0, 0.0), normalSprites.get(0), new Dimension(0.9, 0.9));
         this.currentMap = currentMap;
         this.scaredSprite = scaredSprite;
@@ -29,6 +29,8 @@ public class Ghost extends Entity {
             e.printStackTrace(); // Should never happen
             System.exit(1);
         }
+
+        setSpeed(speed);
     }
 
     public void setScared(boolean isScared) {
