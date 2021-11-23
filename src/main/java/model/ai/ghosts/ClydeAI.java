@@ -99,7 +99,7 @@ public final class ClydeAI extends BasicGhostAI {
             if (!mapLevel.getCell(x, y).isCrossableBy(ghost))
                 return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
 
-            Direction opposite = getOpposite();
+            Direction opposite = direction.getOpposite();
             for (Direction other : Direction.values()) {
                 if (other == direction || other == opposite || other == Direction.IDLE) continue;
                 Coordinates<Integer> otherCoordinates = other.getCoordinates();
@@ -108,17 +108,6 @@ public final class ClydeAI extends BasicGhostAI {
             }
         }
     }
-
-    private Direction getOpposite () {
-        switch (direction) {
-            case UP -> {return Direction.DOWN;}
-            case DOWN -> {return Direction.UP;}
-            case RIGHT -> {return Direction.LEFT;}
-            case LEFT -> {return Direction.RIGHT;}
-            default -> {return Direction.IDLE;}
-        }
-    }
-
 
     /**
      * Return if the target is reach
