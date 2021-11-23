@@ -20,6 +20,8 @@ import java.util.Random;
  */
 public final class ClydeAI extends BasicGhostAI {
 
+    //TODO: fixer la target qui se chosit mal (le mur)
+
     /**
      * Orange - Pokey
      * random pathfinding

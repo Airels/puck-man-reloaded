@@ -13,7 +13,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 
 /**
- * TODO
+ * TODO: fix deplacement
  */
 public final class BlinkyAI extends BasicGhostAI {
 
