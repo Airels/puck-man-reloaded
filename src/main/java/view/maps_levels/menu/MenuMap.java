@@ -1,4 +1,4 @@
-package view.maps.menu;
+package view.maps_levels.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
@@ -14,6 +14,7 @@ import main.Main;
 import model.builders.TextBuilder;
 import model.elements.entities.ghosts.Ghost;
 import model.loadables.LoadableMap;
+import org.jetbrains.annotations.NotNull;
 import view.colors.Color;
 import view.images.Image;
 
@@ -138,7 +139,7 @@ public class MenuMap implements LoadableMap {
     }
 
     @Override
-    public MapLevel getMapLevel() {
+    public @NotNull MapLevel getMapLevel() {
         return mapLevel;
     }
 
@@ -148,12 +149,12 @@ public class MenuMap implements LoadableMap {
     }
 
     @Override
-    public Collection<Ghost> getGeneratedGhosts() {
+    public @NotNull Collection<Ghost> getGeneratedGhosts() {
         return new ArrayList<>();
     }
 
     @Override
-    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+    public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
         return new HashMap<>();
     }
 }

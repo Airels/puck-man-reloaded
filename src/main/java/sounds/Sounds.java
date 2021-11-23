@@ -49,6 +49,7 @@ public enum Sounds {
      */
     public void play() {
         SoundEngine soundEngine = Main.getEngine().getSoundEngine();
+        this.stop();
         try {
             soundEngine.play(getName());
         } catch (SoundDoesNotExistException e) {

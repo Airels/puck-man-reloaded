@@ -9,11 +9,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class GhostConfiguration {
-    public final static List<Sprite> CONF_DEFAULT_FLEEING_SPRITES_GHOST = Arrays.asList(
-            Image.EYES_LEFT.getSprite(),
-            Image.EYES_RIGHT.getSprite(),
-            Image.EYES_UP.getSprite(),
-            Image.EYES_DOWN.getSprite());
 
     public final static String CONF_BLINKY_NAME = "Blinky";
     public final static double CONF_BLINKY_SPEED = 5.1;
@@ -28,7 +23,11 @@ public class GhostConfiguration {
                 Image.BLINKY_UP.getSprite(),
                 Image.BLINKY_DOWN.getSprite());
     public final static Sprite CONF_BLINKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
-    public final static List<Sprite> CONF_BLINKY_FLEEING_SPRITES = CONF_DEFAULT_FLEEING_SPRITES_GHOST;
+    public final static List<Sprite> CONF_BLINKY_FLEEING_SPRITES = Arrays.asList(
+            Image.EYES_LEFT.getSprite(),
+            Image.EYES_RIGHT.getSprite(),
+            Image.EYES_UP.getSprite(),
+            Image.EYES_DOWN.getSprite());
     public final static GhostAI CONF_BLINKY_AI = new BlinkyAI();
 
 
@@ -45,7 +44,11 @@ public class GhostConfiguration {
                 Image.PINKY_UP.getSprite(),
                 Image.PINKY_DOWN.getSprite());
     public final static Sprite CONF_PINKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
-    public final static List<Sprite> CONF_PINKY_FLEEING_SPRITES = CONF_DEFAULT_FLEEING_SPRITES_GHOST;
+    public final static List<Sprite> CONF_PINKY_FLEEING_SPRITES = Arrays.asList(
+            Image.EYES_LEFT.getSprite(),
+            Image.EYES_RIGHT.getSprite(),
+            Image.EYES_UP.getSprite(),
+            Image.EYES_DOWN.getSprite());
     public final static GhostAI CONF_PINKY_AI = new PinkyAI();
 
 
@@ -62,7 +65,11 @@ public class GhostConfiguration {
             Image.INKY_UP.getSprite(),
             Image.INKY_DOWN.getSprite());
     public final static Sprite CONF_INKY_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
-    public final static List<Sprite> CONF_INKY_FLEEING_SPRITES = CONF_DEFAULT_FLEEING_SPRITES_GHOST;
+    public final static List<Sprite> CONF_INKY_FLEEING_SPRITES = Arrays.asList(
+            Image.EYES_LEFT.getSprite(),
+            Image.EYES_RIGHT.getSprite(),
+            Image.EYES_UP.getSprite(),
+            Image.EYES_DOWN.getSprite());
     public final static GhostAI CONF_INKY_AI = new InkyAI();
 
 
@@ -78,6 +85,10 @@ public class GhostConfiguration {
             Image.CLYDE_UP.getSprite(),
             Image.CLYDE_DOWN.getSprite());
     public final static Sprite CONF_CLYDE_SCARED_SPRITE = Image.SCARED_GHOST.getSprite();
-    public final static List<Sprite> CONF_CLYDE_FLEEING_SPRITES = CONF_DEFAULT_FLEEING_SPRITES_GHOST;
+    public final static List<Sprite> CONF_CLYDE_FLEEING_SPRITES = Arrays.asList(
+            Image.EYES_LEFT.getSprite(),
+            Image.EYES_RIGHT.getSprite(),
+            Image.EYES_UP.getSprite(),
+            Image.EYES_DOWN.getSprite());
     public final static GhostAI CONF_CLYDE_AI = new ClydeAI();
 }

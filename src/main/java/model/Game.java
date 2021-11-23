@@ -6,9 +6,10 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
 import model.events.TimedEvent;
-import model.maps.Level;
-import model.maps.fixed_levels.original_level.OriginalLevel;
-import model.maps.generators.LevelGenerator;
+import model.levels.Level;
+import model.levels.fixed_levels.gameover.GameOverLevel;
+import model.levels.fixed_levels.original_level.OriginalLevel;
+import model.levels.generators.LevelGenerator;
 import sounds.SoundLoader;
 
 /**
@@ -20,6 +21,7 @@ public final class Game {
     private final KernelEngine deltaEngine;
     private final LevelLoader levelLoader;
     private final LevelGenerator levelGenerator;
+    private Level menuLevel, gameOverLevel;
     private MapLevelChanger mapLevelChanger;
     private boolean inEnergizedMode;
     private int lifeCounter, ghostEatenChain;
@@ -48,8 +50,11 @@ public final class Game {
      * Start the game with the first given level.
      *
      * @param menuLevel First game level
+     * @param gameOverLevel Level when game over
      */
-    public void start(Level menuLevel) {
+    public void start(Level menuLevel, Level gameOverLevel) {
+        this.menuLevel = menuLevel;
+        this.gameOverLevel = gameOverLevel;
         levelLoader.load(menuLevel);
     }
 
@@ -79,6 +84,13 @@ public final class Game {
      */
     public void quitGame() {
         System.exit(0);
+    }
+
+    /**
+     * Reload Game Menu when called
+     */
+    public void returnToMenu() {
+        levelLoader.load(menuLevel);
     }
 
     /**
@@ -127,6 +139,9 @@ public final class Game {
      * TODO
      */
     public void gameOver() {
+        levelLoader.load(gameOverLevel);
+
+        /*
         try {
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
@@ -134,9 +149,9 @@ public final class Game {
             // TODO Changement de sprite Pacman
             // TODO animation
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
-            Thread.sleep(5000);
+            Thread.sleep(2000);
             levelLoader.getCurrentLevel().reset();
-            // TODO deltaEngine.tick()
+            deltaEngine.tick();
             Thread.sleep(3000);
             if (lifeCounter > 0) {
                 deltaEngine.resumeCurrentMap();
@@ -147,9 +162,10 @@ public final class Game {
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
+            System.exit(1);
         }
 
-
+         */
     }
 
     public double getScore() {

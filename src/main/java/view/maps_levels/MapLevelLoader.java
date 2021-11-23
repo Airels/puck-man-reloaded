@@ -1,4 +1,4 @@
-package view.maps;
+package view.maps_levels;
 
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableMap;

@@ -1,4 +1,4 @@
-package view.maps.original_level;
+package view.maps_levels.original_level;
 
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesStackingException;
@@ -23,7 +23,8 @@ import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.loadables.LoadableMap;
-import model.maps.Level;
+import model.levels.Level;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,8 +63,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void load(KernelEngine engine) {
-        if (originalMapLevel == null)
-            generateLevel(engine);
+        generateLevel(engine);
 
         spawnPoints.put(pacMan, pacMan.getCoordinates());
         for (Entity ghost: getGeneratedGhosts()) {
@@ -81,7 +81,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void unload(KernelEngine engine) {
-
+        engine.removeMap(originalMapLevel.getName());
     }
 
     private void generateLevel(KernelEngine engine) {
@@ -377,7 +377,7 @@ public class OriginalLevelMap implements LoadableMap {
     }
 
     @Override
-    public MapLevel getMapLevel() {
+    public @NotNull MapLevel getMapLevel() {
         return originalMapLevel;
     }
 
@@ -387,12 +387,12 @@ public class OriginalLevelMap implements LoadableMap {
     }
 
     @Override
-    public Collection<Ghost> getGeneratedGhosts() {
+    public @NotNull Collection<Ghost> getGeneratedGhosts() {
         return generatedGhosts;
     }
 
     @Override
-    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+    public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
         return spawnPoints;
     }
 }

@@ -1,15 +1,14 @@
-package model.maps;
+package model.levels;
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.Game;
-import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.loadables.Loadable;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,12 +37,14 @@ public interface Level extends Loadable {
      * Returns the Map of the Level;
      * @return LoadableMap of the level
      */
+    @NotNull
     LoadableMap getMapLevelLoadable();
 
     /**
      * Returns the Inputs of the Level
      * @return LoadableInputs of the level
      */
+    @NotNull
     LoadableInput getInputsLoadable();
 
     /**
@@ -62,18 +63,21 @@ public interface Level extends Loadable {
      * Get all ghosts of the Level
      * @return Collection of Ghost
      */
+    @NotNull
     Collection<Ghost> getGhosts();
 
     /**
      * Returns Game instance
      * @return the Game
      */
+    @NotNull
     Game getGame();
 
     /**
      * Get spawn points of entities in the map
      * @return Map of entity and their associated spawn points
      */
+    @NotNull
     Map<Entity, Coordinates<Double>> getSpawnPoints();
 
 

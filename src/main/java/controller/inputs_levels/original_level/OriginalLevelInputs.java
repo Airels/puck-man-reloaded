@@ -1,4 +1,4 @@
-package controller.maps.original_level;
+package controller.inputs_levels.original_level;
 
 import controller.elements.entities.PacManInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;

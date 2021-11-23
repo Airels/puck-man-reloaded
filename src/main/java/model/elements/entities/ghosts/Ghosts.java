@@ -7,7 +7,7 @@ import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.Game;
 import model.actions.events.PacManTouchedByGhostEvent;
 import model.ai.ghosts.*;
-import model.maps.Level;
+import model.levels.Level;
 
 import java.util.List;
 

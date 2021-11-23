@@ -2,8 +2,8 @@ package model;
 
 import controller.InputsLoader;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import model.maps.Level;
-import view.maps.MapLevelLoader;
+import model.levels.Level;
+import view.maps_levels.MapLevelLoader;
 
 /**
  * Level Loader. Loads given Level (its map and inputs), and load it on the Engine
@@ -32,7 +32,6 @@ public final class LevelLoader {
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
         level.load(deltaEngine);
-
         currentLevel = level;
     }
 

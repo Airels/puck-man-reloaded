@@ -4,17 +4,11 @@ import config.events.MapLevelChangerConfiguration;
 import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
-import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import fr.r1r0r0.deltaengine.model.events.Event;
-import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import fr.r1r0r0.deltaengine.model.sprites.Sprite;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
-import model.Game;
 import model.elements.entities.PacMan;
-import model.maps.Level;
+import model.levels.Level;
 
 /**
  * Level Changer Handler.

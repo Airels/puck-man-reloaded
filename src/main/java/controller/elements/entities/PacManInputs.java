@@ -69,6 +69,10 @@ public class PacManInputs implements LoadableInput {
         engine.clearInput(Key.Q);
         engine.clearInput(Key.S);
         engine.clearInput(Key.D);
+        engine.clearInput(Key.ARROW_UP);
+        engine.clearInput(Key.ARROW_LEFT);
+        engine.clearInput(Key.ARROW_DOWN);
+        engine.clearInput(Key.ARROW_RIGHT);
 
         engine.removeGlobalEvent(inputEvent);
     }

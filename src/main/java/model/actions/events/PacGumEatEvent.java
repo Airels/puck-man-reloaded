@@ -1,10 +1,9 @@
 package model.actions.events;
 
 import fr.r1r0r0.deltaengine.model.events.Event;
-import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.actions.triggers.PacGumEatTrigger;
 import model.elements.entities.items.PacGum;
-import model.maps.Level;
+import model.levels.Level;
 import sounds.WakaSound;
 
 public class PacGumEatEvent extends Event {

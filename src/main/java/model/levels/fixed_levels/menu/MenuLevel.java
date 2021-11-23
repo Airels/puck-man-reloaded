@@ -1,22 +1,21 @@
-package model.maps.fixed_levels.menu;
+package model.levels.fixed_levels.menu;
 
-import controller.maps.menu.MenuInputs;
+import controller.inputs_levels.menu.MenuInputs;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
-import model.maps.Level;
+import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
+import org.jetbrains.annotations.NotNull;
 import sounds.Sounds;
-import view.maps.menu.MenuMap;
+import view.maps_levels.menu.MenuMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -58,12 +57,12 @@ public class MenuLevel implements Level {
     }
 
     @Override
-    public LoadableMap getMapLevelLoadable() {
+    public @NotNull LoadableMap getMapLevelLoadable() {
         return map;
     }
 
     @Override
-    public LoadableInput getInputsLoadable() {
+    public @NotNull LoadableInput getInputsLoadable() {
         return inputs;
     }
 
@@ -78,17 +77,17 @@ public class MenuLevel implements Level {
     }
 
     @Override
-    public Collection<Ghost> getGhosts() {
+    public @NotNull Collection<Ghost> getGhosts() {
         return new ArrayList<>();
     }
 
     @Override
-    public Game getGame() {
+    public @NotNull Game getGame() {
         return game;
     }
 
     @Override
-    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+    public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
 
         return map.getSpawnPoints();
     }

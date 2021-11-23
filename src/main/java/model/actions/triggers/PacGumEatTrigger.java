@@ -1,12 +1,9 @@
 package model.actions.triggers;
 
-import config.pacman.PacManConfiguration;
-import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import model.elements.entities.PacMan;
 import model.elements.entities.items.PacGum;
-import model.maps.Level;
+import model.levels.Level;
 import sounds.WakaSound;
 
 public class PacGumEatTrigger implements Trigger {

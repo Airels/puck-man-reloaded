@@ -1,6 +1,6 @@
-package model.maps.fixed_levels.original_level;
+package model.levels.fixed_levels.original_level;
 
-import controller.maps.original_level.OriginalLevelInputs;
+import controller.inputs_levels.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -10,9 +10,10 @@ import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.GhostState;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
-import model.maps.Level;
+import model.levels.Level;
+import org.jetbrains.annotations.NotNull;
 import sounds.Sounds;
-import view.maps.original_level.OriginalLevelMap;
+import view.maps_levels.original_level.OriginalLevelMap;
 
 import java.util.Collection;
 import java.util.Map;
@@ -65,12 +66,12 @@ public class OriginalLevel implements Level {
     }
 
     @Override
-    public LoadableMap getMapLevelLoadable() {
+    public @NotNull LoadableMap getMapLevelLoadable() {
         return mapLevel;
     }
 
     @Override
-    public LoadableInput getInputsLoadable() {
+    public @NotNull LoadableInput getInputsLoadable() {
         return inputLevel;
     }
 
@@ -80,17 +81,17 @@ public class OriginalLevel implements Level {
     }
 
     @Override
-    public Collection<Ghost> getGhosts() {
+    public @NotNull Collection<Ghost> getGhosts() {
         return mapLevel.getGeneratedGhosts();
     }
 
     @Override
-    public Game getGame() {
+    public @NotNull Game getGame() {
         return game;
     }
 
     @Override
-    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+    public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
         return mapLevel.getSpawnPoints();
     }
 

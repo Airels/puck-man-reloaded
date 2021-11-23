@@ -1,10 +1,10 @@
-package model.maps.fixed_levels.menu;
+package model.levels.fixed_levels.menu;
 
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import model.Game;
 import sounds.Sounds;
-import view.maps.menu.MenuMap;
+import view.maps_levels.menu.MenuMap;
 
 /**
  * The Main Menu selector. Allow to user to select the action he wants.
