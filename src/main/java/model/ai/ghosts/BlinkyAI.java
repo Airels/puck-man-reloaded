@@ -50,7 +50,6 @@ public final class BlinkyAI extends BasicGhostAI {
 
     @Override
     protected void chaseModeTick (Ghost ghost) {
-
         if ( target != null && ! isTargetReach(ghost)) return;
 
         MapLevel mapLevel = ghost.getMapLevel();

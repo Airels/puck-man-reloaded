@@ -40,11 +40,11 @@ public class OriginalLevelMap implements LoadableMap {
 
     private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
     private final Collection<Ghost> generatedGhosts;
-    private PacMan pacMan;
-    private Level level;
+    private final PacMan pacMan;
+    private final Level level;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
-    private Map<Entity, Coordinates<Double>> spawnPoints;
+    private final Map<Entity, Coordinates<Double>> spawnPoints;
 
     /**
      * Default constructor
