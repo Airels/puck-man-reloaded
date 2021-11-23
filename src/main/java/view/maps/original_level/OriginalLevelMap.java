@@ -111,7 +111,8 @@ public class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(inky);
             generatedGhosts.add(inky);
 
-            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10.05, 10.05));
+            //TODO: 10.05, 10.05
+            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(1., 1.));
             originalMapLevel.addEntity(clyde);
             generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {

@@ -1,11 +1,18 @@
 package model.ai.ghosts;
 
 import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
+import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelCoordinatesOutOfBoundException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
+import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
+import fr.r1r0r0.deltaengine.model.elements.cells.CrossableCell;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
+import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
+import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.ArrayList;
@@ -20,7 +27,7 @@ import java.util.Random;
  */
 public final class ClydeAI extends BasicGhostAI {
 
-    //TODO: fixer la target qui se chosit mal (le mur)
+    //TODO: faire le comportement de fuite
 
     /**
      * Orange - Pokey
@@ -34,41 +41,40 @@ public final class ClydeAI extends BasicGhostAI {
     /**
      * Constructor
      */
-    public ClydeAI () {
+    public ClydeAI() {
         random = new Random();
         target = null;
     }
 
     @Override
-    protected void scaryModeTick (Ghost ghost) {
+    protected void scaryModeTick(Ghost ghost) {
         //TODO
     }
 
     @Override
-    protected void chaseModeTick (Ghost ghost){
+    protected void chaseModeTick(Ghost ghost) {
         if (target == null || isTargetReach(ghost)) {
             MapLevel mapLevel = ghost.getMapLevel();
-            direction = chooseDirection(ghost,mapLevel);
-            target = selectTarget(ghost,mapLevel);
+            direction = chooseDirection(ghost);
+            target = selectTarget(ghost, mapLevel);
             ghost.setDirection(direction);
         }
     }
 
     /**
      * Choose and return the next direction to follow
+     *
      * @param ghost a ghost
      * @return a direction
      */
-    private Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
-        Coordinates<Double> position = ghost.getCoordinates();
-        int positionX = position.getX().intValue();
-        int positionY = position.getY().intValue();
+    private Direction chooseDirection(Ghost ghost) {
         ArrayList<Direction> directions = new ArrayList<>();
-        for (Direction direction : Direction.values()) {
-            Coordinates<Integer> coordinates = direction.getCoordinates();
-            int x = coordinates.getX();
-            int y = coordinates.getY();
-            if (mapLevel.getCell(positionX + x,positionY + y).isCrossableBy(ghost)) directions.add(direction);
+        try {
+            for (Direction direction : Direction.values()) {
+                if (DeltaEngine.getKernelEngine().canGoToNextCell(ghost, direction)) directions.add(direction);
+            }
+        } catch (NotInitializedException e) {
+            //e.printStackTrace();
         }
         int size = directions.size();
         return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
@@ -76,33 +82,43 @@ public final class ClydeAI extends BasicGhostAI {
 
     /**
      * Select and return the target, the next coordinates where the ghost must go
-     * @param ghost a ghost
+     *
+     * @param ghost    a ghost
      * @param mapLevel a mapLevel
      * @return a coordinates
      */
-    private Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
+    private Coordinates<Integer> selectTarget(Ghost ghost, MapLevel mapLevel) {
         if (direction == Direction.IDLE) return null;
         Coordinates<Integer> directionCoordinate = direction.getCoordinates();
         Coordinates<Double> position = ghost.getCoordinates();
         int x = position.getX().intValue();
         int y = position.getY().intValue();
-        boolean findCross;
-        while (mapLevel.getCell(x,y).isCrossableBy(ghost)) {
+        for (; ; ) {
             x += directionCoordinate.getX();
             y += directionCoordinate.getY();
-            findCross = false;
+            if (!mapLevel.getCell(x, y).isCrossableBy(ghost))
+                return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
+
+            Direction opposite = getOpposite();
             for (Direction other : Direction.values()) {
-                if (other == direction || other == Direction.IDLE) continue;
-                Coordinates<Integer> coordinates = other.getCoordinates();
-                if (mapLevel.getCell(x+coordinates.getX(),y+coordinates.getY()).isCrossableBy(ghost)){
-                    findCross = true;
-                    break;
-                }
+                if (other == direction || other == opposite || other == Direction.IDLE) continue;
+                Coordinates<Integer> otherCoordinates = other.getCoordinates();
+                if (mapLevel.getCell(x + otherCoordinates.getX(), y + otherCoordinates.getY())
+                        .isCrossableBy(ghost)) return new Coordinates<>(x, y);
             }
-            if (findCross) break;
         }
-        return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
     }
+
+    private Direction getOpposite () {
+        switch (direction) {
+            case UP -> {return Direction.DOWN;}
+            case DOWN -> {return Direction.UP;}
+            case RIGHT -> {return Direction.LEFT;}
+            case LEFT -> {return Direction.RIGHT;}
+            default -> {return Direction.IDLE;}
+        }
+    }
+
 
     /**
      * Return if the target is reach
@@ -115,8 +131,10 @@ public final class ClydeAI extends BasicGhostAI {
         } catch (NotInitializedException e) {
             //e.printStackTrace();
         }
-        Coordinates<Double> topLeft = ghost.getCoordinates();
-        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(topLeft,ghost.getDimension());
+        Coordinates<Double> coordinates = ghost.getCoordinates();
+        Dimension dimension = ghost.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
         return topLeft.getX().intValue() == rightBot.getX().intValue()
                 && topLeft.getY().intValue() == rightBot.getY().intValue()
                 && topLeft.getX().intValue() == target.getX()
