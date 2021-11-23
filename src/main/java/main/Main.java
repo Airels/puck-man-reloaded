@@ -24,8 +24,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(getEngine(), 60);
-        getEngine().printFrameRate(true);
+        Game game = new Game(getEngine(), 144);
         MenuLevel menuLevel = new MenuLevel(game);
         game.start(menuLevel);
     }
