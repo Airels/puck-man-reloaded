@@ -103,7 +103,8 @@ public class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(blinky);
             generatedGhosts.add(blinky);
 
-            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9.05, 10.05));
+            //TODO: 9.05, 10.05
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(17.,16.));
             originalMapLevel.addEntity(pinky);
             generatedGhosts.add(pinky);
 
