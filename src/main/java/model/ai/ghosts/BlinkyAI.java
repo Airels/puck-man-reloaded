@@ -1,5 +1,6 @@
 package model.ai.ghosts;
 
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
@@ -46,7 +47,7 @@ public final class BlinkyAI extends BasicGhostAI {
     }
 
     private Coordinates<Integer> findTarget (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
-        Entity entity = mapLevel.getEntity(PacMan.NAME);
+        Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
         if (entity == null) throw new GhostTargetMissingException(ghost);
         Coordinates<Double> topLeft = entity.getCoordinates();
         Coordinates<Double> botRight = CollisionPositions.RIGHT_BOT.calcPosition(topLeft,entity.getDimension());

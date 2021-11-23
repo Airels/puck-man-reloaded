@@ -1,5 +1,8 @@
 package view.colors;
 
+/**
+ * Colors of the Game
+ */
 public enum Color {
 
     BLACK(fr.r1r0r0.deltaengine.view.colors.Color.BLACK),

@@ -1,7 +1,9 @@
 package model.actions.triggers;
 
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import model.elements.entities.PacMan;
 import model.elements.entities.items.PacGum;
 import model.maps.Level;
 import sounds.WakaSound;
@@ -30,7 +32,7 @@ public class PacGumEatTrigger implements Trigger {
     @Override
     public void trigger() {
         if (isSuper)
-            System.out.println("SUPAPOWA!"); // TODO
+            level.getGame().runEnergizeMode();
 
         mapLevel.removeEntity(pacGum);
         wakaSound.play();

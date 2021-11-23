@@ -1,3 +1,4 @@
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.AI;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
@@ -40,7 +41,7 @@ public class Main {
         deltaEngine.addMap(mapLevel);
 
 
-        Entity pacman = new Entity(PacMan.NAME, new Coordinates<>(5., 5.), new Circle(1, Color.YELLOW), new Dimension(1, 1));
+        Entity pacman = new Entity(PacManConfiguration.CONF_PACMAN_NAME, new Coordinates<>(5., 5.), new Circle(1, Color.YELLOW), new Dimension(1, 1));
         pacman.setSpeed(0);
         mapLevel.addEntity(pacman);
 
@@ -77,12 +78,12 @@ public class Main {
         InputEvent pauseEvent = new InputEvent(deltaEngine::haltCurrentMap, deltaEngine::resumeCurrentMap);
         deltaEngine.setInput(Key.P, pauseEvent);
 
-        Ghost ghostClyde = Ghosts.CLYDE.build(mapLevel);
+        Ghost ghostClyde = Ghosts.CLYDE.build(mapLevel); // TODO
         ghostClyde.setCoordinates(new Coordinates<>(8., 8.));
         ghostClyde.setSpeed(10);
         //mapLevel.addEntity(ghostClyde);
 
-        Ghost ghostBlinky = Ghosts.BLINKY.build(mapLevel);
+        Ghost ghostBlinky = Ghosts.BLINKY.build(mapLevel); // TODO
         ghostBlinky.setCoordinates(new Coordinates<>(8., 8.));
         ghostBlinky.setSpeed(0.5);
         mapLevel.addEntity(ghostBlinky);

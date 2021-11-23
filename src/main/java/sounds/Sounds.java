@@ -5,6 +5,9 @@ import fr.r1r0r0.deltaengine.model.Sound;
 import fr.r1r0r0.deltaengine.model.engines.SoundEngine;
 import main.Main;
 
+/**
+ * All Game sounds, could be anything : music, sound effect, ...
+ */
 public enum Sounds {
 
     MENU_SELECTION("menu-selection", "menu-selection.wav"),
@@ -25,14 +28,25 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Returns Sound object of the Sound
+     * @return Sound engine representation
+     */
     public Sound getSound() {
         return sound;
     }
 
+    /**
+     * Returns name of the Sound
+     * @return String name of the sound
+     */
     public String getName() {
         return sound.getName();
     }
 
+    /**
+     * Play the sound
+     */
     public void play() {
         SoundEngine soundEngine = Main.getEngine().getSoundEngine();
         try {
@@ -43,6 +57,9 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Pause the sound
+     */
     public void pause() {
         SoundEngine soundEngine = Main.getEngine().getSoundEngine();
         try {
@@ -53,6 +70,9 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Stop the sound
+     */
     public void stop() {
         SoundEngine soundEngine = Main.getEngine().getSoundEngine();
         try {

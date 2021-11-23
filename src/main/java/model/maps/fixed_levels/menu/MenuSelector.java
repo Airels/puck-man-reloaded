@@ -6,6 +6,9 @@ import model.Game;
 import sounds.Sounds;
 import view.maps.menu.MenuMap;
 
+/**
+ * The Main Menu selector. Allow to user to select the action he wants.
+ */
 public class MenuSelector {
 
     private int currentSelected;
@@ -13,6 +16,11 @@ public class MenuSelector {
     private Trigger upTrigger, downTrigger, enterTrigger;
     private Game game;
 
+    /**
+     * Default constructor
+     * @param menuMap the MenuMap
+     * @param game the Game
+     */
     public MenuSelector(MenuMap menuMap, Game game) {
         this.game = game;
         currentSelected = 0;

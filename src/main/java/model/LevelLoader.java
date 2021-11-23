@@ -5,6 +5,9 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.maps.Level;
 import view.maps.MapLevelLoader;
 
+/**
+ * Level Loader. Loads given Level (its map and inputs), and load it on the Engine
+ */
 public final class LevelLoader {
 
     private final MapLevelLoader mapLoader;
@@ -19,22 +22,24 @@ public final class LevelLoader {
     }
 
     /**
-     * Loads level, its map and its inputs,
-     * and set number of PacGums in level according to retrieved value in associated Map.
-     * @param level level to load
+     * Load given level, its map and its inputs
+     * @param level Level to load
      */
     public void load(Level level) {
         if (currentLevel != null)
             unload(currentLevel);
 
-        level.load(deltaEngine);
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
-        currentLevel = level;
+        level.load(deltaEngine);
 
-        level.setNbOfPacGums(level.getMapLevelLoadable().getNbOfGeneratedPacGums());
+        currentLevel = level;
     }
 
+    /**
+     * Unload given level, its maps and its inputs,
+     * @param level Level to unload
+     */
     public void unload(Level level) {
         level.unload(deltaEngine);
         mapLoader.unloadMapLevel(level.getMapLevelLoadable());
@@ -42,6 +47,10 @@ public final class LevelLoader {
         currentLevel = null;
     }
 
+    /**
+     * Returns current level of the game
+     * @return current Level, or null if no level is currently running
+     */
     public Level getCurrentLevel() {
         return currentLevel;
     }

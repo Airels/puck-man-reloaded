@@ -7,9 +7,14 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingExcep
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
+import model.actions.events.OriginalLevelLeftTunnelEvent;
+import model.actions.events.OriginalLevelRightTunnelEvent;
 import model.actions.events.PacGumEatEvent;
+import model.actions.triggers.OriginalLevelLeftTunnelTrigger;
+import model.actions.triggers.OriginalLevelRightTunnelTrigger;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -21,21 +26,33 @@ import model.maps.Level;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The Original PacMan map.
+ */
 public class OriginalLevelMap implements LoadableMap {
 
+    private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
+    private final Collection<Ghost> generatedGhosts;
     private PacMan pacMan;
     private Level level;
     private MapLevel originalMapLevel;
-    private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
     private int nbOfGeneratedPacGums;
 
+    /**
+     * Default constructor
+     * @param level The Level of the Map
+     * @param pacMan PacMan
+     */
     public OriginalLevelMap(Level level, PacMan pacMan) {
         this.level = level;
         this.pacMan = pacMan;
         zonesSpawnPacGumsProhibited = new ArrayList<>();
         zonesSpawnSuperPacGum = new ArrayList<>();
+
+        generatedGhosts = new LinkedList<>();
     }
 
     @Override
@@ -60,6 +77,7 @@ public class OriginalLevelMap implements LoadableMap {
         generateWalls(engine);
         generatePacGums();
         generateGhosts();
+        generateBorderTunnel();
 
         try {
             engine.addMap(originalMapLevel);
@@ -69,19 +87,33 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    private void generateBorderTunnel() {
+        Event leftTunnelEvent = new OriginalLevelLeftTunnelEvent(pacMan);
+        leftTunnelEvent.addTrigger(new OriginalLevelLeftTunnelTrigger(pacMan));
+        originalMapLevel.addEvent(leftTunnelEvent);
+
+        Event rightTunnelEvent = new OriginalLevelRightTunnelEvent(originalMapLevel.getWidth(), pacMan);
+        rightTunnelEvent.addTrigger(new OriginalLevelRightTunnelTrigger(pacMan));
+        originalMapLevel.addEvent(rightTunnelEvent);
+    }
+
     private void generateGhosts() {
         try {
-            Ghost blinky = Ghosts.BLINKY.build(originalMapLevel, new Coordinates<>(9.05, 8.05));
+            Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9.05, 8.05));
             originalMapLevel.addEntity(blinky);
+            generatedGhosts.add(blinky);
 
-            Ghost pinky = Ghosts.PINKY.build(originalMapLevel, new Coordinates<>(9.05, 10.05));
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9.05, 10.05));
             originalMapLevel.addEntity(pinky);
+            generatedGhosts.add(pinky);
 
-            Ghost inky = Ghosts.INKY.build(originalMapLevel, new Coordinates<>(8.05, 10.05));
+            Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8.05, 10.05));
             originalMapLevel.addEntity(inky);
+            generatedGhosts.add(inky);
 
-            Ghost clyde = Ghosts.CLYDE.build(originalMapLevel, new Coordinates<>(10.05, 10.05));
+            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10.05, 10.05));
             originalMapLevel.addEntity(clyde);
+            generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
@@ -92,7 +124,6 @@ public class OriginalLevelMap implements LoadableMap {
         addForbiddenZones();
         addSuperPacGumsZones();
 
-        // TODO
         nbOfGeneratedPacGums = 0;
 
         try {
@@ -145,13 +176,13 @@ public class OriginalLevelMap implements LoadableMap {
 
         for (int x = 0; x < width; x++) {
             walls.add(new Wall(x, 0)); // Upper border
-            walls.add(new Wall(x, height-1)); // Down border
+            walls.add(new Wall(x, height - 1)); // Down border
         }
 
-        for (int y = 1; y < height-1; y++) {
+        for (int y = 1; y < height - 1; y++) {
             if (y == 10 || y == 8 || y == 12) continue;
             walls.add(new Wall(0, y)); // Left border
-            walls.add(new Wall(width-1, y)); // Right border
+            walls.add(new Wall(width - 1, y)); // Right border
         }
 
         // y = 1
@@ -340,5 +371,10 @@ public class OriginalLevelMap implements LoadableMap {
     @Override
     public int getNbOfGeneratedPacGums() {
         return nbOfGeneratedPacGums;
+    }
+
+    @Override
+    public Collection<Ghost> getGeneratedGhosts() {
+        return generatedGhosts;
     }
 }

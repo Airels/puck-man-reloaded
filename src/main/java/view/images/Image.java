@@ -1,5 +1,8 @@
 package view.images;
 
+/**
+ * All games Images
+ */
 public enum Image {
 
     MAIN_IMG("main.jpg"),
@@ -20,21 +23,25 @@ public enum Image {
     PINKY_RIGHT("pinky_right.png"),
     PINKY_UP("pinky_up.png"),
     PINKY_DOWN("pinky_down.png"),
-    SCARED_GHOST("scared.png");
+    SCARED_GHOST("scared.png"),
+    EYES_LEFT("eyes_left.png"),
+    EYES_RIGHT("eyes_left.png"),
+    EYES_UP("eyes_left.png"),
+    EYES_DOWN("eyes_left.png");
 
-    private fr.r1r0r0.deltaengine.model.sprites.Image image;
+    private final String path;
 
     Image(String path) {
-        try {
-            String p = "/images/" + path;
-            this.image = new fr.r1r0r0.deltaengine.model.sprites.Image(getClass().getResource(p).getPath());
-        } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+        this.path = "/images/" + path;
     }
 
     public fr.r1r0r0.deltaengine.model.sprites.Image getSprite() {
-        return image;
+        try {
+            return new fr.r1r0r0.deltaengine.model.sprites.Image(getClass().getResource(path).getPath());
+        } catch (Exception e) {
+            e.printStackTrace(); // Should never happen
+            System.exit(1);
+            return null;
+        }
     }
 }
