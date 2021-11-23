@@ -1,11 +1,20 @@
 package model.ai.ghosts;
 
 import config.pacman.PacManConfiguration;
+import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
+import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelCoordinatesOutOfBoundException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
+import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
+import fr.r1r0r0.deltaengine.model.elements.cells.CrossableCell;
+import fr.r1r0r0.deltaengine.model.elements.cells.UncrossableCell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
+import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
+import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
@@ -23,6 +32,9 @@ public final class BlinkyAI extends BasicGhostAI {
      * follow pac-man
      */
 
+    private Coordinates<Integer> target;
+    private Direction direction;
+
     //TODO mettre des attributs pour alleger les arguments des methodes
     public BlinkyAI () {}
 
@@ -31,8 +43,14 @@ public final class BlinkyAI extends BasicGhostAI {
         //TODO
     }
 
+    Cell previousCellPacMan;
+    Cell previousCell;
+
     @Override
     protected void chaseModeTick (Ghost ghost) {
+
+        if ( target != null && ! isTargetReach(ghost)) return;
+
         MapLevel mapLevel = ghost.getMapLevel();
         Coordinates<Integer> target;
         try {
@@ -41,8 +59,28 @@ public final class BlinkyAI extends BasicGhostAI {
             ghost.setDirection(Direction.IDLE);
             return;
         }
+
+        try {
+            if (previousCellPacMan != null) mapLevel.replaceCell(previousCellPacMan);
+            previousCellPacMan = mapLevel.getCell(target.getX(), target.getY());
+            mapLevel.replaceCell(new CrossableCell(target.getX(), target.getY(), new Rectangle(Color.RED)));
+        } catch (MapLevelCoordinatesOutOfBoundException e) {
+            e.printStackTrace();
+        }
+
         Direction direction = findShortestWay(ghost,mapLevel,target);
         ghost.setDirection(direction);
+        this.direction = direction;
+        this.target = nextTarget(ghost);
+
+        try {
+            if (previousCell != null) mapLevel.replaceCell(previousCell);
+            previousCell = mapLevel.getCell(this.target.getX(), this.target.getY());
+            mapLevel.replaceCell(new CrossableCell(this.target.getX(), this.target.getY(), new Rectangle(Color.GREEN)));
+        } catch (MapLevelCoordinatesOutOfBoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     private Coordinates<Integer> findTarget (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
@@ -94,6 +132,29 @@ public final class BlinkyAI extends BasicGhostAI {
                 nodes.add(new Node(nextCoordinates,(origin == null) ? direction : origin));
         }
         return null;
+    }
+
+    private Coordinates<Integer> nextTarget (Ghost ghost) {
+        Coordinates<Double> position = ghost.getCoordinates();
+        Coordinates<Integer> delta = direction.getCoordinates();
+        return new Coordinates<>(position.getX().intValue() + delta.getX(),
+                position.getY().intValue() + delta.getY());
+    }
+
+    private boolean isTargetReach (Ghost ghost) {
+        try {
+            if ( ! DeltaEngine.getKernelEngine().isAvailableDirection(ghost,direction)) return true;
+        } catch (NotInitializedException e) {
+            //e.printStackTrace();
+        }
+        Coordinates<Double> coordinates = ghost.getCoordinates();
+        Dimension dimension = ghost.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
+        return topLeft.getX().intValue() == rightBot.getX().intValue()
+                && topLeft.getY().intValue() == rightBot.getY().intValue()
+                && topLeft.getX().intValue() == target.getX()
+                && topLeft.getY().intValue() == target.getY();
     }
 
     private class Node {
