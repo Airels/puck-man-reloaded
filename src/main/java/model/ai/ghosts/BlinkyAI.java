@@ -43,7 +43,6 @@ public final class BlinkyAI extends BasicGhostAI {
         }
         Direction direction = findShortestWay(ghost,mapLevel,target);
         ghost.setDirection(direction);
-        System.out.println(target + " " + direction);
     }
 
     private Coordinates<Integer> findTarget (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
