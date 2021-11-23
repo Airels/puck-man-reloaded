@@ -63,7 +63,6 @@ public final class ClydeAI extends BasicGhostAI {
 
     /**
      * Choose and return the next direction to follow
-     *
      * @param ghost a ghost
      * @return a direction
      */
@@ -82,8 +81,7 @@ public final class ClydeAI extends BasicGhostAI {
 
     /**
      * Select and return the target, the next coordinates where the ghost must go
-     *
-     * @param ghost    a ghost
+     * @param ghost a ghost
      * @param mapLevel a mapLevel
      * @return a coordinates
      */
