@@ -1,5 +1,7 @@
 package model.maps;
 
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.Game;
@@ -10,6 +12,8 @@ import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 
 import java.util.Collection;
+import java.util.Map;
+
 
 /**
  * A Level of the game.
@@ -65,4 +69,17 @@ public interface Level extends Loadable {
      * @return the Game
      */
     Game getGame();
+
+    /**
+     * Get spawn points of entities in the map
+     * @return Map of entity and their associated spawn points
+     */
+    Map<Entity, Coordinates<Double>> getSpawnPoints();
+
+
+    /**
+     * reset to initial position ghosts and pacman
+     */
+    void reset();
+
 }

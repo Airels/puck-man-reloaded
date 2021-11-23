@@ -19,8 +19,8 @@ public class PacManTouchedByGhostTrigger implements Trigger {
     public void trigger() {
         if (ghost.isScared()) {
             ghost.setState(GhostState.FLEEING);
-            System.out.println("EAT IT"); // TODO
-        } else
+            game.ghostEaten();
+        } else if (!ghost.isFleeing())
             game.gameOver();
     }
 }

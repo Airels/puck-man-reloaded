@@ -2,6 +2,8 @@ package model.maps.fixed_levels.menu;
 
 import controller.maps.menu.MenuInputs;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.AttributeListener;
 import model.Game;
@@ -14,6 +16,9 @@ import view.maps.menu.MenuMap;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * The Main Menu Level
@@ -80,5 +85,16 @@ public class MenuLevel implements Level {
     @Override
     public Game getGame() {
         return game;
+    }
+
+    @Override
+    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+
+        return map.getSpawnPoints();
+    }
+
+    @Override
+    public void reset() {
+
     }
 }

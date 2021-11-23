@@ -1,9 +1,13 @@
 package model.loadables;
 
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.Collection;
+import java.util.Map;
+
 
 /**
  * A Loadable extension, used to specify that class implementing it loads maps
@@ -26,4 +30,11 @@ public interface LoadableMap extends Loadable {
      * @return Collection of Ghosts generated
      */
     Collection<Ghost> getGeneratedGhosts();
+
+    /**
+     * Get spawn points of entities in the map
+     * @return Map of entity and their associated spawn points
+     */
+
+    Map<Entity, Coordinates<Double>> getSpawnPoints();
 }

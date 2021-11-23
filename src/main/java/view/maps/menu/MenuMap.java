@@ -5,6 +5,7 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
@@ -18,6 +19,9 @@ import view.images.Image;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+
 
 /**
  * The Map of the Game Main Menu, only loads HUD elements such image or title.
@@ -146,5 +150,10 @@ public class MenuMap implements LoadableMap {
     @Override
     public Collection<Ghost> getGeneratedGhosts() {
         return new ArrayList<>();
+    }
+
+    @Override
+    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+        return new HashMap<>();
     }
 }

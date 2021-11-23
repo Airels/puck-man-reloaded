@@ -1,6 +1,7 @@
 package model;
 
 import config.game.GameConfiguration;
+import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
@@ -18,14 +19,17 @@ public final class Game {
 
     private final KernelEngine deltaEngine;
     private final LevelLoader levelLoader;
-    private MapLevelChanger mapLevelChanger;
     private final LevelGenerator levelGenerator;
+    private MapLevelChanger mapLevelChanger;
     private boolean inEnergizedMode;
+    private int lifeCounter, ghostEatenChain;
+    private double score;
 
     /**
      * Default constructor.
+     *
      * @param engine KernelEngine reference
-     * @param fps targeted game fps
+     * @param fps    targeted game fps
      */
     public Game(KernelEngine engine, int fps) {
         this.deltaEngine = engine;
@@ -36,10 +40,13 @@ public final class Game {
 
         this.levelLoader = new LevelLoader(engine);
         this.levelGenerator = new LevelGenerator();
+        this.lifeCounter = 2;
+        ghostEatenChain = 0;
     }
 
     /**
      * Start the game with the first given level.
+     *
      * @param menuLevel First game level
      */
     public void start(Level menuLevel) {
@@ -95,10 +102,11 @@ public final class Game {
     /**
      * Run energized mode for configured amount of time, allowing to PacMan to eat ghosts
      */
-    public void runEnergizeMode() {
+    private void runEnergizeMode() {
         TimedEvent timedEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
         timedEvent.addTrigger(() -> {
             inEnergizedMode = false;
+            ghostEatenChain = 0;
             deltaEngine.removeGlobalEvent(timedEvent);
             levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> {
                 if (ghost.getState() == GhostState.SCARED)
@@ -106,6 +114,7 @@ public final class Game {
             });
         });
 
+        inEnergizedMode = true;
         levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> {
             if (ghost.getState() == GhostState.NORMAL)
                 ghost.setState(GhostState.SCARED);
@@ -118,6 +127,51 @@ public final class Game {
      * TODO
      */
     public void gameOver() {
-        System.out.println("GAME OVER"); // TODO
+        try {
+            deltaEngine.haltCurrentMap();
+            Thread.sleep(1000);
+
+            // TODO Changement de sprite Pacman
+            // TODO animation
+            // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
+            Thread.sleep(5000);
+            levelLoader.getCurrentLevel().reset();
+            // TODO deltaEngine.tick()
+            Thread.sleep(3000);
+            if (lifeCounter > 0) {
+                deltaEngine.resumeCurrentMap();
+                lifeCounter--;
+            } else {
+                // TODO FIN DU JEU
+                // TODO Display ScoreDisplayer
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+
+    }
+
+    public double getScore() {
+        return score;
+    }
+
+    private void increaseScore(double scoreToAdd) {
+        score += scoreToAdd;
+    }
+
+    public void pacGumEaten(boolean isSuper){
+        levelLoader.getCurrentLevel().getAndDecreasePacGums();
+
+        increaseScore((isSuper) ?
+                ScoreConfiguration.CONF_SUPER_PACGUM_REWARD_SCORE : ScoreConfiguration.CONF_PACGUM_REWARD_SCORE);
+        if (isSuper) runEnergizeMode();
+    }
+
+    public void ghostEaten(){
+        ghostEatenChain += 1;
+        double eatingMultiplierScore = ScoreConfiguration.CONF_CHAIN_EATING_REWARD_SCORE;
+        double eatingGhostScore = ScoreConfiguration.CONF_EATING_GHOST_REWARD_SCORE;
+        increaseScore(eatingGhostScore * eatingMultiplierScore * ghostEatenChain);
     }
 }

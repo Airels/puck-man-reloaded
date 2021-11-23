@@ -1,6 +1,7 @@
 package model.actions.triggers;
 
 import config.pacman.PacManConfiguration;
+import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.PacMan;
@@ -31,12 +32,9 @@ public class PacGumEatTrigger implements Trigger {
 
     @Override
     public void trigger() {
-        if (isSuper)
-            level.getGame().runEnergizeMode();
-
         mapLevel.removeEntity(pacGum);
         wakaSound.play();
 
-        level.getAndDecreasePacGums();
+        level.getGame().pacGumEaten(isSuper);
     }
 }

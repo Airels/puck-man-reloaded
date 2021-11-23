@@ -78,12 +78,12 @@ public class Main {
         InputEvent pauseEvent = new InputEvent(deltaEngine::haltCurrentMap, deltaEngine::resumeCurrentMap);
         deltaEngine.setInput(Key.P, pauseEvent);
 
-        Ghost ghostClyde = Ghosts.CLYDE.build(mapLevel); // TODO
+        Ghost ghostClyde = Ghosts.CLYDE.build(null); // TODO
         ghostClyde.setCoordinates(new Coordinates<>(8., 8.));
         ghostClyde.setSpeed(10);
         //mapLevel.addEntity(ghostClyde);
 
-        Ghost ghostBlinky = Ghosts.BLINKY.build(mapLevel); // TODO
+        Ghost ghostBlinky = Ghosts.BLINKY.build(null); // TODO
         ghostBlinky.setCoordinates(new Coordinates<>(8., 8.));
         ghostBlinky.setSpeed(0.5);
         mapLevel.addEntity(ghostBlinky);

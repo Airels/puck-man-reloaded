@@ -15,13 +15,15 @@ import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
  */
 public class PacMan extends Entity {
 
+    private boolean isDead;
+
     /**
      * Another constructor. Sets PacMan initial coordinates
      * @param coordinates initial coordinates
      */
     public PacMan(Coordinates<Double> coordinates) {
         super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
-
+        isDead = false;
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
             switch (this.getAttributes().getDirection()) {
@@ -62,5 +64,13 @@ public class PacMan extends Entity {
      */
     public PacMan() {
         this(9 + 0.05, 16 + 0.05);
+    }
+
+    public boolean isDead() {
+        return isDead;
+    }
+
+    public void setDead(boolean dead) {
+        isDead = dead;
     }
 }

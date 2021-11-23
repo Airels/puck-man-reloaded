@@ -6,6 +6,7 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
@@ -26,8 +27,10 @@ import model.maps.Level;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * The Original PacMan map.
@@ -40,6 +43,7 @@ public class OriginalLevelMap implements LoadableMap {
     private Level level;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
+    private Map<Entity, Coordinates<Double>> spawnPoints;
 
     /**
      * Default constructor
@@ -53,12 +57,19 @@ public class OriginalLevelMap implements LoadableMap {
         zonesSpawnSuperPacGum = new ArrayList<>();
 
         generatedGhosts = new LinkedList<>();
+        spawnPoints = new HashMap<>();
     }
 
     @Override
     public void load(KernelEngine engine) {
         if (originalMapLevel == null)
             generateLevel(engine);
+
+        spawnPoints.put(pacMan, pacMan.getCoordinates());
+        for (Entity ghost: getGeneratedGhosts()) {
+            spawnPoints.put(ghost,ghost.getCoordinates());
+        }
+
 
         try {
             engine.setCurrentMap(originalMapLevel.getName());
@@ -377,5 +388,10 @@ public class OriginalLevelMap implements LoadableMap {
     @Override
     public Collection<Ghost> getGeneratedGhosts() {
         return generatedGhosts;
+    }
+
+    @Override
+    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+        return spawnPoints;
     }
 }

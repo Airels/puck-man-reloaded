@@ -1,10 +1,13 @@
 package model.maps.fixed_levels.original_level;
 
 import controller.maps.original_level.OriginalLevelInputs;
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
+import model.elements.entities.ghosts.GhostState;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import model.maps.Level;
@@ -12,6 +15,8 @@ import sounds.Sounds;
 import view.maps.original_level.OriginalLevelMap;
 
 import java.util.Collection;
+import java.util.Map;
+
 
 /**
  * The Original PacMan Level
@@ -82,6 +87,22 @@ public class OriginalLevel implements Level {
     @Override
     public Game getGame() {
         return game;
+    }
+
+    @Override
+    public Map<Entity, Coordinates<Double>> getSpawnPoints() {
+        return mapLevel.getSpawnPoints();
+    }
+
+    @Override
+    public void reset() {
+        for (Map.Entry<Entity, Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
+            entry.getKey().setCoordinates(entry.getValue());
+        }
+        for (Ghost ghost: getGhosts()) {
+            ghost.setState(GhostState.NORMAL);
+
+        }
     }
 
     @Override
