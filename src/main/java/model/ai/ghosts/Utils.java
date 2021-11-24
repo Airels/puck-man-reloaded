@@ -4,16 +4,91 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 
-import java.util.HashSet;
-import java.util.LinkedList;
+import java.util.*;
 
 public final class Utils {
 
     private Utils () throws InstantiationException {
         throw new InstantiationException("Utils class cannot be instanced");
+    }
+
+    /**
+     * TODO
+     * @param entity
+     * @return
+     */
+    public static Coordinates<Integer> getIntegerCoordinates (Entity entity) {
+        Coordinates<Double> coordinates = entity.getCoordinates();
+        Dimension dimension = entity.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> botRight = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
+        return new Coordinates<>((int) ((topLeft.getX() + botRight.getX()) / 2),
+                (int) ((topLeft.getY() + botRight.getY()) / 2));
+    }
+
+    /**
+     * TODO
+     * @param ghost
+     * @param target
+     * @return
+     */
+    public static boolean isOnTarget (Ghost ghost, Coordinates<Integer> target) {
+        Coordinates<Double> coordinates = ghost.getCoordinates();
+        Dimension dimension = ghost.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
+        return topLeft.getX().intValue() == rightBot.getX().intValue()
+                && topLeft.getY().intValue() == rightBot.getY().intValue()
+                && topLeft.getX().intValue() == target.getX()
+                && topLeft.getY().intValue() == target.getY();
+    }
+
+    /**
+     * TODO
+     * @param entity
+     * @param mapLevel
+     * @param position
+     * @param direction
+     * @return
+     */
+    public static Coordinates<Integer> findNextCross (Entity entity, MapLevel mapLevel,
+                                                      Coordinates<Integer> position, Direction direction) {
+        Coordinates<Integer> directionCoordinate = direction.getCoordinates();
+        int x = position.getX();
+        int y = position.getY();
+        for (;;) {
+            x += directionCoordinate.getX();
+            y += directionCoordinate.getY();
+            if ( ! mapLevel.getCell(x, y).isCrossableBy(entity))
+                return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
+
+            Direction opposite = direction.getOpposite();
+            for (Direction other : Direction.values()) {
+                if (other == direction || other == opposite || other == Direction.IDLE) continue;
+                Coordinates<Integer> otherCoordinates = other.getCoordinates();
+                if (mapLevel.getCell(x + otherCoordinates.getX(), y + otherCoordinates.getY())
+                        .isCrossableBy(entity)) return new Coordinates<>(x, y);
+            }
+        }
+    }
+
+    /**
+     * Find and return the last node of the path that minimise the path to the destination
+     * @param ghost a ghost
+     * @param mapLevel a malLevel
+     * @param destination a destination where the ghost want to go
+     * @param forbiddenWays a list of forbidden points
+     * @return the direction that minimise the path to the destination
+     */
+    private static Node findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination,
+                                         Collection<Coordinates<Integer>> forbiddenWays) {
+        Coordinates<Integer> source = getIntegerCoordinates(ghost);
+        if (source.equals(destination)) return new Node(destination,null,Direction.IDLE);
+        return breadthFirstSearch(ghost,mapLevel,source,destination,forbiddenWays);
     }
 
     /**
@@ -24,39 +99,39 @@ public final class Utils {
      * @return the direction that minimise the path to the destination
      */
     private static Node findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination) {
-        Coordinates<Double> coordinates = ghost.getCoordinates();
-        Dimension dimension = ghost.getDimension();
-        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
-        Coordinates<Double> botRight = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
-        Coordinates<Integer> source = new Coordinates<>((int) ((topLeft.getX() + botRight.getX()) / 2),
-                (int) ((topLeft.getY() + botRight.getY()) / 2));
-        if (source.equals(destination))
-            return new Node(destination,null,Direction.IDLE);
-        return breadthFirstSearch(ghost,mapLevel,source,destination);
+        return findShortestWay(ghost,mapLevel,destination,new Stack<>());
     }
 
 
-        /**
-         * Find and return the direction that minimise the path to the destination
-         * @param ghost a ghost
-         * @param mapLevel a malLevel
-         * @param destination a destination where the ghost want to go
-         * @return the direction that minimise the path to the destination
-         */
-    public static Direction findShortestWay_direction (Ghost ghost, MapLevel mapLevel,
-                                                       Coordinates<Integer> destination) {
+    /**
+     * Find and return the direction that minimise the path to the destination
+     * @param ghost a ghost
+     * @param mapLevel a malLevel
+     * @param destination a destination where the ghost want to go
+     * @return the direction that minimise the path to the destination
+     */
+    public static Direction findShortestWay_blinky (Ghost ghost, MapLevel mapLevel,
+                                                    Coordinates<Integer> destination) {
         Node node = findShortestWay(ghost,mapLevel,destination);
         Direction direction = Direction.IDLE;
         for ( ; node != null ; node = node.previousNode) direction = node.direction;
         return direction;
     }
 
-    public static LinkedList<Coordinates<Integer>> findShortestWay_coordinates (Ghost ghost, MapLevel mapLevel,
-                                                                                Coordinates<Integer> destination) {
-        Node node = findShortestWay(ghost,mapLevel,destination);
-        LinkedList<Coordinates<Integer>> coordinatesLinkedList = new LinkedList<>();
-        for ( ; node != null ; node = node.previousNode) coordinatesLinkedList.addFirst(node.coordinates);
-        return coordinatesLinkedList;
+    /**
+     * TODO
+     * @param ghost
+     * @param mapLevel
+     * @param destination
+     * @return
+     */
+    public static Direction findShortestWay_pinky (Ghost ghost, MapLevel mapLevel,
+                                                   Coordinates<Integer> destination,
+                                                   Collection<Coordinates<Integer>> forbiddenWays) {
+        Node node = findShortestWay(ghost,mapLevel,destination,forbiddenWays);
+        Direction direction = Direction.IDLE;
+        for ( ; node != null ; node = node.previousNode) direction = node.direction;
+        return direction;
     }
 
     /**
@@ -70,9 +145,10 @@ public final class Utils {
      * no path from source to destination
      */
     private static Node breadthFirstSearch (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> source,
-                                          Coordinates<Integer> destination) {
+                                            Coordinates<Integer> destination,
+                                            Collection<Coordinates<Integer>> forbiddenWays) {
         LinkedList<Node> nodes = new LinkedList<>();
-        HashSet<Coordinates<Integer>> visited = new HashSet<>();
+        HashSet<Coordinates<Integer>> visited = new HashSet<>(forbiddenWays);
         Node result = breadthFirstSearch_aux(nodes,visited,source,null,ghost,mapLevel,destination);
         if (result != null) return result;
         LinkedList<Node> nextNodes;
