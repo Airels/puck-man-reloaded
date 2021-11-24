@@ -1,10 +1,9 @@
 package model.ai.ghosts;
 
-import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
-import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import main.Main;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.ArrayList;
@@ -65,12 +64,8 @@ public final class ClydeAI extends BasicGhostAI {
      */
     private Direction chooseDirection(Ghost ghost) {
         ArrayList<Direction> directions = new ArrayList<>();
-        try {
-            for (Direction direction : Direction.values()) {
-                if (DeltaEngine.getKernelEngine().canGoToNextCell(ghost, direction)) directions.add(direction);
-            }
-        } catch (NotInitializedException e) {
-            //e.printStackTrace();
+        for (Direction direction : Direction.values()) {
+            if (Main.getEngine().canGoToNextCell(ghost, direction)) directions.add(direction);
         }
         int size = directions.size();
         return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
@@ -84,24 +79,9 @@ public final class ClydeAI extends BasicGhostAI {
      */
     private Coordinates<Integer> selectTarget(Ghost ghost, MapLevel mapLevel) {
         if (direction == Direction.IDLE) return null;
-        Coordinates<Integer> directionCoordinate = direction.getCoordinates();
         Coordinates<Double> position = ghost.getCoordinates();
-        int x = position.getX().intValue();
-        int y = position.getY().intValue();
-        for (; ; ) {
-            x += directionCoordinate.getX();
-            y += directionCoordinate.getY();
-            if (!mapLevel.getCell(x, y).isCrossableBy(ghost))
-                return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
-
-            Direction opposite = direction.getOpposite();
-            for (Direction other : Direction.values()) {
-                if (other == direction || other == opposite || other == Direction.IDLE) continue;
-                Coordinates<Integer> otherCoordinates = other.getCoordinates();
-                if (mapLevel.getCell(x + otherCoordinates.getX(), y + otherCoordinates.getY())
-                        .isCrossableBy(ghost)) return new Coordinates<>(x, y);
-            }
-        }
+        return Utils.findNextCross(ghost,mapLevel,new Coordinates<>(position.getX().intValue(),
+                position.getY().intValue()),direction);
     }
 
     /**
@@ -110,11 +90,7 @@ public final class ClydeAI extends BasicGhostAI {
      * @return if the target is reach
      */
     private boolean isTargetReach (Ghost ghost) {
-        try {
-            if ( ! DeltaEngine.getKernelEngine().isAvailableDirection(ghost,direction)) return true;
-        } catch (NotInitializedException e) {
-            //e.printStackTrace();
-        }
+        if ( ! Main.getEngine().isAvailableDirection(ghost,direction)) return true;
         return Utils.isOnTarget(ghost,target);
     }
 

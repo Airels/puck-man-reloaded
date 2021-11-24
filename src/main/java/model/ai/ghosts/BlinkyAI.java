@@ -7,6 +7,7 @@ import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import main.Main;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
@@ -93,11 +94,7 @@ public final class BlinkyAI extends BasicGhostAI {
      * @return if the target is reach
      */
     private boolean isTargetReach (Ghost ghost) {
-        try {
-            if ( ! DeltaEngine.getKernelEngine().isAvailableDirection(ghost,direction)) return true;
-        } catch (NotInitializedException e) {
-            //e.printStackTrace();
-        }
+        if ( ! Main.getEngine().isAvailableDirection(ghost,direction)) return true;
         return Utils.isOnTarget(ghost,target);
     }
 
