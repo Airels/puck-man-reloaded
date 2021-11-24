@@ -1,18 +1,12 @@
 package model.ai.ghosts;
 
 import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
-import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelCoordinatesOutOfBoundException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
-import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
-import fr.r1r0r0.deltaengine.model.elements.cells.CrossableCell;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
-import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
-import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.ArrayList;
