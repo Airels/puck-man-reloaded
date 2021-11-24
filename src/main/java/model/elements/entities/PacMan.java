@@ -27,7 +27,7 @@ public class PacMan extends Entity {
         isDead = false;
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
-            switch (this.getAttributes().getDirection()) {
+            switch (this.getAttributes().getDirection()) { // TODO a refactor
                 case UP -> {
                     s.getNode().setScaleX(1);
                     s.getNode().setRotate(-90);
