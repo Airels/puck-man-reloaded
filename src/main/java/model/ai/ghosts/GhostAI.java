@@ -14,4 +14,5 @@ public abstract class GhostAI extends AI {
         return (Ghost) super.getEntity();
     }
 
+    public abstract GhostAI clone();
 }

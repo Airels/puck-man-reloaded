@@ -34,6 +34,11 @@ public final class PinkyAI extends BasicGhostAI {
     }
 
     @Override
+    public GhostAI clone() {
+        return new PinkyAI();
+    }
+
+    @Override
     protected void scaryModeTick(Ghost ghost) {
 
     }

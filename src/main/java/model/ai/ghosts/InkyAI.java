@@ -17,6 +17,11 @@ public final class InkyAI extends BasicGhostAI {
     }
 
     @Override
+    public GhostAI clone() {
+        return new InkyAI();
+    }
+
+    @Override
     protected void scaryModeTick(Ghost ghost) {
         //TODO
     }

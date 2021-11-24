@@ -26,7 +26,7 @@ public enum Ghosts {
 
     private final String name;
     private final Sprite scaredSprite;
-    private final GhostAI ai;
+    private final GhostAIs ai;
     private final List<Sprite> normalSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
 
@@ -41,7 +41,7 @@ public enum Ghosts {
      * @param scaredSpeed double speed when Ghost is in Scared state
      * @param fleeingSpeed double speed when Ghost is in Fleeing state
      */
-    Ghosts(String name, List<Sprite> normalSprites, Sprite scaredSprite, List<Sprite> fleeingSprites, GhostAI ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
+    Ghosts(String name, List<Sprite> normalSprites, Sprite scaredSprite, List<Sprite> fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
         this.name = name;
         this.normalSprites = normalSprites;
         this.scaredSprite = scaredSprite;
@@ -61,7 +61,7 @@ public enum Ghosts {
         MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
         Game game = currentLevel.getGame();
 
-        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, fleeingSprites, ai, normalSpeed, scaredSpeed, fleeingSpeed);
+        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, fleeingSprites, ai.build(), normalSpeed, scaredSpeed, fleeingSpeed);
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
 
         return ghost;

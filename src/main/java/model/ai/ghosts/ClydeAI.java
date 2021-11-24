@@ -47,6 +47,11 @@ public final class ClydeAI extends BasicGhostAI {
     }
 
     @Override
+    public GhostAI clone() {
+        return new ClydeAI();
+    }
+
+    @Override
     protected void scaryModeTick(Ghost ghost) {
         //TODO
     }

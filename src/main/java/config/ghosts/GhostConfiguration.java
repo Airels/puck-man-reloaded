@@ -28,7 +28,7 @@ public class GhostConfiguration {
             Image.EYES_RIGHT.getSprite(),
             Image.EYES_UP.getSprite(),
             Image.EYES_DOWN.getSprite());
-    public final static GhostAI CONF_BLINKY_AI = new BlinkyAI();
+    public final static GhostAIs CONF_BLINKY_AI = GhostAIs.BLINKY_AI;
 
 
     public final static String CONF_PINKY_NAME = "Pinky";
@@ -49,7 +49,7 @@ public class GhostConfiguration {
             Image.EYES_RIGHT.getSprite(),
             Image.EYES_UP.getSprite(),
             Image.EYES_DOWN.getSprite());
-    public final static GhostAI CONF_PINKY_AI = new PinkyAI();
+    public final static GhostAIs CONF_PINKY_AI = GhostAIs.PINKY_AI;
 
 
     public final static String CONF_INKY_NAME = "Inky";
@@ -70,7 +70,7 @@ public class GhostConfiguration {
             Image.EYES_RIGHT.getSprite(),
             Image.EYES_UP.getSprite(),
             Image.EYES_DOWN.getSprite());
-    public final static GhostAI CONF_INKY_AI = new InkyAI();
+    public final static GhostAIs CONF_INKY_AI = GhostAIs.PINKY_AI;
 
 
     public final static String CONF_CLYDE_NAME = "Clyde";
@@ -90,5 +90,5 @@ public class GhostConfiguration {
             Image.EYES_RIGHT.getSprite(),
             Image.EYES_UP.getSprite(),
             Image.EYES_DOWN.getSprite());
-    public final static GhostAI CONF_CLYDE_AI = new ClydeAI();
+    public final static GhostAIs CONF_CLYDE_AI = GhostAIs.CLYDE_AI;
 }

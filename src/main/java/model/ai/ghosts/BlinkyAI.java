@@ -44,6 +44,11 @@ public final class BlinkyAI extends BasicGhostAI {
     public BlinkyAI () {}
 
     @Override
+    public GhostAI clone() {
+        return new BlinkyAI();
+    }
+
+    @Override
     protected void scaryModeTick (Ghost ghost) {
         //TODO
     }
