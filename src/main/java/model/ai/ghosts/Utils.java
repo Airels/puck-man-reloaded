@@ -4,6 +4,7 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 
@@ -14,6 +15,37 @@ public final class Utils {
 
     private Utils () {
         System.exit(42);
+    }
+
+    /**
+     * TODO
+     * @param entity
+     * @return
+     */
+    public static Coordinates<Integer> getIntegerCoordinates (Entity entity) {
+        Coordinates<Double> coordinates = entity.getCoordinates();
+        Dimension dimension = entity.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> botRight = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
+        return new Coordinates<>((int) ((topLeft.getX() + botRight.getX()) / 2),
+                (int) ((topLeft.getY() + botRight.getY()) / 2));
+    }
+
+    /**
+     * TODO
+     * @param ghost
+     * @param target
+     * @return
+     */
+    public static boolean isOnTarget (Ghost ghost, Coordinates<Integer> target) {
+        Coordinates<Double> coordinates = ghost.getCoordinates();
+        Dimension dimension = ghost.getDimension();
+        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
+        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
+        return topLeft.getX().intValue() == rightBot.getX().intValue()
+                && topLeft.getY().intValue() == rightBot.getY().intValue()
+                && topLeft.getX().intValue() == target.getX()
+                && topLeft.getY().intValue() == target.getY();
     }
 
     /**
@@ -51,6 +83,13 @@ public final class Utils {
         return direction;
     }
 
+    /**
+     * TODO
+     * @param ghost
+     * @param mapLevel
+     * @param destination
+     * @return
+     */
     public static LinkedList<Coordinates<Integer>> findShortestWay_coordinates (Ghost ghost, MapLevel mapLevel,
                                                                                 Coordinates<Integer> destination) {
         Node node = findShortestWay(ghost,mapLevel,destination);

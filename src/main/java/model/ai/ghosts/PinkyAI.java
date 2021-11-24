@@ -12,6 +12,7 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -25,6 +26,11 @@ public final class PinkyAI extends BasicGhostAI {
      */
 
     //TODO: ameliorer pour ne pas etre similaire au rouge Blinky
+
+    private static final String[] FORBIDDEN_TARGET_NAMES = new String[]{
+            config.ghosts.GhostConfiguration.CONF_BLINKY_NAME,
+            config.ghosts.GhostConfiguration.CONF_INKY_NAME,
+            config.ghosts.GhostConfiguration.CONF_CLYDE_NAME};
 
     private Coordinates<Integer> target;
     private Direction direction;
@@ -75,18 +81,22 @@ public final class PinkyAI extends BasicGhostAI {
         Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
         if (entity == null) throw new GhostTargetMissingException(ghost);
 
-        Coordinates<Double> coordinates = entity.getCoordinates();
-        Dimension dimension = entity.getDimension();
-        Coordinates<Double> pacManTopLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
-        Coordinates<Double> pacManBotRight = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
-        Coordinates<Integer> pacManPosition = new Coordinates<>(
-                (int) ((pacManTopLeft.getX() + pacManBotRight.getX()) / 2),
-                (int) ((pacManTopLeft.getY() + pacManBotRight.getY()) / 2)
-        );
+        Coordinates<Integer> pacManPosition = Utils.getIntegerCoordinates(entity);
+
+        //TODO, le croisement vers où il regarde
 
         LinkedList<Coordinates<Integer>> coordinatesLinkedList =
                 Utils.findShortestWay_coordinates(ghost,mapLevel,pacManPosition);
         return coordinatesLinkedList.get(coordinatesLinkedList.size() / 2);
+    }
+
+    private ArrayList<Coordinates<Integer>> findForbiddenWays (MapLevel mapLevel) {
+        ArrayList<Coordinates<Integer>> forbiddenWays = new ArrayList<>();
+        for (String targetName : FORBIDDEN_TARGET_NAMES) {
+            Entity entity = mapLevel.getEntity(targetName);
+            if (entity == null) continue;
+        }
+        return forbiddenWays;
     }
 
     /**
@@ -112,14 +122,7 @@ public final class PinkyAI extends BasicGhostAI {
         } catch (NotInitializedException e) {
             //e.printStackTrace();
         }
-        Coordinates<Double> coordinates = ghost.getCoordinates();
-        Dimension dimension = ghost.getDimension();
-        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
-        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
-        return topLeft.getX().intValue() == rightBot.getX().intValue()
-                && topLeft.getY().intValue() == rightBot.getY().intValue()
-                && topLeft.getX().intValue() == target.getX()
-                && topLeft.getY().intValue() == target.getY();
+        return Utils.isOnTarget(ghost,target);
     }
 
 }

@@ -2,9 +2,7 @@ package model.ai.ghosts;
 
 import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
-import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
@@ -117,14 +115,7 @@ public final class ClydeAI extends BasicGhostAI {
         } catch (NotInitializedException e) {
             //e.printStackTrace();
         }
-        Coordinates<Double> coordinates = ghost.getCoordinates();
-        Dimension dimension = ghost.getDimension();
-        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
-        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
-        return topLeft.getX().intValue() == rightBot.getX().intValue()
-                && topLeft.getY().intValue() == rightBot.getY().intValue()
-                && topLeft.getX().intValue() == target.getX()
-                && topLeft.getY().intValue() == target.getY();
+        return Utils.isOnTarget(ghost,target);
     }
 
 }
