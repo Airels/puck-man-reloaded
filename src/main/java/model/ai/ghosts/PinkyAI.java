@@ -44,6 +44,7 @@ public final class PinkyAI extends BasicGhostAI {
     protected void scaryModeTick(Ghost ghost) {
 
     }
+
     @Override
     protected void chaseModeTick(Ghost ghost) {
 
