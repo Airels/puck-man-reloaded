@@ -1,9 +1,13 @@
 package model.levels.fixed_levels.original_level;
 
+import config.game.GameConfiguration;
 import controller.inputs_levels.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
+import fr.r1r0r0.deltaengine.model.elements.HUDElement;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.sprites.Text;
 import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
@@ -18,6 +22,8 @@ import view.maps_levels.original_level.OriginalLevelMap;
 import java.util.Collection;
 import java.util.Map;
 
+import static config.game.GameConfiguration.*;
+
 
 /**
  * The Original PacMan Level
@@ -29,6 +35,7 @@ public class OriginalLevel implements Level {
     private final LoadableInput inputLevel;
     private final PacMan pacMan;
     private int nbOfPacGums;
+    private HUDElement readyText;
 
     /**
      * Default constructor.
@@ -40,10 +47,23 @@ public class OriginalLevel implements Level {
 
         this.mapLevel = new OriginalLevelMap(this, pacMan);
         this.inputLevel = new OriginalLevelInputs(pacMan);
+
+
+        Text rText = new Text(CONF_READY_TEXT);
+        rText.setSize(CONF_READY_SIZE);
+        rText.setColor(CONF_READY_COLOR.getEngineColor());
+        readyText = new HUDElement(
+                "Ready Text",
+                CONF_READY_POSITION,
+                rText,
+                Dimension.DEFAULT_DIMENSION
+        );
     }
 
     @Override
     public void load(KernelEngine deltaEngine) {
+        deltaEngine.addHUDElement(readyText);
+
         nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
 
         new Thread(() -> {
@@ -55,6 +75,7 @@ public class OriginalLevel implements Level {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             } finally {
+                deltaEngine.removeHUDElement(readyText);
                 deltaEngine.resumeCurrentMap();
             }
         }).start();
