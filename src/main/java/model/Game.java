@@ -7,7 +7,6 @@ import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
 import model.events.TimedEvent;
 import model.levels.Level;
-import model.levels.fixed_levels.gameover.GameOverLevel;
 import model.levels.fixed_levels.original_level.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import sounds.SoundLoader;
@@ -26,6 +25,7 @@ public final class Game {
     private boolean inEnergizedMode;
     private int lifeCounter, ghostEatenChain;
     private double score;
+    private TimedEvent energizeTimerEvent;
 
     /**
      * Default constructor.
@@ -115,23 +115,28 @@ public final class Game {
      * Run energized mode for configured amount of time, allowing to PacMan to eat ghosts
      */
     private void runEnergizeMode() {
-        TimedEvent timedEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
-        timedEvent.addTrigger(() -> {
-            inEnergizedMode = false;
-            ghostEatenChain = 0;
-            deltaEngine.removeGlobalEvent(timedEvent);
-            levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> {
-                if (ghost.getState() == GhostState.SCARED)
-                    ghost.setState(GhostState.NORMAL);
-            });
-        });
+        if (inEnergizedMode) energizeTimerEvent.runTriggers();
+
+        energizeTimerEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
+        energizeTimerEvent.addTrigger(this::turnOffEnergizeMode);
 
         inEnergizedMode = true;
         levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> {
             if (ghost.getState() == GhostState.NORMAL)
                 ghost.setState(GhostState.SCARED);
         });
-        deltaEngine.addGlobalEvent(timedEvent);
+        deltaEngine.addGlobalEvent(energizeTimerEvent);
+    }
+
+    public void turnOffEnergizeMode() {
+        inEnergizedMode = false;
+        ghostEatenChain = 0;
+        deltaEngine.removeGlobalEvent(energizeTimerEvent);
+        levelLoader.getCurrentLevel().getGhosts().forEach(ghost -> {
+            if (ghost.getState() == GhostState.SCARED)
+                ghost.setState(GhostState.NORMAL);
+        });
+        energizeTimerEvent = null;
     }
 
     /**
