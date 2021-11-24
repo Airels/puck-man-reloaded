@@ -34,6 +34,8 @@ public class GhostConfiguration {
             Image.EYES_DOWN.getSprite(),
             Image.EYES_RIGHT.getSprite()
     );
+    public final static double CONF_BLINKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY = 0.1;
+    public final static int CONF_BLINKY_MAXIMUM_SCATTER_TRAVEL_CELLS = 50;
 
 
     public final static String CONF_PINKY_NAME = "Pinky";
@@ -59,6 +61,8 @@ public class GhostConfiguration {
             Image.EYES_DOWN.getSprite(),
             Image.EYES_RIGHT.getSprite()
     );
+    public final static double CONF_PINKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY = 0.1;
+    public final static int CONF_PINKY_MAXIMUM_SCATTER_TRAVEL_CELLS = 50;
 
 
     public final static String CONF_INKY_NAME = "Inky";
@@ -84,6 +88,8 @@ public class GhostConfiguration {
             Image.EYES_DOWN.getSprite(),
             Image.EYES_RIGHT.getSprite()
     );
+    public final static double CONF_INKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY = 0.1;
+    public final static int CONF_INKY_MAXIMUM_SCATTER_TRAVEL_CELLS = 50;
 
 
     public final static String CONF_CLYDE_NAME = "Clyde";
@@ -109,4 +115,6 @@ public class GhostConfiguration {
             Image.EYES_DOWN.getSprite(),
             Image.EYES_RIGHT.getSprite()
     );
+    public final static double CONF_CLYDE_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY = 0.1;
+    public final static int CONF_CLYDE_MAXIMUM_SCATTER_TRAVEL_CELLS = 50;
 }

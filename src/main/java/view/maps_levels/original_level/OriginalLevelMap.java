@@ -69,8 +69,8 @@ public class OriginalLevelMap implements LoadableMap {
         generateLevel(engine);
 
         spawnPoints.put(pacMan, pacMan.getCoordinates());
-        for (Entity ghost: getGeneratedGhosts())
-            spawnPoints.put(ghost,ghost.getCoordinates());
+        for (Ghost ghost: getGeneratedGhosts())
+            spawnPoints.put(ghost,ghost.getSpawnPoint());
 
         for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
             event.load(engine);
@@ -111,21 +111,21 @@ public class OriginalLevelMap implements LoadableMap {
 
     private void generateGhosts() {
         try {
-            Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9.05, 8.05));
+            Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9.05, 8.05), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(blinky);
             generatedGhosts.add(blinky);
 
             //TODO: 9.05, 10.05
-            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(17.,16.));
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(17.05,16.05), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(pinky);
             generatedGhosts.add(pinky);
 
-            Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8.05, 10.05));
+            Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8.05, 10.05), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(inky);
             generatedGhosts.add(inky);
 
             //TODO: 10.05, 10.05
-            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(1., 1.));
+            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(1.05, 1.05), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(clyde);
             generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {

@@ -34,10 +34,12 @@ public final class Game {
      *
      * @param engine KernelEngine reference
      * @param fps    targeted game fps
+     * @param marginError Margin Error for the Physics of DeltaEngine
      */
-    public Game(KernelEngine engine, int fps) {
+    public Game(KernelEngine engine, int fps, double marginError) {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
+        engine.setMarginError(marginError);
         engine.printFrameRate(false);
 
         SoundLoader.loadSounds();
