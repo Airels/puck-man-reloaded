@@ -86,6 +86,7 @@ public class PacManInputs implements LoadableInput {
     }
 
     private Trigger getReleaseTrigger() {
-        return () -> desiredDirection = Direction.IDLE;
+        // return () -> desiredDirection = Direction.IDLE;
+        return () -> {};
     }
 }
