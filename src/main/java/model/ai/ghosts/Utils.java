@@ -43,7 +43,7 @@ public final class Utils {
          * @param destination a destination where the ghost want to go
          * @return the direction that minimise the path to the destination
          */
-    public static Direction findShortestWay_direction (Ghost ghost, MapLevel mapLevel,
+    public static Direction findShortestWay_blinky (Ghost ghost, MapLevel mapLevel,
                                                        Coordinates<Integer> destination) {
         Node node = findShortestWay(ghost,mapLevel,destination);
         Direction direction = Direction.IDLE;

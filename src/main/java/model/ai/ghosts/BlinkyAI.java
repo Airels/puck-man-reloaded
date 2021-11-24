@@ -66,7 +66,7 @@ public final class BlinkyAI extends BasicGhostAI {
             return;
         }
 
-        Direction direction = Utils.findShortestWay_direction(ghost,mapLevel,destination);
+        Direction direction = Utils.findShortestWay_blinky(ghost,mapLevel,destination);
         ghost.setDirection(direction);
         this.direction = direction;
         this.target = nextTarget(ghost);
