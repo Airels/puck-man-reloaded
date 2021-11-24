@@ -3,6 +3,7 @@ package model;
 import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
 import model.events.TimedEvent;
@@ -26,6 +27,7 @@ public final class Game {
     private int lifeCounter, ghostEatenChain;
     private double score;
     private TimedEvent energizeTimerEvent;
+    private PacMan pacMan;
 
     /**
      * Default constructor.
@@ -62,6 +64,8 @@ public final class Game {
      * When called, launch the game in singleplayer mode.
      */
     public void launchSinglePlayerGame() {
+        this.pacMan = new PacMan();
+
         OriginalLevel originalLevel = new OriginalLevel(this);
         levelLoader.load(originalLevel);
 
@@ -99,16 +103,13 @@ public final class Game {
     public void nextLevel() {
         System.out.println("NEXT LEVEL");
 
-        /*
-        TODO
         deltaEngine.removeGlobalEvent(mapLevelChanger);
-
-        levelLoader.load(levelGenerator.generate());
+        Level nextLevel = levelGenerator.generate(this);
+        levelLoader.load(nextLevel);
 
         mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
         mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
-         */
     }
 
     /**
@@ -194,5 +195,13 @@ public final class Game {
         double eatingMultiplierScore = ScoreConfiguration.CONF_CHAIN_EATING_REWARD_SCORE;
         double eatingGhostScore = ScoreConfiguration.CONF_EATING_GHOST_REWARD_SCORE;
         increaseScore(eatingGhostScore * eatingMultiplierScore * ghostEatenChain);
+    }
+
+    /**
+     * Returns PacMan player
+     * @return PacMan
+     */
+    public PacMan getPacMan() {
+        return pacMan;
     }
 }

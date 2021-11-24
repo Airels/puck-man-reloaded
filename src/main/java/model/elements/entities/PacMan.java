@@ -1,5 +1,6 @@
 package model.elements.entities;
 
+import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -63,7 +64,7 @@ public class PacMan extends Entity {
      * Set PacMan coordinates to its original position
      */
     public PacMan() {
-        this(9 + 0.05, 16 + 0.05);
+        this(PacManConfiguration.CONF_DEFAULT_PACMAN_POSITION);
     }
 
     public boolean isDead() {

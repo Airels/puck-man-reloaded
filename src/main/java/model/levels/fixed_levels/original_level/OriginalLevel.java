@@ -42,8 +42,8 @@ public class OriginalLevel implements Level {
      * @param game the Game
      */
     public OriginalLevel(Game game) {
-        this.pacMan = new PacMan();
         this.game = game;
+        this.pacMan = game.getPacMan();
 
         this.mapLevel = new OriginalLevelMap(this, pacMan);
         this.inputLevel = new OriginalLevelInputs(pacMan);
