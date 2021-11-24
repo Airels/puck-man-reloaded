@@ -12,8 +12,8 @@ import java.util.LinkedList;
 
 public final class Utils {
 
-    private Utils () {
-        System.exit(42);
+    private Utils () throws InstantiationException {
+        throw new InstantiationException("Utils class cannot be instanced");
     }
 
     /**
