@@ -26,19 +26,19 @@ class GameTest {
 
         game.ghostEaten();
         eatenghosts = 1;
-        double score1 = score * eatenghosts;
+        double score1 = score * eatenghosts * mult;
         assertEquals(score1, game.getScore());
 
 
         game.ghostEaten();
         eatenghosts ++;
-        double score2 = score * eatenghosts + score1;
+        double score2 = score * eatenghosts * mult + score1;
         assertEquals(score2, game.getScore());
 
 
         game.ghostEaten();
         eatenghosts++;
-        double score3 = score2 + eatenghosts*score;
+        double score3 = score2 + eatenghosts*score * mult;
         assertEquals(score3, game.getScore());
 
 
