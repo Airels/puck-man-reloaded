@@ -8,6 +8,7 @@ import model.Game;
 import model.actions.events.PacManTouchedByGhostEvent;
 import model.ai.ghosts.*;
 import model.levels.Level;
+import view.SpriteContainer;
 
 import java.util.List;
 
@@ -25,26 +26,25 @@ public enum Ghosts {
     CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_FLEEING_SPRITES, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED, CONF_CLYDE_FLEEING_SPEED);
 
     private final String name;
-    private final Sprite scaredSprite;
     private final GhostAIs ai;
-    private final List<Sprite> normalSprites, fleeingSprites;
+    private final SpriteContainer normalSprites, scaredSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
 
     /**
      * Default ghost constructor.
      * @param name String name of the Ghost
      * @param normalSprites Sprites when Ghost is in Normal state
-     * @param scaredSprite Sprite when Ghost is in Scared state (energized mode)
+     * @param scaredSprites Sprite when Ghost is in Scared state (energized mode)
      * @param fleeingSprites Sprites when Ghost is in Fleeing state (when PacMan eat it)
      * @param ai Ghost AI
      * @param normalSpeed double speed when Ghost is in Normal state
      * @param scaredSpeed double speed when Ghost is in Scared state
      * @param fleeingSpeed double speed when Ghost is in Fleeing state
      */
-    Ghosts(String name, List<Sprite> normalSprites, Sprite scaredSprite, List<Sprite> fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
+    Ghosts(String name, SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
         this.name = name;
         this.normalSprites = normalSprites;
-        this.scaredSprite = scaredSprite;
+        this.scaredSprites = scaredSprites;
         this.fleeingSprites = fleeingSprites;
         this.ai = ai;
         this.normalSpeed = normalSpeed;
@@ -61,7 +61,7 @@ public enum Ghosts {
         MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
         Game game = currentLevel.getGame();
 
-        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprite, fleeingSprites, ai.build(), normalSpeed, scaredSpeed, fleeingSpeed);
+        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprites, fleeingSprites, ai.build(), normalSpeed, scaredSpeed, fleeingSpeed);
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
 
         return ghost;
