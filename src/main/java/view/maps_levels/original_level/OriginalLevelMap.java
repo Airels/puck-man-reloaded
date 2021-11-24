@@ -22,6 +22,7 @@ import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
+import model.events.BordersTunnelTeleportEvent;
 import model.loadables.LoadableMap;
 import model.levels.Level;
 import org.jetbrains.annotations.NotNull;
@@ -45,6 +46,7 @@ public class OriginalLevelMap implements LoadableMap {
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
     private final Map<Entity, Coordinates<Double>> spawnPoints;
+    private final List<BordersTunnelTeleportEvent> bordersTunnelTeleportEvents;
 
     /**
      * Default constructor
@@ -59,6 +61,7 @@ public class OriginalLevelMap implements LoadableMap {
 
         generatedGhosts = new LinkedList<>();
         spawnPoints = new HashMap<>();
+        bordersTunnelTeleportEvents = new LinkedList<>();
     }
 
     @Override
@@ -66,10 +69,11 @@ public class OriginalLevelMap implements LoadableMap {
         generateLevel(engine);
 
         spawnPoints.put(pacMan, pacMan.getCoordinates());
-        for (Entity ghost: getGeneratedGhosts()) {
+        for (Entity ghost: getGeneratedGhosts())
             spawnPoints.put(ghost,ghost.getCoordinates());
-        }
 
+        for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
+            event.load(engine);
 
         try {
             engine.setCurrentMap(originalMapLevel.getName());
@@ -99,13 +103,10 @@ public class OriginalLevelMap implements LoadableMap {
     }
 
     private void generateBorderTunnel() {
-        Event leftTunnelEvent = new OriginalLevelLeftTunnelEvent(pacMan);
-        leftTunnelEvent.addTrigger(new OriginalLevelLeftTunnelTrigger(pacMan));
-        originalMapLevel.addEvent(leftTunnelEvent);
+        bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), pacMan));
 
-        Event rightTunnelEvent = new OriginalLevelRightTunnelEvent(originalMapLevel.getWidth(), pacMan);
-        rightTunnelEvent.addTrigger(new OriginalLevelRightTunnelTrigger(pacMan));
-        originalMapLevel.addEvent(rightTunnelEvent);
+        for (Ghost ghost : getGeneratedGhosts())
+            bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), ghost));
     }
 
     private void generateGhosts() {

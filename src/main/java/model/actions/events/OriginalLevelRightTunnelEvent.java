@@ -1,21 +1,21 @@
 package model.actions.events;
 
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.events.Event;
-import model.elements.entities.PacMan;
 
 public class OriginalLevelRightTunnelEvent extends Event {
 
-    private final PacMan pacMan;
+    private final Entity entity;
     private final int originalLevelWidth;
 
-    public OriginalLevelRightTunnelEvent(int originalLevelWidth, PacMan pacMan) {
-        this.pacMan = pacMan;
+    public OriginalLevelRightTunnelEvent(Entity entity, int originalLevelWidth) {
+        this.entity = entity;
         this.originalLevelWidth = originalLevelWidth;
     }
 
     @Override
     public void checkEvent() {
-        if (pacMan.getCoordinates().getX() > originalLevelWidth-1)
+        if (entity.getCoordinates().getX() > originalLevelWidth-1)
             runTriggers();
     }
 }

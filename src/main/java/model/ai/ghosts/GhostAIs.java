@@ -1,9 +1,8 @@
 package model.ai.ghosts;
 
-import model.elements.entities.ghosts.Ghost;
-
-import java.lang.reflect.Constructor;
-
+/**
+ * All AI's for ghosts behaviours
+ */
 public enum GhostAIs {
 
     BLINKY_AI(new BlinkyAI()),
@@ -11,12 +10,16 @@ public enum GhostAIs {
     INKY_AI(new InkyAI()),
     CLYDE_AI(new ClydeAI());
 
-    private GhostAI ghostAI;
+    private final GhostAI ghostAI;
 
     GhostAIs(GhostAI ai) {
         this.ghostAI = ai;
     }
 
+    /**
+     * Creates a new instance of the AI and returns it
+     * @return new GhostAI instance
+     */
     public GhostAI build() {
         return ghostAI.clone();
     }
