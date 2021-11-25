@@ -9,7 +9,7 @@ import model.actions.events.GhostRegenerationPointEvent;
 import model.actions.triggers.GhostRegenerationPointTrigger;
 import model.elements.entities.ghosts.Ghost;
 
-public class GhostRegenerationPoint extends Entity {
+public final class GhostRegenerationPoint extends Entity {
 
     private static int id = 0;
 

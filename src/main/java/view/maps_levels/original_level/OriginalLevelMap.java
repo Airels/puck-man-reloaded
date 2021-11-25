@@ -1,10 +1,12 @@
 package view.maps_levels.original_level;
 
+import config.game.GlobalHUDConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesStackingException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -19,16 +21,12 @@ import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.events.BordersTunnelTeleportEvent;
 import model.events.GhostRegenerationPoint;
-import model.loadables.LoadableMap;
 import model.levels.Level;
+import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
+import view.hud.GlobalHUD;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The Original PacMan map.
@@ -39,15 +37,16 @@ public class OriginalLevelMap implements LoadableMap {
     private final Collection<Ghost> generatedGhosts;
     private final PacMan pacMan;
     private final Level level;
-    private MapLevel originalMapLevel;
-    private int nbOfGeneratedPacGums;
     private final Map<Entity, Coordinates<Double>> spawnPoints;
     private final Collection<BordersTunnelTeleportEvent> bordersTunnelTeleportEvents;
     private final Collection<GhostRegenerationPoint> ghostRegenerationPoints;
+    private MapLevel originalMapLevel;
+    private int nbOfGeneratedPacGums;
 
     /**
      * Default constructor
-     * @param level The Level of the Map
+     *
+     * @param level  The Level of the Map
      * @param pacMan PacMan
      */
     public OriginalLevelMap(Level level, PacMan pacMan) {
@@ -67,8 +66,8 @@ public class OriginalLevelMap implements LoadableMap {
         generateLevel(engine);
 
         spawnPoints.put(pacMan, pacMan.getCoordinates());
-        for (Ghost ghost: getGeneratedGhosts())
-            spawnPoints.put(ghost,ghost.getSpawnPoint());
+        for (Ghost ghost : getGeneratedGhosts())
+            spawnPoints.put(ghost, ghost.getSpawnPoint());
 
         for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
             event.load(engine);
@@ -127,7 +126,7 @@ public class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(blinky);
             generatedGhosts.add(blinky);
 
-            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9.,10.), new Coordinates<>(9.5, 10.5));
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9., 10.), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(pinky);
             generatedGhosts.add(pinky);
 
@@ -152,6 +151,7 @@ public class OriginalLevelMap implements LoadableMap {
 
         try {
             for (Cell cell : originalMapLevel.getCells()) {
+                if (cell.getCoordinates().getY() >= originalMapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE) continue;
                 if (zonesSpawnPacGumsProhibited.contains(cell.getCoordinates())) continue;
                 boolean superPacGum = (zonesSpawnSuperPacGum.contains(cell.getCoordinates()));
 
@@ -194,7 +194,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     private void generateWalls(KernelEngine engine) {
         int width = 19, height = 22;
-        MapLevelBuilder levelBuilder = new MapLevelBuilder("PuckMan - Original Map", width, height);
+        MapLevelBuilder levelBuilder = new MapLevelBuilder("PuckMan - Original Map", width, height + GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE);
 
         List<Cell> walls = new ArrayList<>();
 

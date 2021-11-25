@@ -5,7 +5,7 @@ import fr.r1r0r0.deltaengine.model.events.Event;
 /**
  * A timed event, who will trigger actions when times up.
  */
-public class TimedEvent extends Event {
+public final class TimedEvent extends Event {
 
     private final long time;
     private long start;

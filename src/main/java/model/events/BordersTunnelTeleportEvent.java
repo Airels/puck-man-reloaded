@@ -10,7 +10,7 @@ import model.actions.triggers.OriginalLevelLeftTunnelTrigger;
 import model.actions.triggers.OriginalLevelRightTunnelTrigger;
 import model.loadables.Loadable;
 
-public class BordersTunnelTeleportEvent implements Loadable {
+public final class BordersTunnelTeleportEvent implements Loadable {
 
     private final MapLevel mapLevel;
     private final Entity entity;

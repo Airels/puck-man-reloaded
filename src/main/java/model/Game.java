@@ -11,6 +11,7 @@ import model.levels.Level;
 import model.levels.fixed_levels.original_level.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import sounds.SoundLoader;
+import view.hud.GlobalHUD;
 
 /**
  * Main core of the game. Oversees game, and called when special game modes need to be activated and handled.
@@ -32,8 +33,8 @@ public final class Game {
     /**
      * Default constructor.
      *
-     * @param engine KernelEngine reference
-     * @param fps    targeted game fps
+     * @param engine      KernelEngine reference
+     * @param fps         targeted game fps
      * @param marginError Margin Error for the Physics of DeltaEngine
      */
     public Game(KernelEngine engine, int fps, double marginError) {
@@ -46,20 +47,18 @@ public final class Game {
 
         this.levelLoader = new LevelLoader(engine);
         this.levelGenerator = new LevelGenerator();
-        this.lifeCounter = 2;
-        ghostEatenChain = 0;
     }
 
     /**
      * Start the game with the first given level.
      *
-     * @param menuLevel First game level
+     * @param menuLevel     First game level
      * @param gameOverLevel Level when game over
      */
     public void start(Level menuLevel, Level gameOverLevel) {
         this.menuLevel = menuLevel;
         this.gameOverLevel = gameOverLevel;
-        levelLoader.load(menuLevel);
+        levelLoader.load(menuLevel, false);
     }
 
     /**
@@ -67,6 +66,10 @@ public final class Game {
      */
     public void launchSinglePlayerGame() {
         this.pacMan = new PacMan();
+
+        this.lifeCounter = 2;
+        this.score = 0;
+        this.ghostEatenChain = 0;
 
         OriginalLevel originalLevel = new OriginalLevel(this);
         levelLoader.load(originalLevel);
@@ -96,7 +99,7 @@ public final class Game {
      * Reload Game Menu when called
      */
     public void returnToMenu() {
-        levelLoader.load(menuLevel);
+        levelLoader.load(menuLevel, false);
     }
 
     /**
@@ -131,6 +134,9 @@ public final class Game {
         deltaEngine.addGlobalEvent(energizeTimerEvent);
     }
 
+    /**
+     * Toggle off energize mode, all scared ghosts returns to normal state.
+     */
     public void turnOffEnergizeMode() {
         inEnergizedMode = false;
         ghostEatenChain = 0;
@@ -140,6 +146,14 @@ public final class Game {
                 ghost.setState(GhostState.NORMAL);
         });
         energizeTimerEvent = null;
+    }
+
+    /**
+     * Returns if game is currently in energized mode
+     * @return boolean true if energized mode is enabled, false otherwise
+     */
+    public boolean isInEnergizedMode() {
+        return inEnergizedMode;
     }
 
     /**
@@ -156,13 +170,14 @@ public final class Game {
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
             Thread.sleep(2000);
             if (lifeCounter > 0) {
+                lifeCounter--;
+
                 levelLoader.getCurrentLevel().reset();
                 deltaEngine.tick();
                 Thread.sleep(3000);
                 deltaEngine.resumeCurrentMap();
-                lifeCounter--;
             } else {
-                levelLoader.load(gameOverLevel);
+                levelLoader.load(gameOverLevel, false);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -174,11 +189,15 @@ public final class Game {
         return score;
     }
 
+    public int getLives() {
+        return lifeCounter;
+    }
+
     private void increaseScore(double scoreToAdd) {
         score += scoreToAdd;
     }
 
-    public void pacGumEaten(boolean isSuper){
+    public void pacGumEaten(boolean isSuper) {
         levelLoader.getCurrentLevel().getAndDecreasePacGums();
 
         increaseScore((isSuper) ?
@@ -186,7 +205,7 @@ public final class Game {
         if (isSuper) runEnergizeMode();
     }
 
-    public void ghostEaten(){
+    public void ghostEaten() {
         ghostEatenChain += 1;
         double eatingMultiplierScore = ScoreConfiguration.CONF_CHAIN_EATING_REWARD_SCORE;
         double eatingGhostScore = ScoreConfiguration.CONF_EATING_GHOST_REWARD_SCORE;
@@ -195,6 +214,7 @@ public final class Game {
 
     /**
      * Returns PacMan player
+     *
      * @return PacMan
      */
     public PacMan getPacMan() {

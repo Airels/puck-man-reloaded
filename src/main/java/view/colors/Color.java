@@ -14,7 +14,8 @@ public enum Color {
     GAINSBORO(220, 220, 220),
     PINK(255, 192, 203),
     ORANGE(255, 127, 0),
-    YELLOW(255, 255, 0);
+    YELLOW(255, 255, 0),
+    CYAN(fr.r1r0r0.deltaengine.view.colors.Color.CYAN);
 
     private final fr.r1r0r0.deltaengine.view.colors.Color color;
 

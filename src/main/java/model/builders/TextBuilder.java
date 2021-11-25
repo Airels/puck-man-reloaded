@@ -22,7 +22,7 @@ public class TextBuilder implements Builder<HUDElement> {
         this.name = text;
         this.text = text;
         this.coords = new Coordinates<>(0.0, 0.0);
-        this.dimension = new Dimension(1, 1);
+        this.dimension = Dimension.DEFAULT_DIMENSION;
         this.color = Color.WHITE;
     }
 
@@ -53,6 +53,11 @@ public class TextBuilder implements Builder<HUDElement> {
 
     public TextBuilder setSize(int size) {
         this.size = size;
+        return this;
+    }
+
+    public TextBuilder setColor(Color c) {
+        this.color = c;
         return this;
     }
 
