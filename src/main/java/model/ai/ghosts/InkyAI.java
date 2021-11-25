@@ -44,23 +44,22 @@ public final class InkyAI extends BasicGhostAI {
         } catch (GhostTargetMissingException e) {
             return Direction.IDLE;
         }
-        Direction oppositeDirection = pacMan.getDirection().getOpposite();
-        if (oppositeDirection != Direction.IDLE && Main.getEngine().canGoToNextCell(ghost,oppositeDirection))
-            return oppositeDirection;
+        Direction pacmanOpposingDirection = pacMan.getDirection().getOpposite();
+        if (pacmanOpposingDirection != Direction.IDLE && Main.getEngine().canGoToNextCell(ghost,pacmanOpposingDirection))
+            return pacmanOpposingDirection;
+        Direction opposingDirection = direction.getOpposite();
         ArrayList<Direction> directions = new ArrayList<>();
         for (Direction otherDirection : Direction.values()) {
-            if (otherDirection == Direction.IDLE) continue;
+            if (otherDirection == Direction.IDLE || otherDirection == opposingDirection) continue;
             if (Main.getEngine().canGoToNextCell(ghost,otherDirection)) directions.add(otherDirection);
         }
         int size = directions.size();
-        return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
+        return (size == 0) ? opposingDirection : directions.get(random.nextInt(size));
     }
 
     @Override
     protected Coordinates<Integer> selectTarget(Ghost ghost, MapLevel mapLevel) {
-        Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
-        return new Coordinates<>(position.getX() + direction.getX(),
-                position.getY() + direction.getY());
+        return Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
 }

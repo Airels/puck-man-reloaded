@@ -66,7 +66,7 @@ public class GhostConfiguration {
 
 
     public final static String CONF_INKY_NAME = "Inky";
-    public final static GhostAIs CONF_INKY_AI = GhostAIs.PINKY_AI;
+    public final static GhostAIs CONF_INKY_AI = GhostAIs.INKY_AI;
     public final static double CONF_INKY_SPEED = 5.1;
     public final static double CONF_INKY_SCARED_SPEED = CONF_INKY_SPEED/2;
     public final static double CONF_INKY_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
