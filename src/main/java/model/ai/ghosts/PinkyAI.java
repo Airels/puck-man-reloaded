@@ -1,6 +1,5 @@
 package model.ai.ghosts;
 
-import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -13,7 +12,11 @@ import java.util.Collection;
 import java.util.Stack;
 
 /**
- * TODO
+ * An AI corresponding to the pink ghost in the game PacMan
+ * His movement used to go to the closest cross according to pacMan current direction to kill him,
+ * he always tries to anticipated him and chose the shortest way to do that
+ *
+ * In the original game, he go 2 cases in front of pacMan want to go
  */
 public final class PinkyAI extends BasicGhostAI {
 
@@ -22,13 +25,14 @@ public final class PinkyAI extends BasicGhostAI {
      * try to ambush pac-man
      */
 
-    //TODO: ameliorer pour ne pas etre similaire au rouge Blinky
-
     private static final String[] FORBIDDEN_TARGET_NAMES = new String[]{
             config.ghosts.GhostConfiguration.CONF_BLINKY_NAME,
             config.ghosts.GhostConfiguration.CONF_INKY_NAME,
             config.ghosts.GhostConfiguration.CONF_CLYDE_NAME};
 
+    /**
+     * Constructor
+     */
     public PinkyAI () {
         super();
     }

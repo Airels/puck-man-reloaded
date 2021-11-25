@@ -7,7 +7,6 @@ import main.Main;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * An AI corresponding to the orange ghost in the game PacMan
@@ -18,11 +17,9 @@ import java.util.Random;
  */
 public final class ClydeAI extends BasicGhostAI {
 
-    //TODO: faire le comportement de fuite
-
     /**
      * Orange - Pokey
-     * random pathfinding
+     * random path-finding
      */
 
     /**

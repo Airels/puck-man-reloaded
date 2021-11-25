@@ -1,11 +1,8 @@
 package model.ai.ghosts;
 
-import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
-import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
@@ -17,20 +14,20 @@ import model.exceptions.GhostTargetMissingException;
  */
 public final class BlinkyAI extends BasicGhostAI {
 
-    //TODO: faire le comportement de fuite
-
     /**
      * Red - Shadow
      * follow pac-man
      */
 
-    //TODO mettre des attributs pour alleger les arguments des methodes
+    /**
+     * Constructor
+     */
     public BlinkyAI () {
         super();
     }
 
     @Override
-    public GhostAI clone() {
+    public GhostAI clone () {
         return new BlinkyAI();
     }
 

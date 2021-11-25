@@ -11,15 +11,22 @@ import model.exceptions.GhostTargetMissingException;
 import java.util.ArrayList;
 
 /**
- * TODO
+ * An AI corresponding to the blue ghost in the game PacMan
+ * His movement are the opposite of pacMan movement,
+ * if he cannot do that, he chose a random direction
+ *
+ * In the original game, he has AI pretty similar
  */
 public final class InkyAI extends BasicGhostAI {
 
     /**
      * Blue - Bashful
-     * TODO: des fois il va dans la direction oppose de pac-man
+     * opposite direction of pacMan
      */
 
+    /**
+     * Constructor
+     */
     public InkyAI () {
         super();
     }

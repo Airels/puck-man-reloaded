@@ -26,6 +26,9 @@ public abstract class BasicGhostAI extends GhostAI {
     protected Coordinates<Integer> target;
     protected Direction direction;
 
+    /**
+     * Constructor
+     */
     protected BasicGhostAI () {
         target = null;
         direction = Direction.IDLE;
