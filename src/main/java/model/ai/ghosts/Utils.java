@@ -10,6 +10,9 @@ import model.elements.entities.ghosts.Ghost;
 
 import java.util.*;
 
+/**
+ * TODO
+ */
 public final class Utils {
 
     private Utils () throws InstantiationException {
@@ -57,14 +60,13 @@ public final class Utils {
      */
     public static Coordinates<Integer> findNextCross (Entity entity, MapLevel mapLevel,
                                                       Coordinates<Integer> position, Direction direction) {
-        Coordinates<Integer> directionCoordinate = direction.getCoordinates();
         int x = position.getX();
         int y = position.getY();
         for (;;) {
-            x += directionCoordinate.getX();
-            y += directionCoordinate.getY();
+            x += direction.getX();
+            y += direction.getY();
             if ( ! mapLevel.getCell(x, y).isCrossableBy(entity))
-                return new Coordinates<>(x - directionCoordinate.getX(), y - directionCoordinate.getY());
+                return new Coordinates<>(x - direction.getX(), y - direction.getY());
 
             Direction opposite = direction.getOpposite();
             for (Direction other : Direction.values()) {

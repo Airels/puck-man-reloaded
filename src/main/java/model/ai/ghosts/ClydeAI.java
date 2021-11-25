@@ -26,43 +26,27 @@ public final class ClydeAI extends BasicGhostAI {
      */
 
     private final Random random;
-    private Coordinates<Integer> target;
-    private Direction direction;
 
     /**
      * Constructor
      */
     public ClydeAI() {
+        super();
         random = new Random();
-        target = null;
     }
 
     @Override
-    public GhostAI clone() {
+    public GhostAI clone () {
         return new ClydeAI();
     }
 
     @Override
-    protected void scaryModeTick(Ghost ghost) {
+    protected void scaryModeTick (Ghost ghost) {
         //TODO
     }
 
     @Override
-    protected void chaseModeTick(Ghost ghost) {
-        if (target == null || isTargetReach(ghost)) {
-            MapLevel mapLevel = ghost.getMapLevel();
-            direction = chooseDirection(ghost);
-            target = selectTarget(ghost, mapLevel);
-            ghost.setDirection(direction);
-        }
-    }
-
-    /**
-     * Choose and return the next direction to follow
-     * @param ghost a ghost
-     * @return a direction
-     */
-    private Direction chooseDirection(Ghost ghost) {
+    protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         ArrayList<Direction> directions = new ArrayList<>();
         for (Direction direction : Direction.values()) {
             if (Main.getEngine().canGoToNextCell(ghost, direction)) directions.add(direction);
@@ -71,27 +55,9 @@ public final class ClydeAI extends BasicGhostAI {
         return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
     }
 
-    /**
-     * Select and return the target, the next coordinates where the ghost must go
-     * @param ghost a ghost
-     * @param mapLevel a mapLevel
-     * @return a coordinates
-     */
-    private Coordinates<Integer> selectTarget(Ghost ghost, MapLevel mapLevel) {
-        if (direction == Direction.IDLE) return null;
-        Coordinates<Double> position = ghost.getCoordinates();
-        return Utils.findNextCross(ghost,mapLevel,new Coordinates<>(position.getX().intValue(),
-                position.getY().intValue()),direction);
-    }
-
-    /**
-     * Return if the target is reach
-     * @param ghost a ghost
-     * @return if the target is reach
-     */
-    private boolean isTargetReach (Ghost ghost) {
-        if ( ! Main.getEngine().isAvailableDirection(ghost,direction)) return true;
-        return Utils.isOnTarget(ghost,target);
+    @Override
+    protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
+        return Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
 }

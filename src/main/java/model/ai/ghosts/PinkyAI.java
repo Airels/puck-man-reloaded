@@ -5,7 +5,6 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import main.Main;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
@@ -28,11 +27,8 @@ public final class PinkyAI extends BasicGhostAI {
             config.ghosts.GhostConfiguration.CONF_INKY_NAME,
             config.ghosts.GhostConfiguration.CONF_CLYDE_NAME};
 
-    private Coordinates<Integer> target;
-    private Direction direction;
-
     public PinkyAI () {
-
+        super();
     }
 
     @Override
@@ -41,37 +37,26 @@ public final class PinkyAI extends BasicGhostAI {
     }
 
     @Override
-    protected void scaryModeTick(Ghost ghost) {
+    protected void scaryModeTick (Ghost ghost) {
 
     }
 
     @Override
-    protected void chaseModeTick(Ghost ghost) {
-
-        if ( target != null && ! isTargetReach(ghost)) return;
-
-        MapLevel mapLevel = ghost.getMapLevel();
+    protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         Coordinates<Integer> destination;
         try {
             destination = findDestination(ghost,mapLevel);
         } catch (GhostTargetMissingException e) {
-            ghost.setDirection(Direction.IDLE);
-            return;
+            return Direction.IDLE;
         }
-
         ArrayList<Coordinates<Integer>> forbiddenWays = findForbiddenWays(mapLevel);
         Coordinates<Integer> ghostCoordinate = Utils.getIntegerCoordinates(ghost);
         for (Coordinates<Integer> forbiddenWay : forbiddenWays) {
             if (forbiddenWay.equals(ghostCoordinate)) {
-                ghost.setDirection(Direction.IDLE);
-                return;
+                return Direction.IDLE;
             }
         }
-        Direction direction = Utils.findShortestWay_pinky(ghost,mapLevel,destination,forbiddenWays);
-        ghost.setDirection(direction);
-        this.direction = direction;
-        this.target = nextTarget(ghost);
-
+        return Utils.findShortestWay_pinky(ghost,mapLevel,destination,forbiddenWays);
     }
 
     /**
@@ -104,26 +89,11 @@ public final class PinkyAI extends BasicGhostAI {
         return forbiddenWays;
     }
 
-    /**
-     * Return and find the next target where the ghost must go
-     * @param ghost a ghost
-     * @return the next target where the ghost must go
-     */
-    private Coordinates<Integer> nextTarget (Ghost ghost) {
+    @Override
+    protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
         Coordinates<Double> position = ghost.getCoordinates();
-        Coordinates<Integer> delta = direction.getCoordinates();
-        return new Coordinates<>(position.getX().intValue() + delta.getX(),
-                position.getY().intValue() + delta.getY());
-    }
-
-    /**
-     * Return if the target is reach
-     * @param ghost a ghost
-     * @return if the target is reach
-     */
-    private boolean isTargetReach (Ghost ghost) {
-        if ( ! Main.getEngine().isAvailableDirection(ghost,direction)) return true;
-        return Utils.isOnTarget(ghost,target);
+        return new Coordinates<>(position.getX().intValue() + direction.getX(),
+                position.getY().intValue() + direction.getY());
     }
 
 }
