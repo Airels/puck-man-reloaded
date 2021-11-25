@@ -4,19 +4,17 @@ import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.Game;
 import model.actions.events.PacManTouchedByGhostEvent;
-import model.ai.ghosts.*;
+import model.ai.ghosts.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
-
-import java.util.List;
 
 import static config.ghosts.GhostConfiguration.*;
 
 /**
  * Declarations of All ghosts, and build them according to their properties.
+ *
  * @see config.ghosts.GhostConfiguration to change Ghost properties
  */
 public enum Ghosts {
@@ -33,14 +31,15 @@ public enum Ghosts {
 
     /**
      * Default ghost constructor.
-     * @param name String name of the Ghost
-     * @param normalSprites Sprites when Ghost is in Normal state
-     * @param scaredSprites Sprite when Ghost is in Scared state (energized mode)
+     *
+     * @param name           String name of the Ghost
+     * @param normalSprites  Sprites when Ghost is in Normal state
+     * @param scaredSprites  Sprite when Ghost is in Scared state (energized mode)
      * @param fleeingSprites Sprites when Ghost is in Fleeing state (when PacMan eat it)
-     * @param ai Ghost AI
-     * @param normalSpeed double speed when Ghost is in Normal state
-     * @param scaredSpeed double speed when Ghost is in Scared state
-     * @param fleeingSpeed double speed when Ghost is in Fleeing state
+     * @param ai             Ghost AI
+     * @param normalSpeed    double speed when Ghost is in Normal state
+     * @param scaredSpeed    double speed when Ghost is in Scared state
+     * @param fleeingSpeed   double speed when Ghost is in Fleeing state
      */
     Ghosts(String name, SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
         this.name = name;
@@ -55,6 +54,7 @@ public enum Ghosts {
 
     /**
      * Returns a new instance of the chosen Ghost
+     *
      * @param currentLevel Current level where Ghost will reside
      * @return new instance of a Ghost
      */
@@ -64,8 +64,9 @@ public enum Ghosts {
 
     /**
      * Second builder, returns a new instance of the chosen Ghost, with default coordinates.
+     *
      * @param currentLevel Current level where Ghost will reside
-     * @param coords Initial coordinates of the Ghost
+     * @param coords       Initial coordinates of the Ghost
      * @return new instance of a Ghost
      */
     public Ghost build(Level currentLevel, Coordinates<Double> coords) {
@@ -74,6 +75,7 @@ public enum Ghosts {
 
     /**
      * TODO
+     *
      * @param currentLevel
      * @param coords
      * @param retreatPoint
@@ -85,6 +87,7 @@ public enum Ghosts {
 
     /**
      * TODO
+     *
      * @param currentLevel
      * @param coords
      * @param spawnPoint
