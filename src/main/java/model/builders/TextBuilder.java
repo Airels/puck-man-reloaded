@@ -1,5 +1,6 @@
 package model.builders;
 
+import fr.r1r0r0.deltaengine.model.Builder;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;

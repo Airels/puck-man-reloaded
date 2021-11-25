@@ -21,6 +21,7 @@ public class Ghost extends Entity {
     private final SpriteContainer normalSprites, scaredSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
     private GhostState ghostState;
+    private Coordinates<Double> spawnPoint, retreatPoint;
 
     /**
      * Default ghost constructor.
@@ -34,23 +35,49 @@ public class Ghost extends Entity {
      * @param scaredSpeed double speed when Ghost is in Scared state
      * @param fleeingSpeed double speed when Ghost is in Fleeing state
      */
-    public Ghost(String name, MapLevel currentMap, SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites, GhostAI ghostAI, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
-        super(name, new Coordinates<>(0.0, 0.0), normalSprites.getSprite(Direction.IDLE), new Dimension(0.9, 0.9));
+
+    /**
+     * Default ghost constructor.
+     * @param name
+     * @param currentMap
+     * @param normalSprites
+     * @param scaredSprites
+     * @param fleeingSprites
+     * @param ghostAI
+     * @param normalSpeed
+     * @param scaredSpeed
+     * @param fleeingSpeed
+     * @param coords
+     * @param spawnPoint
+     * @param retreatPoint
+     * @param dimension
+     */
+    Ghost(String name,
+          MapLevel currentMap,
+          SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites,
+          GhostAI ghostAI,
+          double normalSpeed, double scaredSpeed, double fleeingSpeed,
+          Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint,
+          Dimension dimension) {
+
+        super(name, coords, normalSprites.getSprite(Direction.IDLE), dimension);
         this.currentMap = currentMap;
         this.normalSprites = normalSprites;
         this.scaredSprites = scaredSprites;
         this.fleeingSprites = fleeingSprites;
+        this.normalSpeed = normalSpeed;
+        this.scaredSpeed = scaredSpeed;
+        this.fleeingSpeed = fleeingSpeed;
+        this.spawnPoint = spawnPoint;
+        this.retreatPoint = retreatPoint;
+
 
         try {
-            setAI(ghostAI);
+            if (ghostAI != null) setAI(ghostAI);
         } catch (AIAlreadyAttachedException e) {
             e.printStackTrace(); // Should never happen
             System.exit(1);
         }
-
-        this.normalSpeed = normalSpeed;
-        this.scaredSpeed = scaredSpeed;
-        this.fleeingSpeed = fleeingSpeed;
 
         setState(GhostState.NORMAL);
     }
@@ -63,9 +90,9 @@ public class Ghost extends Entity {
         this.ghostState = ghostState;
 
         double speed = switch (ghostState) {
-            case NORMAL -> normalSpeed;
             case SCARED -> scaredSpeed;
             case FLEEING -> fleeingSpeed;
+            default -> normalSpeed;
         };
 
         setSpeed(speed);
@@ -93,6 +120,30 @@ public class Ghost extends Entity {
      */
     public boolean isFleeing() {
         return getState() == GhostState.FLEEING;
+    }
+
+    /**
+     * Return if Ghost is in Scatter state
+     * @return true if Ghost is in Scatter state, false otherwise
+     */
+    public boolean isScattering() {
+        return getState() == GhostState.SCATTER;
+    }
+
+    /**
+     * Returns coordinates of the spawn of the ghost
+     * @return Coordinates of spawn point
+     */
+    public Coordinates<Double> getSpawnPoint() {
+        return spawnPoint;
+    }
+
+    /**
+     * Returns coordinates of the retreat point, reach by ghost when it's in FLEEING state
+     * @return Coordinates of retreat point
+     */
+    public Coordinates<Double> getRetreatPoint() {
+        return retreatPoint;
     }
 
     /**

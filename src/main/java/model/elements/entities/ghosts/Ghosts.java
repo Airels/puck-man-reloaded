@@ -2,6 +2,7 @@ package model.elements.entities.ghosts;
 
 import config.pacman.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.Game;
@@ -58,13 +59,7 @@ public enum Ghosts {
      * @return new instance of a Ghost
      */
     public Ghost build(Level currentLevel) {
-        MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
-        Game game = currentLevel.getGame();
-
-        Ghost ghost = new Ghost(name, currentMap, normalSprites, scaredSprites, fleeingSprites, ai.build(), normalSpeed, scaredSpeed, fleeingSpeed);
-        ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
-
-        return ghost;
+        return build(currentLevel, new Coordinates<>(0.0, 0.0));
     }
 
     /**
@@ -74,8 +69,45 @@ public enum Ghosts {
      * @return new instance of a Ghost
      */
     public Ghost build(Level currentLevel, Coordinates<Double> coords) {
-        Ghost g = build(currentLevel);
-        g.setCoordinates(coords);
-        return g;
+        return build(currentLevel, coords, new Coordinates<>(0.0, 0.0), new Coordinates<>(0.0, 0.0));
+    }
+
+    /**
+     * TODO
+     * @param currentLevel
+     * @param coords
+     * @param retreatPoint
+     * @return
+     */
+    public Ghost build(Level currentLevel, Coordinates<Double> coords, Coordinates<Double> retreatPoint) {
+        return build(currentLevel, coords, coords.copy(), retreatPoint);
+    }
+
+    /**
+     * TODO
+     * @param currentLevel
+     * @param coords
+     * @param spawnPoint
+     * @param retreatPoint
+     * @return
+     */
+    public Ghost build(Level currentLevel, Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint) {
+        MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();
+        Game game = currentLevel.getGame();
+
+        GhostBuilder ghostBuilder = new GhostBuilder(name, currentMap, normalSprites, scaredSprites, fleeingSprites);
+        ghostBuilder.setAI(ai)
+                .setNormalSpeed(normalSpeed)
+                .setScaredSpeed(scaredSpeed)
+                .setFleeingSpeed(fleeingSpeed)
+                .setCoordinates(coords)
+                .setSpawnPoint(spawnPoint)
+                .setRetreatPoint(retreatPoint)
+                .setDimension(new Dimension(0.9, 0.9));
+
+        Ghost ghost = ghostBuilder.build();
+        ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
+
+        return ghost;
     }
 }
