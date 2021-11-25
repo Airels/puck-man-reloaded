@@ -8,14 +8,9 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
-import model.actions.events.OriginalLevelLeftTunnelEvent;
-import model.actions.events.OriginalLevelRightTunnelEvent;
 import model.actions.events.PacGumEatEvent;
-import model.actions.triggers.OriginalLevelLeftTunnelTrigger;
-import model.actions.triggers.OriginalLevelRightTunnelTrigger;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -23,6 +18,7 @@ import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.events.BordersTunnelTeleportEvent;
+import model.events.GhostRegenerationPoint;
 import model.loadables.LoadableMap;
 import model.levels.Level;
 import org.jetbrains.annotations.NotNull;
@@ -46,7 +42,8 @@ public class OriginalLevelMap implements LoadableMap {
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
     private final Map<Entity, Coordinates<Double>> spawnPoints;
-    private final List<BordersTunnelTeleportEvent> bordersTunnelTeleportEvents;
+    private final Collection<BordersTunnelTeleportEvent> bordersTunnelTeleportEvents;
+    private final Collection<GhostRegenerationPoint> ghostRegenerationPoints;
 
     /**
      * Default constructor
@@ -62,6 +59,7 @@ public class OriginalLevelMap implements LoadableMap {
         generatedGhosts = new LinkedList<>();
         spawnPoints = new HashMap<>();
         bordersTunnelTeleportEvents = new LinkedList<>();
+        ghostRegenerationPoints = new LinkedList<>();
     }
 
     @Override
@@ -93,10 +91,24 @@ public class OriginalLevelMap implements LoadableMap {
         generatePacGums();
         generateGhosts();
         generateBorderTunnel();
+        generateGhostRegenerationPoint();
 
         try {
             engine.addMap(originalMapLevel);
         } catch (MapLevelAlreadyExistException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+    }
+
+    private void generateGhostRegenerationPoint() {
+        try {
+            for (Ghost g : getGeneratedGhosts()) {
+                GhostRegenerationPoint ghostRegenerationPoint = new GhostRegenerationPoint(g);
+                ghostRegenerationPoints.add(ghostRegenerationPoint);
+                originalMapLevel.addEntity(ghostRegenerationPoint);
+            }
+        } catch (MapLevelEntityNameStackingException e) {
             e.printStackTrace();
             System.exit(1);
         }
@@ -115,8 +127,7 @@ public class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(blinky);
             generatedGhosts.add(blinky);
 
-            //TODO: 9.05, 10.05
-            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(17.,16.), new Coordinates<>(9.5, 10.5));
+            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9.,10.), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(pinky);
             generatedGhosts.add(pinky);
 
@@ -124,8 +135,7 @@ public class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(inky);
             generatedGhosts.add(inky);
 
-            //TODO: 10.05, 10.05
-            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(1., 1.), new Coordinates<>(9.5, 10.5));
+            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10., 10.), new Coordinates<>(9.5, 10.5));
             originalMapLevel.addEntity(clyde);
             generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {
