@@ -53,7 +53,7 @@ public enum Ghosts {
     }
 
     /**
-     * Returns a new instance of the chosen Ghost
+     * First builder, returns a new instance of the chosen Ghost
      *
      * @param currentLevel Current level where Ghost will reside
      * @return new instance of a Ghost
@@ -63,7 +63,7 @@ public enum Ghosts {
     }
 
     /**
-     * Second builder, returns a new instance of the chosen Ghost, with default coordinates.
+     * Second builder, returns a new instance of the chosen Ghost, with given coordinates.
      *
      * @param currentLevel Current level where Ghost will reside
      * @param coords       Initial coordinates of the Ghost
@@ -74,25 +74,25 @@ public enum Ghosts {
     }
 
     /**
-     * TODO
+     * Third builder, returns a new instance of the chosen Ghost, with given coordinates and a chosen retreat point.
      *
-     * @param currentLevel
-     * @param coords
-     * @param retreatPoint
-     * @return
+     * @param currentLevel Current level where Ghost will reside
+     * @param coords       Initial coordinates of the Ghost
+     * @param retreatPoint Retreat point where Ghost could go when it was eaten by PacMan to re-transform itself into NORMAL
+     * @return new instance of a Ghost
      */
     public Ghost build(Level currentLevel, Coordinates<Double> coords, Coordinates<Double> retreatPoint) {
         return build(currentLevel, coords, coords.copy(), retreatPoint);
     }
 
     /**
-     * TODO
+     * Fourth builder, returns a new instance of the chosen Ghost, with all required parameters to create a Ghost.
      *
-     * @param currentLevel
-     * @param coords
-     * @param spawnPoint
-     * @param retreatPoint
-     * @return
+     * @param currentLevel Current level where Ghost will reside
+     * @param coords       Initial coordinates of the Ghost
+     * @param spawnPoint   Spawn point of the Ghost, where Ghost will respawn when level is resetting (typically when PacMan dies)
+     * @param retreatPoint Retreat point where Ghost could go when it was eaten by PacMan to re-transform itself into NORMAL
+     * @return new instance of a Ghost
      */
     public Ghost build(Level currentLevel, Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint) {
         MapLevel currentMap = currentLevel.getMapLevelLoadable().getMapLevel();

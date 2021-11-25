@@ -6,7 +6,6 @@ import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesS
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -24,7 +23,6 @@ import model.events.GhostRegenerationPoint;
 import model.levels.Level;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
-import view.hud.GlobalHUD;
 
 import java.util.*;
 
@@ -85,6 +83,10 @@ public class OriginalLevelMap implements LoadableMap {
         engine.removeMap(originalMapLevel.getName());
     }
 
+    /**
+     * Generate the whole level
+     * @param engine DeltaEngine
+     */
     private void generateLevel(KernelEngine engine) {
         generateWalls(engine);
         generatePacGums();
@@ -100,6 +102,9 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    /**
+     * Generate points where ghost need to go to transform themselves from fleeing to normal state
+     */
     private void generateGhostRegenerationPoint() {
         try {
             for (Ghost g : getGeneratedGhosts()) {
@@ -113,6 +118,9 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    /**
+     * Generate tunnel on each side of the map
+     */
     private void generateBorderTunnel() {
         bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), pacMan));
 
@@ -120,6 +128,9 @@ public class OriginalLevelMap implements LoadableMap {
             bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), ghost));
     }
 
+    /**
+     * Generate ghosts
+     */
     private void generateGhosts() {
         try {
             Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9., 8.), new Coordinates<>(9.5, 10.5));
@@ -143,6 +154,9 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    /**
+     * Generate all pac-gums and super-pac-gums
+     */
     private void generatePacGums() {
         addForbiddenZones();
         addSuperPacGumsZones();
@@ -151,7 +165,8 @@ public class OriginalLevelMap implements LoadableMap {
 
         try {
             for (Cell cell : originalMapLevel.getCells()) {
-                if (cell.getCoordinates().getY() >= originalMapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE) continue;
+                if (cell.getCoordinates().getY() >= originalMapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE)
+                    continue;
                 if (zonesSpawnPacGumsProhibited.contains(cell.getCoordinates())) continue;
                 boolean superPacGum = (zonesSpawnSuperPacGum.contains(cell.getCoordinates()));
 
@@ -167,6 +182,9 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    /**
+     * Set coordinates of super-pacgums
+     */
     private void addSuperPacGumsZones() {
         zonesSpawnSuperPacGum.add(new Coordinates<>(1, 2));
         zonesSpawnSuperPacGum.add(new Coordinates<>(17, 2));
@@ -174,6 +192,9 @@ public class OriginalLevelMap implements LoadableMap {
         zonesSpawnSuperPacGum.add(new Coordinates<>(17, 16));
     }
 
+    /**
+     * Add zones where pac-gums are prohibited (like PacMan spawn location for example)
+     */
     private void addForbiddenZones() {
         zonesSpawnPacGumsProhibited.add(new Coordinates<>(pacMan.getCoordinates().getX().intValue(), pacMan.getCoordinates().getY().intValue()));
 
@@ -192,6 +213,10 @@ public class OriginalLevelMap implements LoadableMap {
         }
     }
 
+    /**
+     * Generate walls of the map
+     * @param engine DeltaEngine
+     */
     private void generateWalls(KernelEngine engine) {
         int width = 19, height = 22;
         MapLevelBuilder levelBuilder = new MapLevelBuilder("PuckMan - Original Map", width, height + GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE);

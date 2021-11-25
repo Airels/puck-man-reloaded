@@ -1,6 +1,5 @@
 package model.levels.fixed_levels.original_level;
 
-import config.game.GameConfiguration;
 import controller.inputs_levels.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
@@ -12,9 +11,9 @@ import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.GhostState;
+import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
-import model.levels.Level;
 import org.jetbrains.annotations.NotNull;
 import sounds.Sounds;
 import view.maps_levels.original_level.OriginalLevelMap;
@@ -39,6 +38,7 @@ public class OriginalLevel implements Level {
 
     /**
      * Default constructor.
+     *
      * @param game the Game
      */
     public OriginalLevel(Game game) {
@@ -121,7 +121,7 @@ public class OriginalLevel implements Level {
         for (Map.Entry<Entity, Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
             entry.getKey().setCoordinates(entry.getValue());
         }
-        for (Ghost ghost: getGhosts()) {
+        for (Ghost ghost : getGhosts()) {
             ghost.setState(GhostState.NORMAL);
 
         }

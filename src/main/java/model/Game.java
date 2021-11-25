@@ -11,7 +11,6 @@ import model.levels.Level;
 import model.levels.fixed_levels.original_level.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import sounds.SoundLoader;
-import view.hud.GlobalHUD;
 
 /**
  * Main core of the game. Oversees game, and called when special game modes need to be activated and handled.
@@ -150,6 +149,7 @@ public final class Game {
 
     /**
      * Returns if game is currently in energized mode
+     *
      * @return boolean true if energized mode is enabled, false otherwise
      */
     public boolean isInEnergizedMode() {
@@ -165,7 +165,7 @@ public final class Game {
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
 
-            // TODO Changement de sprite Pacman
+            pacMan.setDead(true); // TODO Changement de sprite Pacman
             // TODO animation
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
             Thread.sleep(2000);
@@ -173,6 +173,7 @@ public final class Game {
                 lifeCounter--;
 
                 levelLoader.getCurrentLevel().reset();
+                pacMan.setDead(false);
                 deltaEngine.tick();
                 Thread.sleep(3000);
                 deltaEngine.resumeCurrentMap();

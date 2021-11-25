@@ -19,14 +19,31 @@ public enum Color {
 
     private final fr.r1r0r0.deltaengine.view.colors.Color color;
 
+    /**
+     * Constructor allowing to set custom colors according to RGB standard
+     *
+     * @param r Red shade (0-255)
+     * @param g Green shade (0-255)
+     * @param b Blue shade (0-255)
+     */
     Color(int r, int g, int b) {
         color = new fr.r1r0r0.deltaengine.view.colors.Color(r, g, b, 255);
     }
 
+    /**
+     * Constructor allowing to create a color according to given colors in the Engine
+     *
+     * @param color Engine Color
+     */
     Color(fr.r1r0r0.deltaengine.view.colors.Color color) {
         this.color = color;
     }
 
+    /**
+     * Returns Color into Color understandable by the Engine
+     *
+     * @return Engine Color
+     */
     public fr.r1r0r0.deltaengine.view.colors.Color getEngineColor() {
         return color;
     }

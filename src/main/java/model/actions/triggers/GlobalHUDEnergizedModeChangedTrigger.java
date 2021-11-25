@@ -13,6 +13,11 @@ public class GlobalHUDEnergizedModeChangedTrigger implements Trigger {
     private final Game game;
     private final GlobalHUD hud;
 
+    /**
+     * Default constructor
+     * @param game The Game
+     * @param hud The Global Game HUD
+     */
     public GlobalHUDEnergizedModeChangedTrigger(Game game, GlobalHUD hud) {
         this.hud = hud;
         this.game = game;

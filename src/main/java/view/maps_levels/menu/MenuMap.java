@@ -97,7 +97,7 @@ public class MenuMap implements LoadableMap {
     }
 
     /**
-     * Called when user select singleplayer in menu
+     * Called when user select single player in menu
      */
     public void selectSinglePlayer() {
         unselectCurrent();

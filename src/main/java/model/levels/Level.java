@@ -21,6 +21,7 @@ public interface Level extends Loadable {
 
     /**
      * Load the level
+     *
      * @param deltaEngine the Engine
      */
     @Override
@@ -28,6 +29,7 @@ public interface Level extends Loadable {
 
     /**
      * Unload the level
+     *
      * @param deltaEngine the Engine
      */
     @Override
@@ -35,6 +37,7 @@ public interface Level extends Loadable {
 
     /**
      * Returns the Map of the Level;
+     *
      * @return LoadableMap of the level
      */
     @NotNull
@@ -42,6 +45,7 @@ public interface Level extends Loadable {
 
     /**
      * Returns the Inputs of the Level
+     *
      * @return LoadableInputs of the level
      */
     @NotNull
@@ -49,18 +53,21 @@ public interface Level extends Loadable {
 
     /**
      * Returns number of PacGums in level
+     *
      * @return int number of PacGums
      */
     int getNbOfPacGums();
 
     /**
      * Returns number of PacGums in level and decrease its value by one.
+     *
      * @return number of PacGums before decreasing
      */
     int getAndDecreasePacGums();
 
     /**
      * Get all ghosts of the Level
+     *
      * @return Collection of Ghost
      */
     @NotNull
@@ -68,6 +75,7 @@ public interface Level extends Loadable {
 
     /**
      * Returns Game instance
+     *
      * @return the Game
      */
     @NotNull
@@ -75,6 +83,7 @@ public interface Level extends Loadable {
 
     /**
      * Get spawn points of entities in the map
+     *
      * @return Map of entity and their associated spawn points
      */
     @NotNull

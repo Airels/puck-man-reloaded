@@ -18,8 +18,9 @@ public class MenuSelector {
 
     /**
      * Default constructor
+     *
      * @param menuMap the MenuMap
-     * @param game the Game
+     * @param game    the Game
      */
     public MenuSelector(MenuMap menuMap, Game game) {
         this.game = game;
@@ -55,6 +56,9 @@ public class MenuSelector {
         return new InputEvent(enterTrigger, null);
     }
 
+    /**
+     * Called when user switch menu selection, to change focused text and play sound
+     */
     private void selectMenuText() {
         Sounds.MENU_SELECTION.stop();
         Sounds.MENU_SELECTION.play();
@@ -66,6 +70,9 @@ public class MenuSelector {
         }
     }
 
+    /**
+     * Called when user selected something on the menu
+     */
     private void userMenuSelected() {
         switch (currentSelected) {
             case 0 -> game.launchSinglePlayerGame();

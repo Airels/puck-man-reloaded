@@ -20,10 +20,11 @@ public class PacMan extends Entity {
 
     /**
      * Another constructor. Sets PacMan initial coordinates
+     *
      * @param coordinates initial coordinates
      */
     public PacMan(Coordinates<Double> coordinates) {
-        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9,0.9));
+        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9, 0.9));
         isDead = false;
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
@@ -52,6 +53,7 @@ public class PacMan extends Entity {
 
     /**
      * Another constructor. Sets PacMan initial location with doubles
+     *
      * @param x abscissa initial PacMan position
      * @param y ordinate initial PacMan position
      */
@@ -67,10 +69,20 @@ public class PacMan extends Entity {
         this(PacManConfiguration.CONF_DEFAULT_PACMAN_POSITION);
     }
 
+    /**
+     * Returns if pacman was touched by a ghost
+     *
+     * @return true if pacman was touched, false otherwise
+     */
     public boolean isDead() {
         return isDead;
     }
 
+    /**
+     * Set if pacman was touched by a ghost
+     *
+     * @param dead boolean to set if pacman was touched by a ghost
+     */
     public void setDead(boolean dead) {
         isDead = dead;
     }

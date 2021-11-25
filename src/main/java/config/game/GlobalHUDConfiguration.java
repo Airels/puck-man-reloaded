@@ -21,4 +21,8 @@ public final class GlobalHUDConfiguration {
     public final static Color CONF_GLOBAL_HUD_LIVES_TEXT_COLOR = Color.WHITE;
     public final static Color CONF_GLOBAL_HUD_SCORE_TEXT_COLOR = Color.WHITE;
     public final static Color CONF_GLOBAL_HUD_ENERGIZED_MODE_TEXT_COLOR = Color.CYAN;
+
+    public final static String CONF_GLOBAL_HUD_LIVES_TEXT_FONT = "Consolas";
+    public final static String CONF_GLOBAL_HUD_SCORE_TEXT_FONT = "Consolas";
+    public final static String CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_FONT = "Consolas";
 }

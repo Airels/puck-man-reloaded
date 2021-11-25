@@ -1,12 +1,12 @@
 package sounds;
 
 import fr.r1r0r0.deltaengine.exceptions.SoundAlreadyExistException;
-import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.SoundEngine;
 import main.Main;
 
 /**
  * Loads all Game sounds, according to configured sounds
+ *
  * @see Sounds to see all configured sounds
  */
 public class SoundLoader {
@@ -17,13 +17,13 @@ public class SoundLoader {
     public static void loadSounds() {
         SoundEngine soundEngine = Main.getEngine().getSoundEngine();
 
-        for (Sounds s : Sounds.values()) {
-            try {
+        try {
+            for (Sounds s : Sounds.values()) {
                 soundEngine.addSound(s.getSound());
-            } catch (SoundAlreadyExistException e) {
-                e.printStackTrace(); // Should never happen
-                System.exit(1);
             }
+        } catch (SoundAlreadyExistException e) {
+            e.printStackTrace(); // Should never happen
+            System.exit(1);
         }
     }
 }

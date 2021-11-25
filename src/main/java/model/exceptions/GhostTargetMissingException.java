@@ -2,6 +2,9 @@ package model.exceptions;
 
 import model.elements.entities.ghosts.Ghost;
 
+/**
+ * TODO
+ */
 public class GhostTargetMissingException extends Exception {
 
     public GhostTargetMissingException (String msg) {

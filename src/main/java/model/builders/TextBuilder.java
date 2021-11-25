@@ -18,6 +18,10 @@ public class TextBuilder implements Builder<HUDElement> {
     private int size;
     private Color color;
 
+    /**
+     * Default constructor.
+     * @param text String of the Text
+     */
     public TextBuilder(String text) {
         this.name = text;
         this.text = text;
@@ -26,36 +30,72 @@ public class TextBuilder implements Builder<HUDElement> {
         this.color = Color.WHITE;
     }
 
+    /**
+     * Set an Engine name for the Text, must be unique! (It's an ID)
+     * @param name String name of the text
+     * @return the current builder
+     */
     public TextBuilder setName(String name) {
         this.name = name;
         return this;
     }
 
+    /**
+     * Set the text of the future in-game Text
+     * @param text String text to set
+     * @return the current builder
+     */
     public TextBuilder setText(String text) {
         this.text = text;
         return this;
     }
 
+    /**
+     * Set coordinates of the Text by giving x and y coordinates
+     * @param x abscissa coordinate
+     * @param y ordinate coordinate
+     * @return the current builder
+     */
     public TextBuilder setCoordinates(double x, double y) {
         this.coords = new Coordinates<>(x, y);
         return this;
     }
 
+    /**
+     * Set coordinates of the Text by giving Coordinates object
+     * @param coords Coordinates to set
+     * @return the current builder
+     */
     public TextBuilder setCoordinates(Coordinates<Double> coords) {
         this.coords = coords;
         return this;
     }
 
+    /**
+     * Set the font of the Text
+     * @param font String font name
+     * @return the current builder
+     */
     public TextBuilder setFont(String font) {
         this.font = font;
         return this;
     }
 
+    /**
+     * Set the size of the Text
+     * @param size int size of the text
+     * @return the current builder
+     */
     public TextBuilder setSize(int size) {
         this.size = size;
         return this;
     }
 
+    /**
+     * Set the color of the text
+     * @param c Color of the text
+     * @return the current builder
+     */
     public TextBuilder setColor(Color c) {
         this.color = c;
         return this;

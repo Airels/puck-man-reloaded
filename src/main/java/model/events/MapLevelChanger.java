@@ -25,6 +25,7 @@ public final class MapLevelChanger extends Event {
 
     /**
      * Default constructor
+     *
      * @param level attached level
      */
     public MapLevelChanger(Level level) {
@@ -54,6 +55,7 @@ public final class MapLevelChanger extends Event {
 
     /**
      * Returns if portal is activated or not
+     *
      * @return boolean true if portal activated, false otherwise
      */
     public boolean isPortalActivated() {
@@ -62,6 +64,7 @@ public final class MapLevelChanger extends Event {
 
     /**
      * Set portal activation
+     *
      * @param isActivated true to activate it, false otherwise
      */
     public void setPortalActivated(boolean isActivated) {

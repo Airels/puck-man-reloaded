@@ -17,6 +17,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Game Over level. Basically the screen when user lost all of their lives and then lose the game.
+ */
 public class GameOverLevel implements Level {
 
     private final Game game;

@@ -12,12 +12,16 @@ import fr.r1r0r0.deltaengine.view.colors.Color;
  */
 public class PacGum extends Entity {
 
-    private static int counter = 0; // Counter used to generate different names
+    /**
+     * Counter used to generate different names
+     */
+    private static int counter = 0;
 
     private boolean isSuper;
 
     /**
      * Default constructor. Creates a new PacGum. It will not be a Super PacGum.
+     *
      * @param coords Coordinates of the PacGum
      */
     public PacGum(Coordinates<Double> coords) {
@@ -32,7 +36,8 @@ public class PacGum extends Entity {
 
     /**
      * Another constructor. Creates a new PacGum with possibility to set if it's a Super PacGum or not.
-     * @param coords Coordinates of the PacGum
+     *
+     * @param coords  Coordinates of the PacGum
      * @param isSuper boolean if PacGum is a Super PacGum
      */
     public PacGum(Coordinates<Double> coords, boolean isSuper) {
@@ -48,6 +53,7 @@ public class PacGum extends Entity {
 
     /**
      * Returns if PacGum is a Super PacGum
+     *
      * @return boolean true if it's a Super PacGum, false otherwise
      */
     public boolean isSuperPacGum() {

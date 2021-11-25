@@ -6,6 +6,9 @@ import model.elements.entities.items.PacGum;
 import model.levels.Level;
 import sounds.WakaSound;
 
+/**
+ * Trigger triggered when PacMan eat a PacGum
+ */
 public class PacGumEatTrigger implements Trigger {
 
     private final PacGum pacGum;
@@ -14,6 +17,12 @@ public class PacGumEatTrigger implements Trigger {
     private final WakaSound wakaSound;
     private boolean isSuper;
 
+    /**
+     * Default constructor
+     * @param level Level who belongs the PacGum
+     * @param pacGum The PacGum
+     * @param wakaSound The Waka sound
+     */
     public PacGumEatTrigger(Level level, PacGum pacGum, WakaSound wakaSound) {
         this.level = level;
         this.mapLevel = level.getMapLevelLoadable().getMapLevel();
@@ -22,6 +31,13 @@ public class PacGumEatTrigger implements Trigger {
         isSuper = false;
     }
 
+    /**
+     * Second constructor, used if eaten PacGum is a Super PacGum
+     * @param level Level who belongs the PacGum
+     * @param pacGum The PacGum
+     * @param wakaSound The waka sound
+     * @param isSuper boolean if PacGum is a Super PacGum
+     */
     public PacGumEatTrigger(Level level, PacGum pacGum, WakaSound wakaSound, boolean isSuper) {
         this(level, pacGum, wakaSound);
         this.isSuper = isSuper;

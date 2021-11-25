@@ -28,7 +28,8 @@ public final class LevelLoader {
 
     /**
      * Load given level, its map and its inputs, and Game HUD if wanted
-     * @param level Level to load
+     *
+     * @param level         Level to load
      * @param loadGlobalHUD boolean true to load global game hud
      */
     public void load(Level level, boolean loadGlobalHUD) {
@@ -56,6 +57,7 @@ public final class LevelLoader {
 
     /**
      * Load given level, its map and its inputs, and load game hud by default
+     *
      * @param level Level to load
      */
     public void load(Level level) {
@@ -64,6 +66,7 @@ public final class LevelLoader {
 
     /**
      * Unload given level, its maps and its inputs,
+     *
      * @param level Level to unload
      */
     public void unload(Level level) {
@@ -81,6 +84,7 @@ public final class LevelLoader {
 
     /**
      * Returns current level of the game
+     *
      * @return current Level, or null if no level is currently running
      */
     public Level getCurrentLevel() {

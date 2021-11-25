@@ -20,12 +20,19 @@ import java.util.*;
 
 import static config.levels.GameOverScreenConfigurator.*;
 
+/**
+ * The Game Over Map, contains nothing excepts Game Over text and some additional texts such as score
+ */
 public class GameOverMap implements LoadableMap {
 
     private final GameOverLevel level;
     private final List<HUDElement> hudElements;
     private MapLevel map;
 
+    /**
+     * Default constructor
+     * @param gameOverLevel the level of the map
+     */
     public GameOverMap(GameOverLevel gameOverLevel) {
         this.level = gameOverLevel;
         this.hudElements = new LinkedList<>();
@@ -134,6 +141,6 @@ public class GameOverMap implements LoadableMap {
      */
     @Override
     public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
-        return null;
+        return new HashMap<>();
     }
 }

@@ -9,10 +9,18 @@ import model.actions.events.GhostRegenerationPointEvent;
 import model.actions.triggers.GhostRegenerationPointTrigger;
 import model.elements.entities.ghosts.Ghost;
 
+/**
+ * A point in the map, who will re-transform fleeing ghost into a normal ghost when given ghost collides with.
+ */
 public final class GhostRegenerationPoint extends Entity {
 
     private static int id = 0;
 
+    /**
+     * Default constructor.
+     *
+     * @param ghost The Ghost to re-transform on collision
+     */
     public GhostRegenerationPoint(Ghost ghost) {
         super("GhostRegeneration" + id, ghost.getRetreatPoint(), new Rectangle(new Color(0, 0, 0, 100)), new Dimension(0.1, 0.1));
 

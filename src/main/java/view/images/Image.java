@@ -1,5 +1,7 @@
 package view.images;
 
+import java.util.Objects;
+
 /**
  * All games Images
  */
@@ -35,9 +37,14 @@ public enum Image {
         this.path = "/images/" + path;
     }
 
+    /**
+     * Returns wanted image into a Sprite
+     *
+     * @return Sprite of the Image
+     */
     public fr.r1r0r0.deltaengine.model.sprites.Image getSprite() {
         try {
-            return new fr.r1r0r0.deltaengine.model.sprites.Image(getClass().getResource(path).getPath());
+            return new fr.r1r0r0.deltaengine.model.sprites.Image(Objects.requireNonNull(getClass().getResource(path)).getPath());
         } catch (Exception e) {
             e.printStackTrace(); // Should never happen
             System.exit(1);

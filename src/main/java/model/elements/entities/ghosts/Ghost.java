@@ -10,8 +10,6 @@ import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.ai.ghosts.GhostAI;
 import view.SpriteContainer;
 
-import java.util.List;
-
 /**
  * A PacMan's Ghost.
  */
@@ -20,37 +18,25 @@ public class Ghost extends Entity {
     private final MapLevel currentMap;
     private final SpriteContainer normalSprites, scaredSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
+    private final Coordinates<Double> spawnPoint, retreatPoint;
     private GhostState ghostState;
-    private Coordinates<Double> spawnPoint, retreatPoint;
 
     /**
      * Default ghost constructor.
-     * @param name String name of the Ghost
-     * @param currentMap Current Map who Ghost resides
-     * @param normalSprites Sprites when Ghost is in Normal state
-     * @param scaredSprites Sprites when Ghost is in Scared state (energized mode)
-     * @param fleeingSprites Sprites when Ghost is in Fleeing state (when PacMan eat it)
-     * @param ghostAI Ghost AI
-     * @param normalSpeed double speed when Ghost is in Normal state
-     * @param scaredSpeed double speed when Ghost is in Scared state
-     * @param fleeingSpeed double speed when Ghost is in Fleeing state
-     */
-
-    /**
-     * Default ghost constructor.
-     * @param name
-     * @param currentMap
-     * @param normalSprites
-     * @param scaredSprites
-     * @param fleeingSprites
-     * @param ghostAI
-     * @param normalSpeed
-     * @param scaredSpeed
-     * @param fleeingSpeed
-     * @param coords
-     * @param spawnPoint
-     * @param retreatPoint
-     * @param dimension
+     *
+     * @param name           String name of the Ghost
+     * @param currentMap     Current Map who Ghost is
+     * @param normalSprites  Sprites when Ghost is in NORMAL state
+     * @param scaredSprites  Sprites when Ghost is in SCARED state
+     * @param fleeingSprites Sprites when Ghost is in FLEEING state
+     * @param ghostAI        Ghost AI
+     * @param normalSpeed    double speed when Ghost is in NORMAL state
+     * @param scaredSpeed    double speed when Ghost is in SCARED state
+     * @param fleeingSpeed   double speed when Ghost is in FLEEING state
+     * @param coords         Initial Coordinates of the Ghost
+     * @param spawnPoint     Spawn point of the Ghost, who Ghost will be teleported if the map is reset (usually when PacMan dies)
+     * @param retreatPoint   Retreat point of the Ghost, who Ghost will go to regenerate itself from FLEEING to NORMAL state (when PacMan eats it)
+     * @param dimension      Dimension of the Ghost
      */
     Ghost(String name,
           MapLevel currentMap,
@@ -83,7 +69,17 @@ public class Ghost extends Entity {
     }
 
     /**
+     * Get current state of the Ghost
+     *
+     * @return GhostState current Ghost state
+     */
+    public GhostState getState() {
+        return ghostState;
+    }
+
+    /**
      * Set new ghost state
+     *
      * @param ghostState new state of the ghost
      */
     public void setState(GhostState ghostState) {
@@ -99,15 +95,8 @@ public class Ghost extends Entity {
     }
 
     /**
-     * Get current state of the Ghost
-     * @return GhostState current Ghost state
-     */
-    public GhostState getState() {
-        return ghostState;
-    }
-
-    /**
      * Returns if Ghost is in Scared state
+     *
      * @return true if Ghost is in Scared state, false otherwise
      */
     public boolean isScared() {
@@ -116,6 +105,7 @@ public class Ghost extends Entity {
 
     /**
      * Returns if Ghost is in Fleeing state
+     *
      * @return true if Ghost is in Fleeing state, false otherwise
      */
     public boolean isFleeing() {
@@ -124,6 +114,7 @@ public class Ghost extends Entity {
 
     /**
      * Return if Ghost is in Scatter state
+     *
      * @return true if Ghost is in Scatter state, false otherwise
      */
     public boolean isScattering() {
@@ -132,6 +123,7 @@ public class Ghost extends Entity {
 
     /**
      * Returns coordinates of the spawn of the ghost
+     *
      * @return Coordinates of spawn point
      */
     public Coordinates<Double> getSpawnPoint() {
@@ -140,6 +132,7 @@ public class Ghost extends Entity {
 
     /**
      * Returns coordinates of the retreat point, reach by ghost when it's in FLEEING state
+     *
      * @return Coordinates of retreat point
      */
     public Coordinates<Double> getRetreatPoint() {
@@ -148,6 +141,7 @@ public class Ghost extends Entity {
 
     /**
      * Get the Map of the Level where Ghost resides
+     *
      * @return MapLevel current map of the ghost
      */
     public MapLevel getMapLevel() {
