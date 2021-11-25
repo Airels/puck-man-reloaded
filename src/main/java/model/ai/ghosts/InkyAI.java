@@ -37,7 +37,7 @@ public final class InkyAI extends BasicGhostAI {
     }
 
     @Override
-    protected Direction chooseDirection(Ghost ghost, MapLevel mapLevel) {
+    protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         PacMan pacMan;
         try {
             pacMan = findPacMan(ghost,mapLevel);
@@ -45,13 +45,15 @@ public final class InkyAI extends BasicGhostAI {
             return Direction.IDLE;
         }
         Direction oppositeDirection = pacMan.getDirection().getOpposite();
-        if (Main.getEngine().canGoToNextCell(ghost,oppositeDirection)) return oppositeDirection;
+        if (oppositeDirection != Direction.IDLE && Main.getEngine().canGoToNextCell(ghost,oppositeDirection))
+            return oppositeDirection;
         ArrayList<Direction> directions = new ArrayList<>();
         for (Direction otherDirection : Direction.values()) {
             if (otherDirection == Direction.IDLE) continue;
             if (Main.getEngine().canGoToNextCell(ghost,otherDirection)) directions.add(otherDirection);
         }
-        return (directions.size() == 0) ? Direction.IDLE : directions.get(random.nextInt(directions.size()));
+        int size = directions.size();
+        return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
     }
 
     @Override
