@@ -27,10 +27,11 @@ public abstract class BasicGhostAI extends GhostAI {
     public final void tick() {
         Ghost ghost = getGhost();
         if (target != null && ! isTargetReach(ghost)) return;
+        MapLevel mapLevel = ghost.getMapLevel();
         switch (ghost.getState()) {
-            case NORMAL -> chaseModeTick(ghost);
+            case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost);
-            case FLEEING -> fleeingModeTick(ghost);
+            case FLEEING -> fleeingModeTick(ghost,mapLevel);
             default -> {}
         }
         ghost.setDirection(direction);
@@ -45,9 +46,10 @@ public abstract class BasicGhostAI extends GhostAI {
     /**
      * Action when the ghost is in normal/chase mode
      * @param ghost a ghost
+     * @param mapLevel a mapLevel
      */
-    protected final void chaseModeTick (Ghost ghost) {
-        MapLevel mapLevel = ghost.getMapLevel();
+    protected final void chaseModeTick (Ghost ghost, MapLevel mapLevel) {
+
         direction = chooseDirection(ghost,mapLevel);
         target = (direction == Direction.IDLE) ? null : selectTarget(ghost, mapLevel);
     }
@@ -71,9 +73,13 @@ public abstract class BasicGhostAI extends GhostAI {
     /**
      * Action when the ghost is in fleeing mode
      * @param ghost a ghost
+     * @param mapLevel a mapLevel
      */
-    private void fleeingModeTick (Ghost ghost) {
-
+    private void fleeingModeTick (Ghost ghost, MapLevel mapLevel) {
+        Coordinates<Double> point = ghost.getRetreatPoint();
+        Coordinates<Integer> destination = new Coordinates<>(point.getX().intValue(),point.getY().intValue());
+        direction = Utils.findShortestWay(ghost,mapLevel,destination);
+        target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
     /**

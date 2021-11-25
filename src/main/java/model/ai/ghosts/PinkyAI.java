@@ -56,7 +56,7 @@ public final class PinkyAI extends BasicGhostAI {
                 return Direction.IDLE;
             }
         }
-        return Utils.findShortestWay_pinky(ghost,mapLevel,destination,forbiddenWays);
+        return Utils.findShortestWay(ghost,mapLevel,destination,forbiddenWays);
     }
 
     /**
@@ -91,9 +91,9 @@ public final class PinkyAI extends BasicGhostAI {
 
     @Override
     protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
-        Coordinates<Double> position = ghost.getCoordinates();
-        return new Coordinates<>(position.getX().intValue() + direction.getX(),
-                position.getY().intValue() + direction.getY());
+        Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
+        return new Coordinates<>(position.getX() + direction.getX(),
+                position.getY() + direction.getY());
     }
 
 }

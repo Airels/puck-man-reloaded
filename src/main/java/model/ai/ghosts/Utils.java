@@ -67,7 +67,6 @@ public final class Utils {
             y += direction.getY();
             if ( ! mapLevel.getCell(x, y).isCrossableBy(entity))
                 return new Coordinates<>(x - direction.getX(), y - direction.getY());
-
             Direction opposite = direction.getOpposite();
             for (Direction other : Direction.values()) {
                 if (other == direction || other == opposite || other == Direction.IDLE) continue;
@@ -79,31 +78,22 @@ public final class Utils {
     }
 
     /**
-     * Find and return the last node of the path that minimise the path to the destination
+     * Find and return the direction that minimise the path to the destination
      * @param ghost a ghost
      * @param mapLevel a malLevel
      * @param destination a destination where the ghost want to go
      * @param forbiddenWays a list of forbidden points
      * @return the direction that minimise the path to the destination
      */
-    private static Node findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination,
+    public static Direction findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination,
                                          Collection<Coordinates<Integer>> forbiddenWays) {
         Coordinates<Integer> source = getIntegerCoordinates(ghost);
-        if (source.equals(destination)) return new Node(destination,null,Direction.IDLE);
-        return breadthFirstSearch(ghost,mapLevel,source,destination,forbiddenWays);
+        if (source.equals(destination)) return Direction.IDLE;
+        Node node = breadthFirstSearch(ghost,mapLevel,source,destination,forbiddenWays);
+        Direction direction = Direction.IDLE;
+        for ( ; node != null ; node = node.previousNode) direction = node.direction;
+        return direction;
     }
-
-    /**
-     * Find and return the last node of the path that minimise the path to the destination
-     * @param ghost a ghost
-     * @param mapLevel a malLevel
-     * @param destination a destination where the ghost want to go
-     * @return the direction that minimise the path to the destination
-     */
-    private static Node findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination) {
-        return findShortestWay(ghost,mapLevel,destination,new Stack<>());
-    }
-
 
     /**
      * Find and return the direction that minimise the path to the destination
@@ -112,28 +102,8 @@ public final class Utils {
      * @param destination a destination where the ghost want to go
      * @return the direction that minimise the path to the destination
      */
-    public static Direction findShortestWay_blinky (Ghost ghost, MapLevel mapLevel,
-                                                    Coordinates<Integer> destination) {
-        Node node = findShortestWay(ghost,mapLevel,destination);
-        Direction direction = Direction.IDLE;
-        for ( ; node != null ; node = node.previousNode) direction = node.direction;
-        return direction;
-    }
-
-    /**
-     * TODO
-     * @param ghost
-     * @param mapLevel
-     * @param destination
-     * @return
-     */
-    public static Direction findShortestWay_pinky (Ghost ghost, MapLevel mapLevel,
-                                                   Coordinates<Integer> destination,
-                                                   Collection<Coordinates<Integer>> forbiddenWays) {
-        Node node = findShortestWay(ghost,mapLevel,destination,forbiddenWays);
-        Direction direction = Direction.IDLE;
-        for ( ; node != null ; node = node.previousNode) direction = node.direction;
-        return direction;
+    public static Direction findShortestWay (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> destination) {
+        return findShortestWay(ghost,mapLevel,destination,new Stack<>());
     }
 
     /**
