@@ -5,10 +5,10 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Stack;
 
@@ -39,11 +39,6 @@ public final class PinkyAI extends BasicGhostAI {
     }
 
     @Override
-    protected void scaryModeTick (Ghost ghost) {
-
-    }
-
-    @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         Coordinates<Integer> destination;
         try {
@@ -66,14 +61,12 @@ public final class PinkyAI extends BasicGhostAI {
      * @param ghost a ghost
      * @param mapLevel a mapLevel
      * @return the final where the ghost must go
-     * @throws GhostTargetMissingException if pacMan is not on the mapLevel
+     * @throws GhostTargetMissingException if pacMan is not in the mapLevel
      */
     private Coordinates<Integer> findDestination (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
-        Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
-        if (entity == null) throw new GhostTargetMissingException(ghost);
-        Coordinates<Integer> pacManPosition = Utils.getIntegerCoordinates(entity);
-        Direction pacManDirection = entity.getDirection();
-        return Utils.findNextCross(ghost,mapLevel,pacManPosition,pacManDirection);
+        PacMan pacMan = findPacMan(ghost,mapLevel);
+        Coordinates<Integer> pacManPosition = Utils.getIntegerCoordinates(pacMan);
+        return Utils.findNextCross(ghost,mapLevel,pacManPosition,pacMan.getDirection());
 
     }
 

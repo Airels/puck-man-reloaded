@@ -41,15 +41,10 @@ public final class ClydeAI extends BasicGhostAI {
     }
 
     @Override
-    protected void scaryModeTick (Ghost ghost) {
-        //TODO
-    }
-
-    @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         ArrayList<Direction> directions = new ArrayList<>();
         for (Direction direction : Direction.values()) {
-            if (Main.getEngine().canGoToNextCell(ghost, direction)) directions.add(direction);
+            if (Main.getEngine().canGoToNextCell(ghost,direction)) directions.add(direction);
         }
         int size = directions.size();
         return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
