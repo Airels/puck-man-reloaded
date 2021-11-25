@@ -147,9 +147,6 @@ public final class Game {
      * TODO
      */
     public void gameOver() {
-        levelLoader.load(gameOverLevel);
-
-        /*
         try {
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
@@ -158,22 +155,19 @@ public final class Game {
             // TODO animation
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
             Thread.sleep(2000);
-            levelLoader.getCurrentLevel().reset();
-            deltaEngine.tick();
-            Thread.sleep(3000);
             if (lifeCounter > 0) {
+                levelLoader.getCurrentLevel().reset();
+                deltaEngine.tick();
+                Thread.sleep(3000);
                 deltaEngine.resumeCurrentMap();
                 lifeCounter--;
             } else {
-                // TODO FIN DU JEU
-                // TODO Display ScoreDisplayer
+                levelLoader.load(gameOverLevel);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.exit(1);
         }
-
-         */
     }
 
     public double getScore() {
