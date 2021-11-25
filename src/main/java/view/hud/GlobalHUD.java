@@ -9,6 +9,9 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
 import model.Game;
+import model.actions.events.GlobalHUDCheckEnergizedModeChangedEvent;
+import model.actions.events.GlobalHUDCheckLivesChangedEvent;
+import model.actions.events.GlobalHUDCheckScoreChangedEvent;
 import model.actions.triggers.GlobalHUDEnergizedModeChangedTrigger;
 import model.loadables.Loadable;
 
@@ -70,43 +73,9 @@ public final class GlobalHUD implements Loadable {
                 Dimension.DEFAULT_DIMENSION
         ));
 
-        checkLivesChanged = new Event() {
-            private int previous = game.getLives();
-
-            @Override
-            public void checkEvent() {
-
-
-                if (game.getLives() != previous) {
-                    previous = game.getLives();
-                    runTriggers();
-                }
-            }
-        };
-
-        checkScoreChanged = new Event() {
-            private double previous = game.getScore();
-
-            @Override
-            public void checkEvent() {
-                if (game.getScore() != previous) {
-                    previous = game.getScore();
-                    runTriggers();
-                }
-            }
-        };
-
-        checkEnergizedModeChanged = new Event() {
-            boolean previous = game.isInEnergizedMode();
-
-            @Override
-            public void checkEvent() {
-                if (game.isInEnergizedMode() || previous != game.isInEnergizedMode())
-                    runTriggers();
-
-                previous = game.isInEnergizedMode();
-            }
-        };
+        checkLivesChanged = new GlobalHUDCheckLivesChangedEvent(game);
+        checkScoreChanged = new GlobalHUDCheckScoreChangedEvent(game);
+        checkEnergizedModeChanged = new GlobalHUDCheckEnergizedModeChangedEvent(game);
 
         checkLivesChanged.addTrigger(() -> setLives(game.getLives()));
         checkScoreChanged.addTrigger(() -> setScore(game.getScore()));
