@@ -25,14 +25,11 @@ public final class ClydeAI extends BasicGhostAI {
      * random pathfinding
      */
 
-    private final Random random;
-
     /**
      * Constructor
      */
     public ClydeAI() {
         super();
-        random = new Random();
     }
 
     @Override

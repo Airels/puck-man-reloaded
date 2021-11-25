@@ -22,6 +22,7 @@ import java.util.Random;
  */
 public abstract class BasicGhostAI extends GhostAI {
 
+    protected final Random random = new Random();
     protected Coordinates<Integer> target;
     protected Direction direction;
 
@@ -91,7 +92,7 @@ public abstract class BasicGhostAI extends GhostAI {
             if (escape != shortestDirection && Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
-        direction = (escapes.size() == 0) ? Direction.IDLE : escapes.get(new Random().nextInt(escapes.size()));
+        direction = (escapes.size() == 0) ? Direction.IDLE : escapes.get(random.nextInt(escapes.size()));
         target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
