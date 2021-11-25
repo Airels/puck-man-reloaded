@@ -9,6 +9,8 @@ import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Stack;
 
 /**
  * TODO
@@ -49,7 +51,7 @@ public final class PinkyAI extends BasicGhostAI {
         } catch (GhostTargetMissingException e) {
             return Direction.IDLE;
         }
-        ArrayList<Coordinates<Integer>> forbiddenWays = findForbiddenWays(mapLevel);
+        Collection<Coordinates<Integer>> forbiddenWays = findForbiddenWays(mapLevel);
         Coordinates<Integer> ghostCoordinate = Utils.getIntegerCoordinates(ghost);
         for (Coordinates<Integer> forbiddenWay : forbiddenWays) {
             if (forbiddenWay.equals(ghostCoordinate)) {
@@ -76,15 +78,15 @@ public final class PinkyAI extends BasicGhostAI {
     }
 
     /**
-     * TODO
-     * @param mapLevel
-     * @return
+     * Find and return a collection of coordinates to avoid
+     * @param mapLevel a mapLevel
+     * @return a collection of coordinates to avoid
      */
-    private ArrayList<Coordinates<Integer>> findForbiddenWays (MapLevel mapLevel) {
-        ArrayList<Coordinates<Integer>> forbiddenWays = new ArrayList<>();
+    private Collection<Coordinates<Integer>> findForbiddenWays (MapLevel mapLevel) {
+        Stack<Coordinates<Integer>> forbiddenWays = new Stack<>();
         for (String targetName : FORBIDDEN_TARGET_NAMES) {
             Entity entity = mapLevel.getEntity(targetName);
-            if (entity != null) forbiddenWays.add(Utils.getIntegerCoordinates(entity));
+            if (entity != null) forbiddenWays.push(Utils.getIntegerCoordinates(entity));
         }
         return forbiddenWays;
     }
