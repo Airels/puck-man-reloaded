@@ -37,8 +37,10 @@ public final class ClydeAI extends BasicGhostAI {
     @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         ArrayList<Direction> directions = new ArrayList<>();
-        for (Direction direction : Direction.values()) {
-            if (Main.getEngine().canGoToNextCell(ghost,direction)) directions.add(direction);
+        Direction oppositeDirection = direction.getOpposite();
+        for (Direction other : Direction.values()) {
+            if (other == Direction.IDLE || other == oppositeDirection) continue;
+            if (Main.getEngine().canGoToNextCell(ghost,other)) directions.add(other);
         }
         int size = directions.size();
         return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
