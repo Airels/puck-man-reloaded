@@ -9,7 +9,7 @@ import view.images.Image;
 import java.util.Arrays;
 import java.util.List;
 
-public class GhostConfiguration {
+public final class GhostConfiguration {
 
     public final static String CONF_BLINKY_NAME = "Blinky";
     public final static GhostAIs CONF_BLINKY_AI = GhostAIs.BLINKY_AI;

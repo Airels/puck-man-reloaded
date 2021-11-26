@@ -23,7 +23,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(getEngine(), 80, 0);
+        Game game = new Game(getEngine(), 144, 0);
         MenuLevel menuLevel = new MenuLevel(game);
         GameOverLevel gameOverLevel = new GameOverLevel(game);
         game.start(menuLevel, gameOverLevel);

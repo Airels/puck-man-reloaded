@@ -51,7 +51,7 @@ public final class GlobalHUD implements Loadable {
         livesText.setSize(GlobalHUDConfiguration.CONF_GLOBAL_HUD_LIVES_TEXT_SIZE);
         livesText.setFont(CONF_GLOBAL_HUD_LIVES_TEXT_FONT);
         hudElements.add(new HUDElement("lives text",
-                coordinatesConvert(0, 0),
+                coordinatesConvert(CONF_GLOBAL_HUD_LIVES_TEXT_POSITION),
                 livesText,
                 Dimension.DEFAULT_DIMENSION
         ));
@@ -61,7 +61,7 @@ public final class GlobalHUD implements Loadable {
         scoreText.setSize(GlobalHUDConfiguration.CONF_GLOBAL_HUD_SCORE_TEXT_SIZE);
         scoreText.setFont(CONF_GLOBAL_HUD_SCORE_TEXT_FONT);
         hudElements.add(new HUDElement("score text",
-                coordinatesConvert(width - width / 3, 0),
+                coordinatesConvert(CONF_GLOBAL_HUD_SCORE_TEXT_POSITION),
                 scoreText,
                 Dimension.DEFAULT_DIMENSION
         ));
@@ -71,7 +71,7 @@ public final class GlobalHUD implements Loadable {
         energizedModeText.setSize(GlobalHUDConfiguration.CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_SIZE);
         energizedModeText.setFont(CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_FONT);
         hudElements.add(new HUDElement("timer super pac gum text",
-                coordinatesConvert(4.5, 0),
+                coordinatesConvert(CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_POSITION),
                 energizedModeText,
                 Dimension.DEFAULT_DIMENSION
         ));
@@ -156,7 +156,10 @@ public final class GlobalHUD implements Loadable {
      * @param y ordinate position
      * @return new Coordinates relative to the HUD
      */
-    private Coordinates<Double> coordinatesConvert(double x, double y) {
+    private Coordinates<Double> coordinatesConvert(Coordinates<Double> coordinates) {
+        double x = coordinates.getX(),
+                y = coordinates.getY();
+
         return new Coordinates<>(position.getX() + x, position.getY() + y + GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_MARGIN);
     }
 }

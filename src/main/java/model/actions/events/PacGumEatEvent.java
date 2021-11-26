@@ -6,6 +6,10 @@ import model.elements.entities.items.PacGum;
 import model.levels.Level;
 import sounds.WakaSound;
 
+/**
+ * Event checking when PacMan eats a PacGum.
+ * Generates a Trigger itself
+ */
 public class PacGumEatEvent extends Event {
 
     private final static WakaSound wakaSound = new WakaSound();

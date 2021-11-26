@@ -40,7 +40,7 @@ public final class Game {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
         engine.setMarginError(marginError);
-        engine.printFrameRate(false);
+        engine.printFrameRate(true);
 
         SoundLoader.loadSounds();
 

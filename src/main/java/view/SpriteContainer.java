@@ -26,7 +26,7 @@ public final class SpriteContainer {
         this.downSprite = downSprite;
         this.rightSprite = rightSprite;
 
-        this.lastSpriteGet = leftSprite;
+        this.lastSpriteGet = rightSprite;
     }
 
     /**

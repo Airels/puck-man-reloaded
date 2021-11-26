@@ -1,5 +1,6 @@
 package config.game;
 
+import fr.r1r0r0.deltaengine.model.Coordinates;
 import view.colors.Color;
 
 /**
@@ -25,4 +26,8 @@ public final class GlobalHUDConfiguration {
     public final static String CONF_GLOBAL_HUD_LIVES_TEXT_FONT = "Consolas";
     public final static String CONF_GLOBAL_HUD_SCORE_TEXT_FONT = "Consolas";
     public final static String CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_FONT = "Consolas";
+
+    public final static Coordinates<Double> CONF_GLOBAL_HUD_LIVES_TEXT_POSITION = new Coordinates<>(0., 0.);
+    public final static Coordinates<Double> CONF_GLOBAL_HUD_SCORE_TEXT_POSITION = new Coordinates<>(10., 0.);
+    public final static Coordinates<Double> CONF_GLOBAL_HUD_ENERGIZED_MODE_TIMER_TEXT_POSITION = new Coordinates<>(2.5, .5);
 }

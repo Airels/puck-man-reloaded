@@ -3,6 +3,9 @@ package model.actions.events;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.events.Event;
 
+/**
+ * Event
+ */
 public class OriginalLevelRightTunnelEvent extends Event {
 
     private final Entity entity;

@@ -1,5 +1,8 @@
 package model.elements.cells;
 
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
+import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.cells.RestrictiveCell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -23,6 +26,16 @@ public class GhostDoor extends Cell {
 
     @Override
     public boolean isCrossableBy(Entity entity) {
-        return entity.getClass().equals(Ghost.class);
+        if (!entity.getClass().equals(Ghost.class)) return false;
+
+        Ghost ghost = ((Ghost) entity);
+        if (ghost.isFleeing())
+            return true;
+
+        Coordinates<Double> ghostCoords = ghost.getCoordinates();
+        Dimension ghostDimension = ghost.getDimension();
+        Coordinates<Double> botRightCollisionPoint = CollisionPositions.RIGHT_BOT.calcPosition(ghostCoords, ghostDimension);
+
+        return (botRightCollisionPoint.getY() > this.getCoordinates().getY());
     }
 }
