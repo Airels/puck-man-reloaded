@@ -6,6 +6,9 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
+import java.util.Collection;
+import java.util.Stack;
+
 /**
  * An AI corresponding to the red ghost in the game PacMan
  * His movement used to follow pacMan to kill him, he always chose the shortest way
@@ -39,7 +42,10 @@ public final class BlinkyAI extends BasicGhostAI {
         } catch (GhostTargetMissingException e) {
             return Direction.IDLE;
         }
-        return Utils.findShortestWay(ghost,mapLevel,destination);
+        Collection<Coordinates<Integer>> forbiddenWays = new Stack<>();
+        forbiddenWays.add(Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction.getOpposite()));
+        Direction directionChoose = Utils.findShortestWay(ghost,mapLevel,destination,forbiddenWays);
+        return (directionChoose == Direction.IDLE) ? direction.getOpposite() : directionChoose;
     }
 
     /**

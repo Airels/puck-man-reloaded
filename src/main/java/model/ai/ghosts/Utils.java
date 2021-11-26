@@ -60,21 +60,23 @@ public final class Utils {
      */
     public static Coordinates<Integer> findNextCross (Entity entity, MapLevel mapLevel,
                                                       Coordinates<Integer> position, Direction direction) {
-        int x = position.getX();
-        int y = position.getY();
         for (;;) {
-            x += direction.getX();
-            y += direction.getY();
-            if ( ! mapLevel.getCell(x, y).isCrossableBy(entity))
-                return new Coordinates<>(x - direction.getX(), y - direction.getY());
+            position = calcNextPosition(position,direction);
+            if ( ! mapLevel.getCell(position.getX(),position.getY()).isCrossableBy(entity))
+                return calcNextPosition(position,direction.getOpposite());
             Direction opposite = direction.getOpposite();
             for (Direction other : Direction.values()) {
                 if (other == direction || other == opposite || other == Direction.IDLE) continue;
                 Coordinates<Integer> otherCoordinates = other.getCoordinates();
-                if (mapLevel.getCell(x + otherCoordinates.getX(), y + otherCoordinates.getY())
-                        .isCrossableBy(entity)) return new Coordinates<>(x, y);
+                Coordinates<Integer> nextPosition = calcNextPosition(position,other);
+                if (mapLevel.getCell(nextPosition.getX(),nextPosition.getY())
+                        .isCrossableBy(entity)) return position.copy();
             }
         }
+    }
+
+    public static Coordinates<Integer> calcNextPosition (Coordinates<Integer> position, Direction direction) {
+        return new Coordinates<>(position.getX() + direction.getX(), position.getY() + direction.getY());
     }
 
     /**

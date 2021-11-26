@@ -108,7 +108,8 @@ public abstract class BasicGhostAI extends GhostAI {
         Coordinates<Double> point = ghost.getRetreatPoint();
         Coordinates<Integer> destination = new Coordinates<>(point.getX().intValue(),point.getY().intValue());
         direction = Utils.findShortestWay(ghost,mapLevel,destination);
-        target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
+        target = Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction);
+        //target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
     /**
