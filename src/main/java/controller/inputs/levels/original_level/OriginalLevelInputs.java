@@ -1,10 +1,13 @@
-package controller.inputs_levels.original_level;
+package controller.inputs.levels.original_level;
 
 import controller.elements.entities.PacManInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.PacMan;
 import model.loadables.LoadableInput;
 
+/**
+ * Inputs of the Original level. Loads required inputs for the map.
+ */
 public class OriginalLevelInputs implements LoadableInput {
 
     private PacMan pacman;
@@ -18,8 +21,6 @@ public class OriginalLevelInputs implements LoadableInput {
     @Override
     public void load(KernelEngine engine) {
         pacManInputs.load(engine);
-
-        // TODO Escape = Quit OR Return to menu OR halt execution (pause) ?
     }
 
     @Override

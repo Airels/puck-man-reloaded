@@ -1,6 +1,6 @@
 package model.levels.fixed_levels.menu;
 
-import controller.inputs_levels.menu.MenuInputs;
+import controller.inputs.levels.menu.MenuInputs;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;

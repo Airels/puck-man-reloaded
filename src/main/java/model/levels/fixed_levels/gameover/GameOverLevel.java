@@ -1,6 +1,6 @@
 package model.levels.fixed_levels.gameover;
 
-import controller.inputs_levels.gameover.GameOverInputs;
+import controller.inputs.levels.gameover.GameOverInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;

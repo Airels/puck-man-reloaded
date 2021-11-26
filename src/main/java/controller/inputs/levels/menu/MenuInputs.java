@@ -1,4 +1,4 @@
-package controller.inputs_levels.menu;
+package controller.inputs.levels.menu;
 
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;

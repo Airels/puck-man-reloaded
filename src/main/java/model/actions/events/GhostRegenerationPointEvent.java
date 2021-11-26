@@ -3,6 +3,10 @@ package model.actions.events;
 import fr.r1r0r0.deltaengine.model.events.Event;
 import model.elements.entities.ghosts.Ghost;
 
+/**
+ * Handles the regeneration point of the ghost.
+ * Run associated triggers when the ghost enters the point.
+ */
 public class GhostRegenerationPointEvent extends Event {
 
     private Ghost ghost;

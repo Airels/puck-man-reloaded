@@ -1,6 +1,6 @@
 package model.levels.fixed_levels.original_level;
 
-import controller.inputs_levels.original_level.OriginalLevelInputs;
+import controller.inputs.levels.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
