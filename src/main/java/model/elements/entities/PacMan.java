@@ -7,8 +7,7 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import view.images.Image;
 
-import static config.pacman.PacManConfiguration.CONF_PACMAN_NAME;
-import static config.pacman.PacManConfiguration.CONF_PACMAN_SPRITE;
+import static config.pacman.PacManConfiguration.*;
 
 /**
  * PacMan, the main Character.
@@ -26,24 +25,25 @@ public class PacMan extends Entity {
     public PacMan(Coordinates<Double> coordinates) {
         super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), new Dimension(0.9, 0.9));
         isDead = false;
+
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
             switch (this.getAttributes().getDirection()) { // TODO a refactor
                 case UP -> {
-                    s.getNode().setScaleX(1);
-                    s.getNode().setRotate(-90);
+                    s.setScale(1, s.getScale().getScaleY());
+                    s.setRotate(-90);
                 }
                 case DOWN -> {
-                    s.getNode().setScaleX(1);
-                    s.getNode().setRotate(90);
+                    s.setScale(1, s.getScale().getScaleY());
+                    s.setRotate(90);
                 }
                 case RIGHT -> {
-                    s.getNode().setScaleX(1);
-                    s.getNode().setRotate(0);
+                    s.setScale(1, s.getScale().getScaleY());
+                    s.setRotate(0);
                 }
                 case LEFT -> {
-                    s.getNode().setScaleX(-1);
-                    s.getNode().setRotate(0);
+                    s.setScale(-1, s.getScale().getScaleY());
+                    s.setRotate(0);
                 }
             }
 
@@ -85,5 +85,7 @@ public class PacMan extends Entity {
      */
     public void setDead(boolean dead) {
         isDead = dead;
+
+        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE : CONF_PACMAN_SPRITE);
     }
 }

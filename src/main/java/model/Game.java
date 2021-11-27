@@ -2,6 +2,7 @@ package model;
 
 import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
+import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
@@ -39,7 +40,6 @@ public final class Game {
     public Game(KernelEngine engine, int fps, double marginError) {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
-        engine.setMarginError(marginError);
         engine.printFrameRate(true);
 
         SoundLoader.loadSounds();
@@ -191,9 +191,9 @@ public final class Game {
             Thread.sleep(1000);
 
             pacMan.setDead(true); // TODO Changement de sprite Pacman
-            // TODO animation
+            deltaEngine.tick(Engines.GRAPHICS_ENGINE); // TODO animation
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             if (lifeCounter > 0) {
                 lifeCounter--;
 
