@@ -5,7 +5,8 @@ import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
-import model.levels.fixed_levels.gameover.GameOverLevel;
+import model.levels.fixed_levels.GameOverLevel;
+import model.levels.fixed_levels.PauseMenuLevel;
 import model.levels.fixed_levels.menu.MenuLevel;
 
 /**
@@ -25,8 +26,9 @@ public class Main {
     public static void main(String[] args) {
         Game game = new Game(getEngine(), 144, 0);
         MenuLevel menuLevel = new MenuLevel(game);
+        PauseMenuLevel pauseMenu = new PauseMenuLevel(game);
         GameOverLevel gameOverLevel = new GameOverLevel(game);
-        game.start(menuLevel, gameOverLevel);
+        game.start(menuLevel, pauseMenu, gameOverLevel);
     }
 
     public static KernelEngine getEngine() {

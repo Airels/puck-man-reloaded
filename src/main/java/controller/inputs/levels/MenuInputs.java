@@ -1,11 +1,11 @@
-package controller.inputs.levels.menu;
+package controller.inputs.levels;
 
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import model.Game;
 import model.levels.fixed_levels.menu.MenuSelector;
-import view.maps_levels.menu.MenuMap;
+import view.maps.MenuMap;
 import model.loadables.LoadableInput;
 
 public class MenuInputs implements LoadableInput {

@@ -1,6 +1,6 @@
 package model.levels.fixed_levels.menu;
 
-import controller.inputs.levels.menu.MenuInputs;
+import controller.inputs.levels.MenuInputs;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -12,7 +12,7 @@ import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
 import sounds.Sounds;
-import view.maps_levels.menu.MenuMap;
+import view.maps.MenuMap;
 
 import java.util.ArrayList;
 import java.util.Collection;

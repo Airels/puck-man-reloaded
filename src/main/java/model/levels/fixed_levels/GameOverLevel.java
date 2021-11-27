@@ -1,6 +1,6 @@
-package model.levels.fixed_levels.gameover;
+package model.levels.fixed_levels;
 
-import controller.inputs.levels.gameover.GameOverInputs;
+import controller.inputs.levels.GameOverInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -10,7 +10,7 @@ import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
-import view.maps_levels.gameover.GameOverMap;
+import view.maps.GameOverMap;
 
 import java.util.ArrayList;
 import java.util.Collection;

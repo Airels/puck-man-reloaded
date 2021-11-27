@@ -1,6 +1,6 @@
-package model.levels.fixed_levels.original_level;
+package model.levels.fixed_levels;
 
-import controller.inputs.levels.original_level.OriginalLevelInputs;
+import controller.inputs.levels.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
@@ -16,7 +16,7 @@ import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
 import sounds.Sounds;
-import view.maps_levels.original_level.OriginalLevelMap;
+import view.maps.OriginalLevelMap;
 
 import java.util.Collection;
 import java.util.Map;
@@ -35,6 +35,7 @@ public class OriginalLevel implements Level {
     private final PacMan pacMan;
     private int nbOfPacGums;
     private HUDElement readyText;
+    private boolean firstTime;
 
     /**
      * Default constructor.
@@ -46,7 +47,7 @@ public class OriginalLevel implements Level {
         this.pacMan = game.getPacMan();
 
         this.mapLevel = new OriginalLevelMap(this, pacMan);
-        this.inputLevel = new OriginalLevelInputs(pacMan);
+        this.inputLevel = new OriginalLevelInputs(game);
 
 
         Text rText = new Text(CONF_READY_TEXT);
@@ -58,27 +59,32 @@ public class OriginalLevel implements Level {
                 rText,
                 Dimension.DEFAULT_DIMENSION
         );
+
+        firstTime = true;
     }
 
     @Override
     public void load(KernelEngine deltaEngine) {
-        deltaEngine.addHUDElement(readyText);
+        if (firstTime) {
+            deltaEngine.addHUDElement(readyText);
 
-        nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
+            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
 
-        new Thread(() -> {
-            deltaEngine.haltCurrentMap();
-            Sounds.GAME_BEGIN.play();
+            new Thread(() -> {
+                Sounds.GAME_BEGIN.play();
 
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                deltaEngine.removeHUDElement(readyText);
-                deltaEngine.resumeCurrentMap();
-            }
-        }).start();
+                try {
+                    Thread.sleep(4000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } finally {
+                    deltaEngine.removeHUDElement(readyText);
+                    deltaEngine.resumeCurrentMap();
+                }
+            }).start();
+
+            firstTime = false;
+        }
     }
 
     @Override

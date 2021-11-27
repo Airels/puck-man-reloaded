@@ -19,26 +19,26 @@ class GameTest {
         double score = ScoreConfiguration.CONF_EATING_GHOST_REWARD_SCORE;
         double mult = ScoreConfiguration.CONF_CHAIN_EATING_REWARD_SCORE;
 
-        Game game = new Game(Main.getEngine(), 1);
+        Game game = new Game(Main.getEngine(), 1, 0);
 
         assertEquals(0, game.getScore());
-        double eatenghosts = 0;
+        double eatenGhosts;
 
         game.ghostEaten();
-        eatenghosts = 1;
-        double score1 = score * eatenghosts * mult;
+        eatenGhosts = 1;
+        double score1 = score * eatenGhosts * mult;
         assertEquals(score1, game.getScore());
 
 
         game.ghostEaten();
-        eatenghosts ++;
-        double score2 = score * eatenghosts * mult + score1;
+        eatenGhosts ++;
+        double score2 = score * eatenGhosts * mult + score1;
         assertEquals(score2, game.getScore());
 
 
         game.ghostEaten();
-        eatenghosts++;
-        double score3 = score2 + eatenghosts*score * mult;
+        eatenGhosts++;
+        double score3 = score2 + eatenGhosts*score * mult;
         assertEquals(score3, game.getScore());
 
 

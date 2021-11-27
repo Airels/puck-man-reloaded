@@ -2,13 +2,14 @@ package model;
 
 import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
+import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
 import model.events.MapLevelChanger;
 import model.events.TimedEvent;
 import model.levels.Level;
-import model.levels.fixed_levels.original_level.OriginalLevel;
+import model.levels.fixed_levels.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import sounds.SoundLoader;
 
@@ -21,9 +22,9 @@ public final class Game {
     private final KernelEngine deltaEngine;
     private final LevelLoader levelLoader;
     private final LevelGenerator levelGenerator;
-    private Level menuLevel, gameOverLevel;
+    private Level menuLevel, pauseLevel, gameOverLevel, bufferedLevel;
     private MapLevelChanger mapLevelChanger;
-    private boolean inEnergizedMode;
+    private boolean inEnergizedMode, canPause;
     private int lifeCounter, ghostEatenChain;
     private double score;
     private TimedEvent energizeTimerEvent;
@@ -39,13 +40,13 @@ public final class Game {
     public Game(KernelEngine engine, int fps, double marginError) {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
-        engine.setMarginError(marginError);
         engine.printFrameRate(true);
 
         SoundLoader.loadSounds();
 
         this.levelLoader = new LevelLoader(engine);
         this.levelGenerator = new LevelGenerator();
+        this.canPause = true;
     }
 
     /**
@@ -54,14 +55,15 @@ public final class Game {
      * @param menuLevel     First game level
      * @param gameOverLevel Level when game over
      */
-    public void start(Level menuLevel, Level gameOverLevel) {
+    public void start(Level menuLevel, Level pauseLevel, Level gameOverLevel) {
         this.menuLevel = menuLevel;
+        this.pauseLevel = pauseLevel;
         this.gameOverLevel = gameOverLevel;
         levelLoader.load(menuLevel, false);
     }
 
     /**
-     * When called, launch the game in singleplayer mode.
+     * When called, launch the game in single player mode.
      */
     public void launchSinglePlayerGame() {
         this.pacMan = new PacMan();
@@ -72,6 +74,7 @@ public final class Game {
 
         OriginalLevel originalLevel = new OriginalLevel(this);
         levelLoader.load(originalLevel);
+        deltaEngine.haltCurrentMap();
 
         mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
         mapLevelChanger.addTrigger(this::nextLevel);
@@ -102,10 +105,30 @@ public final class Game {
     }
 
     /**
+     * Load the Pause level
+     */
+    public void pauseGame() {
+        if (!canPause) return;
+
+        if (isInEnergizedMode()) energizeTimerEvent.pause();
+        bufferedLevel = levelLoader.getCurrentLevel();
+        levelLoader.load(pauseLevel, false);
+    }
+
+    /**
+     * Resumes the current level
+     */
+    public void resumeGame() {
+        if (isInEnergizedMode()) energizeTimerEvent.unpause();
+        levelLoader.load(bufferedLevel);
+        bufferedLevel = null;
+    }
+
+    /**
      * Transfers player character to the next generated level (in singleplayer)
      */
     public void nextLevel() {
-        System.out.println("NEXT LEVEL");
+        System.out.println("NEXT LEVEL"); // TODO
 
         deltaEngine.removeGlobalEvent(mapLevelChanger);
         Level nextLevel = levelGenerator.generate(this);
@@ -162,13 +185,15 @@ public final class Game {
      */
     public void gameOver() {
         try {
+            this.canPause = false;
+
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
 
             pacMan.setDead(true); // TODO Changement de sprite Pacman
-            // TODO animation
+            deltaEngine.tick(Engines.GRAPHICS_ENGINE); // TODO animation
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
-            Thread.sleep(2000);
+            Thread.sleep(3000);
             if (lifeCounter > 0) {
                 lifeCounter--;
 
@@ -180,6 +205,8 @@ public final class Game {
             } else {
                 levelLoader.load(gameOverLevel, false);
             }
+
+            this.canPause = true;
         } catch (InterruptedException e) {
             e.printStackTrace();
             System.exit(1);
@@ -199,6 +226,8 @@ public final class Game {
     }
 
     public void pacGumEaten(boolean isSuper) {
+        if (levelLoader.getCurrentLevel() == null) return;
+
         levelLoader.getCurrentLevel().getAndDecreasePacGums();
 
         increaseScore((isSuper) ?
@@ -220,5 +249,17 @@ public final class Game {
      */
     public PacMan getPacMan() {
         return pacMan;
+    }
+
+    /**
+     * Returns if game is currently paused
+     * @return boolean true if in pause, false otherwise
+     */
+    public boolean isPaused() {
+        return (bufferedLevel != null);
+    }
+
+    public TimedEvent getEnergizeTimerEvent() {
+        return energizeTimerEvent;
     }
 }

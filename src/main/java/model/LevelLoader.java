@@ -7,7 +7,7 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.levels.Level;
 import view.hud.GlobalHUD;
-import view.maps_levels.MapLevelLoader;
+import view.maps.MapLevelLoader;
 
 /**
  * Level Loader. Loads given Level (its map and inputs), and load it on the Engine
@@ -32,9 +32,11 @@ public final class LevelLoader {
      * @param level         Level to load
      * @param loadGlobalHUD boolean true to load global game hud
      */
-    public void load(Level level, boolean loadGlobalHUD) {
+    public synchronized void load(Level level, boolean loadGlobalHUD) {
         if (currentLevel != null)
             unload(currentLevel);
+
+        deltaEngine.haltCurrentMap();
 
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
@@ -53,6 +55,8 @@ public final class LevelLoader {
         }
 
         currentLevel = level;
+
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
@@ -69,7 +73,9 @@ public final class LevelLoader {
      *
      * @param level Level to unload
      */
-    public void unload(Level level) {
+    public synchronized void unload(Level level) {
+        deltaEngine.haltCurrentMap();
+
         level.unload(deltaEngine);
         mapLoader.unloadMapLevel(level.getMapLevelLoadable());
         inputsLoader.unloadInputs(level.getInputsLoadable());
@@ -80,6 +86,8 @@ public final class LevelLoader {
         }
 
         currentLevel = null;
+
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
