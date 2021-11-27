@@ -1,4 +1,4 @@
-package view.maps_levels.original_level;
+package view.maps;
 
 import config.game.GlobalHUDConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
@@ -40,6 +40,7 @@ public class OriginalLevelMap implements LoadableMap {
     private final Collection<GhostRegenerationPoint> ghostRegenerationPoints;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
+    private boolean generated;
 
     /**
      * Default constructor
@@ -57,18 +58,23 @@ public class OriginalLevelMap implements LoadableMap {
         spawnPoints = new HashMap<>();
         bordersTunnelTeleportEvents = new LinkedList<>();
         ghostRegenerationPoints = new LinkedList<>();
+        this.generated = false;
     }
 
     @Override
     public void load(KernelEngine engine) {
-        generateLevel(engine);
+        if (!generated) {
+            generateLevel(engine);
 
-        spawnPoints.put(pacMan, pacMan.getCoordinates());
-        for (Ghost ghost : getGeneratedGhosts())
-            spawnPoints.put(ghost, ghost.getSpawnPoint());
+            spawnPoints.put(pacMan, pacMan.getCoordinates());
+            for (Ghost ghost : getGeneratedGhosts())
+                spawnPoints.put(ghost, ghost.getSpawnPoint());
 
-        for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
-            event.load(engine);
+            for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
+                event.load(engine);
+
+            generated = true;
+        }
 
         try {
             engine.setCurrentMap(originalMapLevel.getName());
@@ -80,7 +86,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void unload(KernelEngine engine) {
-        engine.removeMap(originalMapLevel.getName());
+
     }
 
     /**

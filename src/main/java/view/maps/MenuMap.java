@@ -1,4 +1,4 @@
-package view.maps_levels.menu;
+package view.maps;
 
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;

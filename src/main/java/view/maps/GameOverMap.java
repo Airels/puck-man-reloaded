@@ -1,10 +1,9 @@
-package view.maps_levels.gameover;
+package view.maps;
 
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
-import fr.r1r0r0.deltaengine.model.elements.Element;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -12,7 +11,7 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
 import model.elements.entities.ghosts.Ghost;
-import model.levels.fixed_levels.gameover.GameOverLevel;
+import model.levels.fixed_levels.GameOverLevel;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
 

@@ -1,4 +1,4 @@
-package controller.inputs;
+package controller.inputs.levels;
 
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
@@ -8,16 +8,17 @@ import model.Game;
 import model.loadables.LoadableInput;
 
 /**
- * Default games inputs. Could be used anywhere, in any levels.
+ * Pause menu inputs
  */
-public class GameInputs implements LoadableInput {
+public class PauseMenuInputs implements LoadableInput {
 
     private final Game game;
-    private final InputEvent openPauseEvent;
+    private final InputEvent quitGameEvent, resumeGameEvent;
 
-    public GameInputs(Game game) {
+    public PauseMenuInputs(Game game) {
         this.game = game;
-        openPauseEvent = new InputEvent(null, game::pauseGame);
+        resumeGameEvent = new InputEvent(null, game::resumeGame);
+        quitGameEvent = new InputEvent(null, game::quitGame);
     }
 
     /**
@@ -28,8 +29,9 @@ public class GameInputs implements LoadableInput {
     @Override
     public void load(KernelEngine engine) {
         try {
-            engine.setInput(Key.ESCAPE, openPauseEvent);
-        } catch (InputKeyStackingError e) {
+            engine.setInput(Key.ESCAPE, resumeGameEvent);
+            engine.setInput(Key.Q, quitGameEvent);
+        } catch (InputKeyStackingError e){
             e.printStackTrace();
             System.exit(1);
         }
@@ -43,5 +45,6 @@ public class GameInputs implements LoadableInput {
     @Override
     public void unload(KernelEngine engine) {
         engine.clearInput(Key.ESCAPE);
+        engine.clearInput(Key.Q);
     }
 }

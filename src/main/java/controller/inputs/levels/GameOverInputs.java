@@ -1,11 +1,11 @@
-package controller.inputs.levels.gameover;
+package controller.inputs.levels;
 
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
 import model.Game;
-import model.levels.fixed_levels.gameover.GameOverLevel;
+import model.levels.fixed_levels.GameOverLevel;
 import model.loadables.LoadableInput;
 
 public class GameOverInputs implements LoadableInput {
