@@ -14,8 +14,10 @@ public class LevelGenerator {
      * @return newly generated level
      */
     public Level generate(Game game) {
-        // TODO
-        System.exit(501);
-        return null;
+        LoadableMapBuilder loadableMapBuilder = null;
+        LoadableInputBuilder loadableInputBuilder = LoadableInputBuilder.CLASSIC;
+        GenericLevel genericLevel = new GenericLevel(game,loadableMapBuilder,loadableInputBuilder);
+        return genericLevel;
     }
+
 }
