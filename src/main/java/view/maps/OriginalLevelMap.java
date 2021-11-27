@@ -12,6 +12,8 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import model.actions.events.PacGumEatEvent;
+import model.elements.teleporter.TeleportPoint;
+import model.elements.teleporter.Teleporter;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -26,6 +28,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
+import static config.game.GameConfiguration.CONF_TUNNELS_COOLDOWN;
+
 /**
  * The Original PacMan map.
  */
@@ -36,8 +40,8 @@ public class OriginalLevelMap implements LoadableMap {
     private final PacMan pacMan;
     private final Level level;
     private final Map<Entity, Coordinates<Double>> spawnPoints;
-    private final Collection<BordersTunnelTeleportEvent> bordersTunnelTeleportEvents;
     private final Collection<GhostRegenerationPoint> ghostRegenerationPoints;
+    private Teleporter tunnelTeleporter;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
     private boolean generated;
@@ -56,7 +60,6 @@ public class OriginalLevelMap implements LoadableMap {
 
         generatedGhosts = new LinkedList<>();
         spawnPoints = new HashMap<>();
-        bordersTunnelTeleportEvents = new LinkedList<>();
         ghostRegenerationPoints = new LinkedList<>();
         this.generated = false;
     }
@@ -69,9 +72,6 @@ public class OriginalLevelMap implements LoadableMap {
             spawnPoints.put(pacMan, pacMan.getSpawnPoint());
             for (Ghost ghost : getGeneratedGhosts())
                 spawnPoints.put(ghost, ghost.getSpawnPoint());
-
-            for (BordersTunnelTeleportEvent event : bordersTunnelTeleportEvents)
-                event.load(engine);
 
             generated = true;
         }
@@ -91,6 +91,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     /**
      * Generate the whole level
+     *
      * @param engine DeltaEngine
      */
     private void generateLevel(KernelEngine engine) {
@@ -128,10 +129,13 @@ public class OriginalLevelMap implements LoadableMap {
      * Generate tunnel on each side of the map
      */
     private void generateBorderTunnel() {
-        bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), pacMan));
+        TeleportPoint leftTunnel = new TeleportPoint(new Coordinates<>(0., 10.)),
+                rightTunnel = new TeleportPoint(new Coordinates<>(18., 10.));
+        tunnelTeleporter = new Teleporter(originalMapLevel, leftTunnel, rightTunnel, CONF_TUNNELS_COOLDOWN);
 
+        tunnelTeleporter.addEntityToHandle(pacMan);
         for (Ghost ghost : getGeneratedGhosts())
-            bordersTunnelTeleportEvents.add(new BordersTunnelTeleportEvent(this.getMapLevel(), ghost));
+            tunnelTeleporter.addEntityToHandle(ghost);
     }
 
     /**
@@ -221,6 +225,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     /**
      * Generate walls of the map
+     *
      * @param engine DeltaEngine
      */
     private void generateWalls(KernelEngine engine) {

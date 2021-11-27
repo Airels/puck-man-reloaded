@@ -5,6 +5,7 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.events.Event;
+import fr.r1r0r0.deltaengine.model.sprites.InvisibleSprite;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 
 public class GenericTunnel extends Entity {
@@ -15,7 +16,7 @@ public class GenericTunnel extends Entity {
     private Coordinates<Double> destination;
 
     private GenericTunnel (Coordinates<Double> source, Coordinates<Double> destination) {
-        super("tunnel" + ID,source,Sprite.INVISIBLE_SPRITE,Dimension.DEFAULT_DIMENSION);
+        super("tunnel" + ID,source, InvisibleSprite.getInstance(),Dimension.DEFAULT_DIMENSION);
         ID++;
         this.source = source;
         this.destination = destination;

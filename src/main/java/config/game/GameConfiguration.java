@@ -11,4 +11,6 @@ public final class GameConfiguration {
     public final static Coordinates<Double> CONF_READY_POSITION = new Coordinates<>(8.5, 12.70);
     public final static int CONF_READY_SIZE = 30;
     public final static Color CONF_READY_COLOR = Color.YELLOW;
+
+    public final static long CONF_TUNNELS_COOLDOWN = 350;
 }

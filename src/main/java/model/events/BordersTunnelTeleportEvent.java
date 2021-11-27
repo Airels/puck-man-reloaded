@@ -16,6 +16,7 @@ import model.loadables.Loadable;
  *
  * @see config.levels.OriginalLevelConfigurator to configure spawn point where entities need to be teleported
  */
+@Deprecated
 public final class BordersTunnelTeleportEvent implements Loadable {
 
     private final MapLevel mapLevel;
