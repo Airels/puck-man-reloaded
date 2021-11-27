@@ -1,6 +1,6 @@
 package controller.elements.entities;
 
-import config.pacman.PacManConfiguration;
+import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;

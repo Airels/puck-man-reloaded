@@ -1,8 +1,8 @@
 package model.elements.entities.ghosts;
 
+import config.entities.CharactersConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.AIAlreadyAttachedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
@@ -36,17 +36,15 @@ public class Ghost extends Entity {
      * @param coords         Initial Coordinates of the Ghost
      * @param spawnPoint     Spawn point of the Ghost, who Ghost will be teleported if the map is reset (usually when PacMan dies)
      * @param retreatPoint   Retreat point of the Ghost, who Ghost will go to regenerate itself from FLEEING to NORMAL state (when PacMan eats it)
-     * @param dimension      Dimension of the Ghost
      */
     Ghost(String name,
           MapLevel currentMap,
           SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites,
           GhostAI ghostAI,
           double normalSpeed, double scaredSpeed, double fleeingSpeed,
-          Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint,
-          Dimension dimension) {
+          Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint) {
 
-        super(name, coords, normalSprites.getSprite(Direction.IDLE), dimension);
+        super(name, coords, normalSprites.getSprite(Direction.IDLE), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
         this.currentMap = currentMap;
         this.normalSprites = normalSprites;
         this.scaredSprites = scaredSprites;

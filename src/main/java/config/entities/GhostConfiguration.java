@@ -1,4 +1,4 @@
-package config.ghosts;
+package config.entities;
 
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
@@ -15,7 +15,7 @@ public final class GhostConfiguration {
     public final static GhostAIs CONF_BLINKY_AI = GhostAIs.BLINKY_AI;
     public final static double CONF_BLINKY_SPEED = 5.1;
     public final static double CONF_BLINKY_SCARED_SPEED = CONF_BLINKY_SPEED/2;
-    public final static double CONF_BLINKY_FLEEING_SPEED = CONF_BLINKY_SPEED*1.5;
+    public final static double CONF_BLINKY_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
     public final static SpriteContainer CONF_BLINKY_NORMAL_SPRITES = new SpriteContainer(
             Image.BLINKY_LEFT.getSprite(),
             Image.BLINKY_UP.getSprite(),
@@ -42,7 +42,7 @@ public final class GhostConfiguration {
     public final static GhostAIs CONF_PINKY_AI = GhostAIs.PINKY_AI;
     public final static double CONF_PINKY_SPEED = 5.1;
     public final static double CONF_PINKY_SCARED_SPEED = CONF_PINKY_SPEED/2;
-    public final static double CONF_PINKY_FLEEING_SPEED = CONF_BLINKY_SPEED*1.5;
+    public final static double CONF_PINKY_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
     public final static SpriteContainer CONF_PINKY_NORMAL_SPRITES = new SpriteContainer(
             Image.PINKY_LEFT.getSprite(),
             Image.PINKY_UP.getSprite(),
@@ -69,7 +69,7 @@ public final class GhostConfiguration {
     public final static GhostAIs CONF_INKY_AI = GhostAIs.INKY_AI;
     public final static double CONF_INKY_SPEED = 5.1;
     public final static double CONF_INKY_SCARED_SPEED = CONF_INKY_SPEED/2;
-    public final static double CONF_INKY_FLEEING_SPEED = CONF_BLINKY_SPEED*1.5;
+    public final static double CONF_INKY_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
     public final static SpriteContainer CONF_INKY_NORMAL_SPRITES = new SpriteContainer(
             Image.INKY_LEFT.getSprite(),
             Image.INKY_UP.getSprite(),
@@ -96,7 +96,7 @@ public final class GhostConfiguration {
     public final static GhostAIs CONF_CLYDE_AI = GhostAIs.CLYDE_AI;
     public final static double CONF_CLYDE_SPEED = 5.1;
     public final static double CONF_CLYDE_SCARED_SPEED = CONF_CLYDE_SPEED/2;
-    public final static double CONF_CLYDE_FLEEING_SPEED = CONF_BLINKY_SPEED*1.5;
+    public final static double CONF_CLYDE_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
     public final static SpriteContainer CONF_CLYDE_NORMAL_SPRITES = new SpriteContainer(
             Image.CLYDE_LEFT.getSprite(),
             Image.CLYDE_UP.getSprite(),

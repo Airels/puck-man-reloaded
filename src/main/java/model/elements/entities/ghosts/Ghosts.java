@@ -1,8 +1,8 @@
 package model.elements.entities.ghosts;
 
-import config.pacman.PacManConfiguration;
+import config.entities.GhostConfiguration;
+import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.Game;
 import model.actions.events.PacManTouchedByGhostEvent;
@@ -10,12 +10,12 @@ import model.ai.ghosts.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
 
-import static config.ghosts.GhostConfiguration.*;
+import static config.entities.GhostConfiguration.*;
 
 /**
  * Declarations of All ghosts, and build them according to their properties.
  *
- * @see config.ghosts.GhostConfiguration to change Ghost properties
+ * @see GhostConfiguration to change Ghost properties
  */
 public enum Ghosts {
 
@@ -105,8 +105,7 @@ public enum Ghosts {
                 .setFleeingSpeed(fleeingSpeed)
                 .setCoordinates(coords)
                 .setSpawnPoint(spawnPoint)
-                .setRetreatPoint(retreatPoint)
-                .setDimension(new Dimension(0.9, 0.9));
+                .setRetreatPoint(retreatPoint);
 
         Ghost ghost = ghostBuilder.build();
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));

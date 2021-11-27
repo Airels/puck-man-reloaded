@@ -1,5 +1,6 @@
 package model.ai.ghosts;
 
+import config.entities.GhostConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -26,9 +27,9 @@ public final class PinkyAI extends BasicGhostAI {
      */
 
     private static final String[] FORBIDDEN_TARGET_NAMES = new String[]{
-            config.ghosts.GhostConfiguration.CONF_BLINKY_NAME,
-            config.ghosts.GhostConfiguration.CONF_INKY_NAME,
-            config.ghosts.GhostConfiguration.CONF_CLYDE_NAME};
+            GhostConfiguration.CONF_BLINKY_NAME,
+            GhostConfiguration.CONF_INKY_NAME,
+            GhostConfiguration.CONF_CLYDE_NAME};
 
     /**
      * Constructor

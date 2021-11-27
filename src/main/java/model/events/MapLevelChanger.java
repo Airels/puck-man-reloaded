@@ -1,7 +1,7 @@
 package model.events;
 
 import config.events.MapLevelChangerConfiguration;
-import config.pacman.PacManConfiguration;
+import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;

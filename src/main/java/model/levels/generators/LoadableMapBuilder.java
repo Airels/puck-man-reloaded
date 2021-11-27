@@ -2,7 +2,7 @@ package model.levels.generators;
 
 import model.levels.Level;
 import model.loadables.LoadableMap;
-import view.maps_levels.original_level.OriginalLevelMap;
+import view.maps.OriginalLevelMap;
 
 public enum LoadableMapBuilder {
 

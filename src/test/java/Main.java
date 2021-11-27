@@ -1,5 +1,4 @@
-import config.pacman.PacManConfiguration;
-import fr.r1r0r0.deltaengine.model.AI;
+import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
@@ -10,21 +9,15 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
-import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
-import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Circle;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import fr.r1r0r0.deltaengine.view.colors.Color;
-import model.ai.ghosts.ClydeAI;
-import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
-
-import java.awt.*;
 
 public class Main {
 

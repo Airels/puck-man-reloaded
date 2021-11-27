@@ -1,4 +1,4 @@
-package config.pacman;
+package config.entities;
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;

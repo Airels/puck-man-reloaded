@@ -1,6 +1,5 @@
 package model.levels.generators;
 
-import controller.inputs.levels.original_level.OriginalLevelInputs;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.HUDElement;
@@ -30,7 +29,6 @@ public class GenericLevel implements Level {
     private final LoadableInput inputLevel;
     private final PacMan pacMan;
     private int nbOfPacGums;
-    private HUDElement readyText;
 
     public GenericLevel(Game game, LoadableMapBuilder loadableMapBuilder, LoadableInputBuilder loadableInputBuilder) {
         this.game = game;
@@ -39,35 +37,11 @@ public class GenericLevel implements Level {
         mapLevel = loadableMapBuilder.build(this);
         inputLevel = loadableInputBuilder.build(this);
         nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
-
-
-        Text rText = new Text(CONF_READY_TEXT);
-        rText.setSize(CONF_READY_SIZE);
-        rText.setColor(CONF_READY_COLOR.getEngineColor());
-        readyText = new HUDElement(
-                "Ready Text",
-                CONF_READY_POSITION,
-                rText,
-                Dimension.DEFAULT_DIMENSION
-        );
     }
 
     @Override
     public void load(KernelEngine deltaEngine) {
-        deltaEngine.addHUDElement(readyText);
-        new Thread(() -> {
-            deltaEngine.haltCurrentMap();
-            Sounds.GAME_BEGIN.play();
 
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } finally {
-                deltaEngine.removeHUDElement(readyText);
-                deltaEngine.resumeCurrentMap();
-            }
-        }).start();
     }
 
     @Override

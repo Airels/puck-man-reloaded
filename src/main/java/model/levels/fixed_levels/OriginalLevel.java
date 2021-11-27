@@ -129,7 +129,6 @@ public class OriginalLevel implements Level {
         }
         for (Ghost ghost : getGhosts()) {
             ghost.setState(GhostState.NORMAL);
-
         }
     }
 

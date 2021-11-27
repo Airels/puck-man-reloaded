@@ -66,7 +66,7 @@ public class OriginalLevelMap implements LoadableMap {
         if (!generated) {
             generateLevel(engine);
 
-            spawnPoints.put(pacMan, pacMan.getCoordinates());
+            spawnPoints.put(pacMan, pacMan.getSpawnPoint());
             for (Ghost ghost : getGeneratedGhosts())
                 spawnPoints.put(ghost, ghost.getSpawnPoint());
 

@@ -1,6 +1,6 @@
 package model.ai.ghosts;
 
-import config.pacman.PacManConfiguration;
+import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -46,6 +46,7 @@ public abstract class BasicGhostAI extends GhostAI {
             default -> {}
         }
         ghost.setDirection(direction);
+        ghost.setBlockTarget(target);
     }
 
     /**

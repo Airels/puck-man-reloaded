@@ -20,7 +20,6 @@ public class GhostBuilder implements Builder<Ghost> {
     private GhostAI ai;
     private double normalSpeed, scaredSpeed, fleeingSpeed;
     private Coordinates<Double> coordinates, spawnPoint, retreatPoint;
-    private Dimension dimension;
 
     /**
      * Default constructor, with required attributes for a Ghost that must be unique for each.
@@ -45,7 +44,6 @@ public class GhostBuilder implements Builder<Ghost> {
         this.coordinates = new Coordinates<>(0.0, 0.0);
         this.spawnPoint = new Coordinates<>(0.0, 0.0);
         this.retreatPoint = new Coordinates<>(0.0, 0.0);
-        this.dimension = Dimension.DEFAULT_DIMENSION;
     }
 
     /**
@@ -128,18 +126,8 @@ public class GhostBuilder implements Builder<Ghost> {
         return this;
     }
 
-    /**
-     * Set the dimension of the Ghost
-     * @param dimension Dimension to set
-     * @return the current builder
-     */
-    public GhostBuilder setDimension(Dimension dimension) {
-        this.dimension = dimension;
-        return this;
-    }
-
     @Override
     public Ghost build() {
-        return new Ghost(name, mapLevel, normalSprites, scaredSprites, fleeingSprites, ai, normalSpeed, scaredSpeed, fleeingSpeed, coordinates, spawnPoint, retreatPoint, dimension);
+        return new Ghost(name, mapLevel, normalSprites, scaredSprites, fleeingSprites, ai, normalSpeed, scaredSpeed, fleeingSpeed, coordinates, spawnPoint, retreatPoint);
     }
 }
