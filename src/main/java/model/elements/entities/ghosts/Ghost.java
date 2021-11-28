@@ -7,6 +7,8 @@ import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.ai.GhostAI;
 import view.SpriteContainer;
 
@@ -59,8 +61,7 @@ public class Ghost extends Entity {
         try {
             if (ghostAI != null) setAI(ghostAI);
         } catch (AIAlreadyAttachedException e) {
-            e.printStackTrace(); // Should never happen
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "", e).show();
         }
 
         setState(GhostState.NORMAL);

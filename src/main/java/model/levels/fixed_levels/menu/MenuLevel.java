@@ -5,6 +5,8 @@ import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
 import model.events.LevelChanger;
@@ -47,8 +49,7 @@ public class MenuLevel implements Level {
             Sounds.MAIN_THEME.play();
             deltaEngine.getSoundEngine().setLoop(Sounds.MAIN_THEME.getName(), true);
         } catch (SoundDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Menu sound playing error", e).show();
         }
     }
 

@@ -12,6 +12,8 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.actions.events.PacGumEatEvent;
 import model.elements.teleporter.TeleportPoint;
 import model.elements.teleporter.Teleporter;
@@ -79,8 +81,7 @@ public final class OriginalLevelMap implements LoadableMap {
         try {
             engine.setCurrentMap(originalMapLevel.getName());
         } catch (MapLevelDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original Map loading error", e).show();
         }
     }
 
@@ -104,8 +105,7 @@ public final class OriginalLevelMap implements LoadableMap {
         try {
             engine.addMap(originalMapLevel);
         } catch (MapLevelAlreadyExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map loading error", e).show();
         }
     }
 
@@ -120,8 +120,7 @@ public final class OriginalLevelMap implements LoadableMap {
                 originalMapLevel.addEntity(ghostRegenerationPoint);
             }
         } catch (MapLevelEntityNameStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map ghost regeneration point generation error", e).show();
         }
     }
 
@@ -159,8 +158,7 @@ public final class OriginalLevelMap implements LoadableMap {
             originalMapLevel.addEntity(clyde);
             generatedGhosts.add(clyde);
         } catch (MapLevelEntityNameStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map ghost generation error", e).show();
         }
     }
 
@@ -187,8 +185,7 @@ public final class OriginalLevelMap implements LoadableMap {
                 nbOfGeneratedPacGums += 1;
             }
         } catch (MapLevelEntityNameStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map pacgums generation error", e).show();
         }
     }
 
@@ -409,8 +406,7 @@ public final class OriginalLevelMap implements LoadableMap {
                 zonesSpawnPacGumsProhibited.add(c.getCoordinates());
             }
         } catch (MapLevelBuilderCellCoordinatesStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map walls generation error", e).show();
         }
 
         originalMapLevel = levelBuilder.build();
@@ -418,8 +414,7 @@ public final class OriginalLevelMap implements LoadableMap {
         try {
             originalMapLevel.addEntity(pacMan);
         } catch (MapLevelEntityNameStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Original level map pacman loading error", e).show();
         }
     }
 

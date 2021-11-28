@@ -3,6 +3,8 @@ package controller.inputs.levels;
 import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.Game;
 import model.levels.fixed_levels.menu.MenuSelector;
 import view.maps.MenuMap;
@@ -29,9 +31,8 @@ public class MenuInputs implements LoadableInput {
             engine.setInput(Key.ARROW_UP, menuSelector.getUpEvent());
             engine.setInput(Key.ARROW_DOWN, menuSelector.getDownEvent());
             engine.setInput(Key.ENTER, menuSelector.getEnterEvent());
-        } catch (InputKeyStackingError inputKeyStackingError) {
-            inputKeyStackingError.printStackTrace();
-            System.exit(1);
+        } catch (InputKeyStackingError e) {
+            new Dialog(Main.APPLICATION_NAME, "Menu inputs loading error", e).show();
         }
     }
 

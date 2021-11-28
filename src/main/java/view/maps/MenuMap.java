@@ -10,6 +10,7 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.builders.TextBuilder;
 import model.elements.entities.ghosts.Ghost;
@@ -41,8 +42,7 @@ public final class MenuMap implements LoadableMap {
         try {
             Main.getEngine().addMap(mapLevel);
         } catch (MapLevelAlreadyExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Menu screen loading error", e).show();
         }
     }
 
@@ -73,8 +73,7 @@ public final class MenuMap implements LoadableMap {
         try {
             deltaEngine.setCurrentMap("PuckMan Reloaded");
         } catch (MapLevelDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Menu screen loading error", e).show();
         }
 
 

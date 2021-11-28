@@ -141,7 +141,6 @@ public class OriginalLevel implements Level {
     @Override
     public LevelChanger getLevelChanger() {
         return new LevelChanger(this, new Coordinates<>(9.0, 12.0));
-        // return null; TODO
     }
 
     @Override

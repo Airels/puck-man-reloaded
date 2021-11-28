@@ -93,6 +93,8 @@ public class RandomLevel implements LoadableMap {
         } catch (MapLevelDoesNotExistException e) {
             e.printStackTrace();
             System.exit(1);
+            TODO Remplace ton print stack trace par ça :
+            new Dialog(Main.APPLICATION_NAME, "", e).show();
         }
         */
     }

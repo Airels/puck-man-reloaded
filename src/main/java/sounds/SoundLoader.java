@@ -2,6 +2,7 @@ package sounds;
 
 import fr.r1r0r0.deltaengine.exceptions.SoundAlreadyExistException;
 import fr.r1r0r0.deltaengine.model.engines.SoundEngine;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 
 /**
@@ -22,8 +23,7 @@ public class SoundLoader {
                 soundEngine.addSound(s.getSound());
             }
         } catch (SoundAlreadyExistException e) {
-            e.printStackTrace(); // Should never happen
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Sound loading error", e).show();
         }
     }
 }

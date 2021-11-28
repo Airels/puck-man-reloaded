@@ -8,6 +8,8 @@ import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
 import fr.r1r0r0.deltaengine.model.events.Trigger;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.elements.entities.PacMan;
 import model.loadables.LoadableInput;
 
@@ -37,8 +39,7 @@ public class PacManInputs implements LoadableInput {
             engine.setInput(Key.ARROW_LEFT, getPressEvent(Direction.LEFT));
             engine.setInput(Key.ARROW_RIGHT, getPressEvent(Direction.RIGHT));
         } catch (InputKeyStackingError e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "PacMan inputs loading error", e).show();
         }
 
         desiredDirection = Direction.IDLE;

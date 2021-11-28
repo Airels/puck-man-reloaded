@@ -1,5 +1,8 @@
 package view.images;
 
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
+
 import java.util.Objects;
 
 /**
@@ -47,8 +50,7 @@ public enum Image {
         try {
             return new fr.r1r0r0.deltaengine.model.sprites.Image(Objects.requireNonNull(getClass().getResource(path)).getPath());
         } catch (Exception e) {
-            e.printStackTrace(); // Should never happen
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Image loading error", e).show();
             return null;
         }
     }

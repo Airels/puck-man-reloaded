@@ -4,6 +4,7 @@ import fr.r1r0r0.deltaengine.exceptions.AlreadyInitializedException;
 import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import model.Game;
 import model.levels.fixed_levels.GameOverLevel;
 import model.levels.fixed_levels.PauseMenuLevel;
@@ -14,12 +15,13 @@ import model.levels.fixed_levels.menu.MenuLevel;
  */
 public class Main {
 
+    public final static String APPLICATION_NAME = "PuckMan Reloaded";
+
     static {
         try {
             DeltaEngine.launch();
         } catch (AlreadyInitializedException e) {
-            e.printStackTrace();
-            System.exit(0);
+            new Dialog(APPLICATION_NAME, "Error on startup", e).show();
         }
     }
 
@@ -35,8 +37,7 @@ public class Main {
         try {
             return DeltaEngine.getKernelEngine();
         } catch (NotInitializedException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(APPLICATION_NAME, "Critical application error", e).show();
         }
 
         return null;

@@ -3,6 +3,8 @@ package model.elements.teleporter;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 
 /**
  * Teleport any added entity to another point.
@@ -33,8 +35,7 @@ public final class Teleporter {
             mapLevel.addEntity(firstPoint);
             mapLevel.addEntity(secondPoint);
         } catch (MapLevelEntityNameStackingException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Error while creating a new Teleporter", e).show();
         }
     }
 

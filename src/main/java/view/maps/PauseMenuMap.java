@@ -9,6 +9,8 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.Game;
 import model.builders.TextBuilder;
 import model.elements.entities.ghosts.Ghost;
@@ -83,8 +85,7 @@ public final class PauseMenuMap implements LoadableMap {
             engine.addMap(map);
             engine.setCurrentMap(mapName);
         } catch (MapLevelDoesNotExistException | MapLevelAlreadyExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Pause Menu loading error", e).show();
         }
 
         engine.addHUDElement(title);

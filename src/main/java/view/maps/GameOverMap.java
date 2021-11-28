@@ -10,6 +10,8 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.Text;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.elements.entities.ghosts.Ghost;
 import model.levels.fixed_levels.GameOverLevel;
 import model.loadables.LoadableMap;
@@ -82,10 +84,8 @@ public final class GameOverMap implements LoadableMap {
         try {
             engine.addMap(map);
             engine.setCurrentMap(map.getName());
-        } catch (MapLevelAlreadyExistException ignored) {
-        } catch (MapLevelDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+        } catch (MapLevelDoesNotExistException | MapLevelAlreadyExistException e) {
+            new Dialog(Main.APPLICATION_NAME, "Game over screen loading error", e).show();
         }
     }
 

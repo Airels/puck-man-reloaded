@@ -4,6 +4,8 @@ import fr.r1r0r0.deltaengine.exceptions.InputKeyStackingError;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.engines.utils.Key;
 import fr.r1r0r0.deltaengine.model.events.InputEvent;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.Game;
 import model.loadables.LoadableInput;
 
@@ -32,8 +34,7 @@ public class PauseMenuInputs implements LoadableInput {
             engine.setInput(Key.ESCAPE, resumeGameEvent);
             engine.setInput(Key.Q, quitGameEvent);
         } catch (InputKeyStackingError e){
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Pause menu screen inputs loading error", e).show();
         }
     }
 

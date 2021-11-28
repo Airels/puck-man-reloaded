@@ -4,6 +4,8 @@ import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
@@ -24,7 +26,7 @@ public final class Game {
     private final LevelLoader levelLoader;
     private final LevelGenerator levelGenerator;
     private Level menuLevel, pauseLevel, gameOverLevel, bufferedLevel;
-    private LevelChanger mapLevelChanger;
+    private LevelChanger levelChanger;
     private boolean inEnergizedMode, canPause;
     private int lifeCounter, ghostEatenChain, levelCounter;
     private double score;
@@ -78,12 +80,16 @@ public final class Game {
         levelLoader.load(originalLevel);
         deltaEngine.haltCurrentMap();
 
-        mapLevelChanger = originalLevel.getLevelChanger();
-        if (mapLevelChanger == null) {
-            throw new RuntimeException("LevelChanger can't be null for a normal level");
+        levelChanger = originalLevel.getLevelChanger();
+        if (levelChanger == null) {
+            new Dialog(
+                    Main.APPLICATION_NAME,
+                    "Launch single player mode failed",
+                    new RuntimeException("Level changer can't be null")
+            ).show();
         }
-        mapLevelChanger.addTrigger(this::nextLevel);
-        deltaEngine.addGlobalEvent(mapLevelChanger);
+        levelChanger.addTrigger(this::nextLevel);
+        deltaEngine.addGlobalEvent(levelChanger);
     }
 
     /**
@@ -135,7 +141,7 @@ public final class Game {
     public void nextLevel() {
         System.out.println("NEXT LEVEL"); // TODO
 
-        deltaEngine.removeGlobalEvent(mapLevelChanger);
+        deltaEngine.removeGlobalEvent(levelChanger);
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
 
@@ -143,9 +149,9 @@ public final class Game {
             lifeCounter+= GameConfiguration.CONF_ADD_Y_LIVES;
         levelCounter++;
 
-        mapLevelChanger = nextLevel.getLevelChanger();
-        mapLevelChanger.addTrigger(this::nextLevel);
-        deltaEngine.addGlobalEvent(mapLevelChanger);
+        levelChanger = nextLevel.getLevelChanger();
+        levelChanger.addTrigger(this::nextLevel);
+        deltaEngine.addGlobalEvent(levelChanger);
     }
 
     /**
@@ -217,8 +223,7 @@ public final class Game {
 
             this.canPause = true;
         } catch (InterruptedException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Game over event error", e).show();
         }
     }
 

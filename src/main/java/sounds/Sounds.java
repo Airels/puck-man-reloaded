@@ -3,6 +3,7 @@ package sounds;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.Sound;
 import fr.r1r0r0.deltaengine.model.engines.SoundEngine;
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 
 /**
@@ -23,8 +24,7 @@ public enum Sounds {
             String p = "/sounds/" + path;
             this.sound = new Sound(name, getClass().getResource(p).getPath());
         } catch (Exception e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Sounds loading error", e).show();
         }
     }
 
@@ -53,8 +53,7 @@ public enum Sounds {
         try {
             soundEngine.play(getName());
         } catch (SoundDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Sound control error", e).show();
         }
     }
 
@@ -66,8 +65,7 @@ public enum Sounds {
         try {
             soundEngine.pause(getName());
         } catch (SoundDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Sound control error", e).show();
         }
     }
 
@@ -79,8 +77,7 @@ public enum Sounds {
         try {
             soundEngine.stop(getName());
         } catch (SoundDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(1);
+            new Dialog(Main.APPLICATION_NAME, "Sound control error", e).show();
         }
     }
 }
