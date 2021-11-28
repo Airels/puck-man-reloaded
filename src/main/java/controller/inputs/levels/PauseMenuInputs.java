@@ -8,7 +8,7 @@ import model.Game;
 import model.loadables.LoadableInput;
 
 /**
- * Pause menu inputs
+ * Inputs of the Pause menu
  */
 public class PauseMenuInputs implements LoadableInput {
 

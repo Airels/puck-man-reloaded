@@ -1,7 +1,7 @@
 package model.events;
 
-import config.events.MapLevelChangerConfiguration;
 import config.entities.PacManConfiguration;
+import config.events.MapLevelChangerConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -15,7 +15,7 @@ import model.levels.Level;
  * When PacMan collected all PacGums, activates a Teleporter Entity, and when it enters it, activates associated trigger
  * given by the Game manager (aka to transfert him to the next level)
  */
-public final class MapLevelChanger extends Event {
+public final class LevelChanger extends Event {
 
     private final Level level;
     private final MapLevel mapLevel;
@@ -24,15 +24,15 @@ public final class MapLevelChanger extends Event {
     private boolean isActivated;
 
     /**
-     * Default constructor
+     * Default constructor, allowing to create a Map level changer on specific coordinates
      *
      * @param level attached level
+     * @param coordinates position of the MapLevelChanger
      */
-    public MapLevelChanger(Level level) {
+    public LevelChanger(Level level, Coordinates<Double> coordinates) {
         this.level = level;
         this.mapLevel = level.getMapLevelLoadable().getMapLevel();
-        Coordinates<Double> coords = MapLevelChangerConfiguration.CONF_CELL_COORDINATES_TELEPORT;
-        teleporter = new Entity("teleporter", coords, MapLevelChangerConfiguration.CONF_ACTIVATED_TELEPORTER_CELL, MapLevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_DIMENSION);
+        teleporter = new Entity("LevelChanger", coordinates, MapLevelChangerConfiguration.CONF_ACTIVATED_TELEPORTER_CELL, MapLevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_DIMENSION);
 
         pacMan = (PacMan) mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
 

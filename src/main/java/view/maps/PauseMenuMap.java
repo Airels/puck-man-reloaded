@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PauseMenuMap implements LoadableMap {
+public final class PauseMenuMap implements LoadableMap {
 
     private final String mapName = "PuckMan Reloaded - Pause";
 

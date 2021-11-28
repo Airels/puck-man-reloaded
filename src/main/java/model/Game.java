@@ -6,11 +6,12 @@ import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
-import model.events.MapLevelChanger;
+import model.events.LevelChanger;
 import model.events.TimedEvent;
 import model.levels.Level;
 import model.levels.fixed_levels.OriginalLevel;
 import model.levels.generators.LevelGenerator;
+import org.jetbrains.annotations.Nullable;
 import sounds.SoundLoader;
 
 /**
@@ -23,7 +24,7 @@ public final class Game {
     private final LevelLoader levelLoader;
     private final LevelGenerator levelGenerator;
     private Level menuLevel, pauseLevel, gameOverLevel, bufferedLevel;
-    private MapLevelChanger mapLevelChanger;
+    private LevelChanger mapLevelChanger;
     private boolean inEnergizedMode, canPause;
     private int lifeCounter, ghostEatenChain;
     private double score;
@@ -75,7 +76,10 @@ public final class Game {
         levelLoader.load(originalLevel);
         deltaEngine.haltCurrentMap();
 
-        mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
+        mapLevelChanger = originalLevel.getLevelChanger();
+        if (mapLevelChanger == null) {
+            throw new RuntimeException("LevelChanger can't be null for a normal level");
+        }
         mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
     }
@@ -133,7 +137,7 @@ public final class Game {
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
 
-        mapLevelChanger = new MapLevelChanger(levelLoader.getCurrentLevel());
+        mapLevelChanger = nextLevel.getLevelChanger();
         mapLevelChanger.addTrigger(this::nextLevel);
         deltaEngine.addGlobalEvent(mapLevelChanger);
     }
@@ -179,8 +183,8 @@ public final class Game {
     }
 
     /**
-     * Triggers game over animation
-     * TODO
+     * Triggers game over animation,
+     * and run another game if possible, otherwise show game over screen
      */
     public void gameOver() {
         try {
@@ -212,18 +216,34 @@ public final class Game {
         }
     }
 
+    /**
+     * Returns the current score of the game
+     * @return double the score
+     */
     public double getScore() {
         return score;
     }
 
+    /**
+     * Returns number of lives players have before the game over.
+     * @return integer number of lives remaining
+     */
     public int getLives() {
         return lifeCounter;
     }
 
+    /**
+     * Increase the current score by the value given
+     * @param scoreToAdd double value to add on the score
+     */
     private void increaseScore(double scoreToAdd) {
         score += scoreToAdd;
     }
 
+    /**
+     * Calls its method when a PacGum is eaten by PacMan to trigger multiple actions according to the game
+     * @param isSuper boolean if eaten PacGum is super
+     */
     public void pacGumEaten(boolean isSuper) {
         if (levelLoader.getCurrentLevel() == null) return;
 
@@ -234,6 +254,9 @@ public final class Game {
         if (isSuper) runEnergizeMode();
     }
 
+    /**
+     * Calls its method when a Ghost is eaton by PacMan to trigger different actions
+     */
     public void ghostEaten() {
         ghostEatenChain += 1;
         double eatingMultiplierScore = ScoreConfiguration.CONF_CHAIN_EATING_REWARD_SCORE;
@@ -258,6 +281,11 @@ public final class Game {
         return (bufferedLevel != null);
     }
 
+    /**
+     * Returns the timed event linked to the Energized Mode.
+     * @return Timed event instance if energized mode is running, null otherwise
+     */
+    @Nullable
     public TimedEvent getEnergizeTimerEvent() {
         return energizeTimerEvent;
     }

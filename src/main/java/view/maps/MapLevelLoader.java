@@ -6,7 +6,7 @@ import model.loadables.LoadableMap;
 /**
  * Component of Level Loader. Loads the given map of the level.
  */
-public class MapLevelLoader {
+public final  class MapLevelLoader {
 
     private final KernelEngine deltaEngine;
     private LoadableMap currentMap;

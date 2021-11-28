@@ -22,7 +22,7 @@ import static config.levels.GameOverScreenConfigurator.*;
 /**
  * The Game Over Map, contains nothing excepts Game Over text and some additional texts such as score
  */
-public class GameOverMap implements LoadableMap {
+public final class GameOverMap implements LoadableMap {
 
     private final GameOverLevel level;
     private final List<HUDElement> hudElements;

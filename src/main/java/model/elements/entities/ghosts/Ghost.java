@@ -7,7 +7,7 @@ import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
-import model.ai.ghosts.GhostAI;
+import model.ai.GhostAI;
 import view.SpriteContainer;
 
 /**

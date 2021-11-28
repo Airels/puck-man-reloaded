@@ -1,4 +1,4 @@
-package model.ai.ghosts;
+package model.ai;
 
 import org.junit.jupiter.api.Test;
 

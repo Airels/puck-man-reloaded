@@ -6,7 +6,7 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.Game;
 import model.actions.events.PacManTouchedByGhostEvent;
-import model.ai.ghosts.GhostAIs;
+import model.ai.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
 

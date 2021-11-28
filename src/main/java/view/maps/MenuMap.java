@@ -27,7 +27,7 @@ import java.util.Map;
 /**
  * The Map of the Game Main Menu, only loads HUD elements such image or title.
  */
-public class MenuMap implements LoadableMap {
+public final class MenuMap implements LoadableMap {
 
     private final MapLevel mapLevel;
     private HUDElement title, singlePlayerText, multiPlayerText, quitText, selectedText, mainImg;

@@ -1,4 +1,4 @@
-package model.ai.ghosts;
+package model.ai;
 
 /**
  * All AI's for ghosts behaviours

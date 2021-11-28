@@ -11,6 +11,9 @@ import fr.r1r0r0.deltaengine.model.events.Trigger;
 import model.elements.entities.PacMan;
 import model.loadables.LoadableInput;
 
+/**
+ * PacMan inputs, allowing player to control it
+ */
 public class PacManInputs implements LoadableInput {
 
     private PacMan pacMan;

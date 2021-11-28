@@ -1,6 +1,7 @@
 package view.maps;
 
 import config.game.GlobalHUDConfiguration;
+import config.levels.OriginalLevelConfigurator;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesStackingException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
@@ -32,7 +33,7 @@ import static config.game.GameConfiguration.CONF_TUNNELS_COOLDOWN;
 /**
  * The Original PacMan map.
  */
-public class OriginalLevelMap implements LoadableMap {
+public final class OriginalLevelMap implements LoadableMap {
 
     private final Collection<Coordinates<Integer>> zonesSpawnPacGumsProhibited, zonesSpawnSuperPacGum;
     private final Collection<Ghost> generatedGhosts;
@@ -85,7 +86,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void unload(KernelEngine engine) {
-        engine.removeMap(originalMapLevel.getName());
+
     }
 
     /**
@@ -128,8 +129,8 @@ public class OriginalLevelMap implements LoadableMap {
      * Generate tunnel on each side of the map
      */
     private void generateBorderTunnel() {
-        TeleportPoint leftTunnel = new TeleportPoint(new Coordinates<>(0., 10.)),
-                rightTunnel = new TeleportPoint(new Coordinates<>(18., 10.));
+        TeleportPoint leftTunnel = new TeleportPoint(OriginalLevelConfigurator.CONF_LEFT_TUNNEL_SPAWN_POINT),
+                rightTunnel = new TeleportPoint(OriginalLevelConfigurator.CONF_RIGHT_TUNNEL_SPAWN_POINT);
         tunnelTeleporter = new Teleporter(originalMapLevel, leftTunnel, rightTunnel, CONF_TUNNELS_COOLDOWN);
 
         tunnelTeleporter.addEntityToHandle(pacMan);

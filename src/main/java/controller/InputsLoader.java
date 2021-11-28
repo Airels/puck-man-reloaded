@@ -4,7 +4,7 @@ import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableInput;
 
 /**
- * A Loader who loading inputs.
+ * A Loader who loads input levels.
  * Call load method from LoadableInput to load inputs given into the engine.
  * Memorize the current inputs loaded, and unload them when trying to load inputs again without unload previous ones.
  */

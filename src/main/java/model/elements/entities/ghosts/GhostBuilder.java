@@ -2,10 +2,9 @@ package model.elements.entities.ghosts;
 
 import fr.r1r0r0.deltaengine.model.Builder;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
-import model.ai.ghosts.GhostAI;
-import model.ai.ghosts.GhostAIs;
+import model.ai.GhostAI;
+import model.ai.GhostAIs;
 import view.SpriteContainer;
 
 /**

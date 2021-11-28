@@ -8,6 +8,9 @@ import model.levels.fixed_levels.menu.MenuSelector;
 import view.maps.MenuMap;
 import model.loadables.LoadableInput;
 
+/**
+ * Inputs of the Menu
+ */
 public class MenuInputs implements LoadableInput {
 
     private MenuSelector menuSelector;

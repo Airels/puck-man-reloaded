@@ -6,6 +6,7 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
+import model.events.LevelChanger;
 import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
@@ -131,5 +132,15 @@ public class PauseMenuLevel implements Level {
     @Override
     public void reset() {
 
+    }
+
+    /**
+     * Returns the level changer of the level
+     *
+     * @return Level Changer instance
+     */
+    @Override
+    public LevelChanger getLevelChanger() {
+        return null;
     }
 }

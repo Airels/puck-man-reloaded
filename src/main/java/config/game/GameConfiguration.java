@@ -3,6 +3,9 @@ package config.game;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import view.colors.Color;
 
+/**
+ * Global game configuration
+ */
 public final class GameConfiguration {
 
     public final static long CONF_ENERGIZED_TIME = 7_500;

@@ -1,13 +1,8 @@
 package config.entities;
 
-import fr.r1r0r0.deltaengine.model.sprites.Sprite;
-import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
-import fr.r1r0r0.deltaengine.view.colors.Color;
-import model.ai.ghosts.*;
+import model.ai.GhostAIs;
 import view.SpriteContainer;
 import view.images.Image;
-import java.util.Arrays;
-import java.util.List;
 
 public final class GhostConfiguration {
 

@@ -8,6 +8,9 @@ import model.Game;
 import model.levels.fixed_levels.GameOverLevel;
 import model.loadables.LoadableInput;
 
+/**
+ * Inputs on game over screen
+ */
 public class GameOverInputs implements LoadableInput {
 
     private final GameOverLevel level;

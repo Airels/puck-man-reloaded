@@ -1,4 +1,4 @@
-package model.ai.ghosts;
+package model.ai;
 
 import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;

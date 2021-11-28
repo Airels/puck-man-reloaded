@@ -5,10 +5,12 @@ import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
+import model.events.LevelChanger;
 import model.loadables.Loadable;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
 import java.util.Map;
@@ -94,5 +96,12 @@ public interface Level extends Loadable {
      * reset to initial position ghosts and pacman
      */
     void reset();
+
+    /**
+     * Returns the level changer of the level
+     * @return Level Changer instance
+     */
+    @Nullable
+    LevelChanger getLevelChanger();
 
 }

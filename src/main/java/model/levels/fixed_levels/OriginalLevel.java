@@ -11,6 +11,7 @@ import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.GhostState;
+import model.events.LevelChanger;
 import model.levels.Level;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
@@ -130,6 +131,17 @@ public class OriginalLevel implements Level {
         for (Ghost ghost : getGhosts()) {
             ghost.setState(GhostState.NORMAL);
         }
+    }
+
+    /**
+     * Returns the level changer of the level
+     *
+     * @return Level Changer instance
+     */
+    @Override
+    public LevelChanger getLevelChanger() {
+        return new LevelChanger(this, new Coordinates<>(9.0, 12.0));
+        // return null; TODO
     }
 
     @Override
