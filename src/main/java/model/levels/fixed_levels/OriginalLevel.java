@@ -140,7 +140,6 @@ public class OriginalLevel implements Level {
      */
     @Override
     public LevelChanger getLevelChanger() {
-        System.out.println("Bite");
         return new LevelChanger(this, new Coordinates<>(9.0, 12.0));
     }
 
