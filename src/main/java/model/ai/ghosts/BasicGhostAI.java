@@ -37,8 +37,8 @@ public abstract class BasicGhostAI extends GhostAI {
     @Override
     public final void tick() {
         Ghost ghost = getGhost();
-        if (target != null && ! isTargetReach(ghost)) return;
         MapLevel mapLevel = ghost.getMapLevel();
+        if (ghost.getBlockTarget() != null && ! isTargetReach(ghost,mapLevel)) return;
         switch (ghost.getState()) {
             case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost,mapLevel);
@@ -92,8 +92,10 @@ public abstract class BasicGhostAI extends GhostAI {
         Coordinates<Integer> pacManPosition = Utils.getIntegerCoordinates(pacMan);
         Direction shortestDirection = Utils.findShortestWay(ghost,mapLevel,pacManPosition);
         ArrayList<Direction> escapes = new ArrayList<>();
+        Direction oppositeDirection = direction.getOpposite();
         for (Direction escape : Direction.values()) {
-            if (escape != shortestDirection && Main.getEngine().canGoToNextCell(ghost,escape))
+            if (escape == Direction.IDLE || escape == shortestDirection || escape == oppositeDirection) continue;
+            if (Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
         direction = (escapes.size() == 0) ? Direction.IDLE : escapes.get(random.nextInt(escapes.size()));
@@ -109,18 +111,17 @@ public abstract class BasicGhostAI extends GhostAI {
         Coordinates<Double> point = ghost.getRetreatPoint();
         Coordinates<Integer> destination = new Coordinates<>(point.getX().intValue(),point.getY().intValue());
         direction = Utils.findShortestWay(ghost,mapLevel,destination);
-        target = Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction);
-        //target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
+        target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
     /**
      * Return if the target is reach
      * @param ghost a ghost
+     * @param mapLevel a mapLevel
      * @return if the target is reach
      */
-    private boolean isTargetReach (Ghost ghost) {
-        if ( ! Main.getEngine().isAvailableDirection(ghost,direction)) return true;
-        return Utils.isOnTarget(ghost,target);
+    private boolean isTargetReach (Ghost ghost, MapLevel mapLevel) {
+        return Utils.isTargetReach(ghost,mapLevel,target);
     }
 
     /**

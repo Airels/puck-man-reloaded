@@ -36,18 +36,20 @@ public final class Utils {
     /**
      * TODO
      * @param ghost
+     * @param mapLevel
      * @param target
      * @return
      */
-    public static boolean isOnTarget (Ghost ghost, Coordinates<Integer> target) {
-        Coordinates<Double> coordinates = ghost.getCoordinates();
-        Dimension dimension = ghost.getDimension();
-        Coordinates<Double> topLeft = CollisionPositions.LEFT_TOP.calcPosition(coordinates,dimension);
-        Coordinates<Double> rightBot = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
-        return topLeft.getX().intValue() == rightBot.getX().intValue()
-                && topLeft.getY().intValue() == rightBot.getY().intValue()
-                && topLeft.getX().intValue() == target.getX()
-                && topLeft.getY().intValue() == target.getY();
+    public static boolean isTargetReach (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> target) {
+        Coordinates<Double> topLeft = ghost.getCoordinates();
+        Coordinates<Integer> topLeftInteger = Coordinates.doubleToInteger(topLeft);
+        Coordinates<Integer> botRightInteger = Coordinates.doubleToInteger(
+                CollisionPositions.RIGHT_BOT.calcPosition(topLeft,ghost.getDimension()));
+        if ( ! topLeftInteger.equals(botRightInteger)) return false;
+        if (topLeftInteger.equals(target)) return true;
+        Direction direction = ghost.getDirection();
+        return mapLevel.getCell(topLeftInteger.getX() + direction.getX(),
+                topLeftInteger.getY() + direction.getY()).isCrossableBy(ghost);
     }
 
     /**
@@ -67,7 +69,6 @@ public final class Utils {
             Direction opposite = direction.getOpposite();
             for (Direction other : Direction.values()) {
                 if (other == direction || other == opposite || other == Direction.IDLE) continue;
-                Coordinates<Integer> otherCoordinates = other.getCoordinates();
                 Coordinates<Integer> nextPosition = calcNextPosition(position,other);
                 if (mapLevel.getCell(nextPosition.getX(),nextPosition.getY())
                         .isCrossableBy(entity)) return position.copy();
