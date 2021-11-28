@@ -26,7 +26,7 @@ public final class Game {
     private Level menuLevel, pauseLevel, gameOverLevel, bufferedLevel;
     private LevelChanger mapLevelChanger;
     private boolean inEnergizedMode, canPause;
-    private int lifeCounter, ghostEatenChain;
+    private int lifeCounter, ghostEatenChain, levelCounter;
     private double score;
     private TimedEvent energizeTimerEvent;
     private PacMan pacMan;
@@ -47,6 +47,7 @@ public final class Game {
         this.levelLoader = new LevelLoader(engine);
         this.levelGenerator = new LevelGenerator();
         this.canPause = true;
+        this.levelCounter = 0;
     }
 
     /**
@@ -71,6 +72,7 @@ public final class Game {
         this.lifeCounter = 2;
         this.score = 0;
         this.ghostEatenChain = 0;
+        this.levelCounter = 1;
 
         OriginalLevel originalLevel = new OriginalLevel(this);
         levelLoader.load(originalLevel);
@@ -136,6 +138,10 @@ public final class Game {
         deltaEngine.removeGlobalEvent(mapLevelChanger);
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
+
+        if(levelCounter%(GameConfiguration.CONF_ADD_LIFE_EACH_X_LEVELS) == 0)
+            lifeCounter+= GameConfiguration.CONF_ADD_Y_LIVES;
+        levelCounter++;
 
         mapLevelChanger = nextLevel.getLevelChanger();
         mapLevelChanger.addTrigger(this::nextLevel);
