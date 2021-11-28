@@ -16,6 +16,7 @@ public final class GameConfiguration {
     public final static Color CONF_READY_COLOR = Color.YELLOW;
 
     public final static long CONF_TUNNELS_COOLDOWN = 350;
-    public final static int CONF_ADD_LIFE_EACH_X_LEVELS = 1;
-    public final static int CONF_ADD_Y_LIVES = 1;
+
+    public final static int CONF_GAINED_LIVES = 1;
+    public final static int CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES = 1;
 }

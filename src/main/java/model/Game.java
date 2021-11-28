@@ -145,8 +145,8 @@ public final class Game {
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
 
-        if(levelCounter%(GameConfiguration.CONF_ADD_LIFE_EACH_X_LEVELS) == 0)
-            lifeCounter+= GameConfiguration.CONF_ADD_Y_LIVES;
+        if(levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
+            lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
         levelCounter++;
 
         levelChanger = nextLevel.getLevelChanger();
