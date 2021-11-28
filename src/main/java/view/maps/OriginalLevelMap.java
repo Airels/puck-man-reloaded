@@ -20,7 +20,6 @@ import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
-import model.events.BordersTunnelTeleportEvent;
 import model.events.GhostRegenerationPoint;
 import model.levels.Level;
 import model.loadables.LoadableMap;
