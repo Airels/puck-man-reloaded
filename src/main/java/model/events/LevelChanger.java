@@ -1,7 +1,7 @@
 package model.events;
 
 import config.entities.PacManConfiguration;
-import config.events.MapLevelChangerConfiguration;
+import config.events.LevelChangerConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
@@ -34,7 +34,7 @@ public final class LevelChanger extends Event {
     public LevelChanger(Level level, Coordinates<Double> coordinates) {
         this.level = level;
         this.mapLevel = level.getMapLevelLoadable().getMapLevel();
-        levelChangerEntity = new Entity("LevelChanger", coordinates, MapLevelChangerConfiguration.CONF_ACTIVATED_TELEPORTER_CELL, MapLevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_DIMENSION);
+        levelChangerEntity = new Entity("LevelChanger", coordinates, LevelChangerConfiguration.CONF_ACTIVATED_TELEPORTER_CELL, LevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_DIMENSION, LevelChangerConfiguration.CONF_DEFAULT_TELEPORTER_HITBOX_SIZE);
 
         pacMan = (PacMan) mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
 
