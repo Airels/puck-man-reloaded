@@ -85,7 +85,7 @@ public class OriginalLevelMap implements LoadableMap {
 
     @Override
     public void unload(KernelEngine engine) {
-
+        engine.removeMap(originalMapLevel.getName());
     }
 
     /**
