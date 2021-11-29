@@ -79,15 +79,16 @@ public final class OriginalLevelMap implements LoadableMap {
         }
 
         try {
+            engine.addMap(originalMapLevel);
             engine.setCurrentMap(originalMapLevel.getName());
-        } catch (MapLevelDoesNotExistException e) {
+        } catch (MapLevelDoesNotExistException | MapLevelAlreadyExistException e) {
             new Dialog(Main.APPLICATION_NAME, "Original Map loading error", e).show();
         }
     }
 
     @Override
     public void unload(KernelEngine engine) {
-
+        engine.removeMap(originalMapLevel.getName());
     }
 
     /**
@@ -101,12 +102,6 @@ public final class OriginalLevelMap implements LoadableMap {
         generateGhosts();
         generateBorderTunnel();
         generateGhostRegenerationPoint();
-
-        try {
-            engine.addMap(originalMapLevel);
-        } catch (MapLevelAlreadyExistException e) {
-            new Dialog(Main.APPLICATION_NAME, "Original level map loading error", e).show();
-        }
     }
 
     /**

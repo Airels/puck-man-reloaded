@@ -98,4 +98,12 @@ public enum Sounds {
             new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
         }
     }
+
+    public void setVolume(double volume) {
+        try {
+            Main.getEngine().getSoundEngine().setVolume(getName(), volume);
+        } catch (SoundDoesNotExistException e) {
+            new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
+        }
+    }
 }

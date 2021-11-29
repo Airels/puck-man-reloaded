@@ -68,6 +68,8 @@ public final class Game {
         this.pauseLevel = pauseLevel;
         this.gameOverLevel = gameOverLevel;
         levelLoader.load(menuLevel, false);
+
+        Sounds.SIREN.setLoop(true);
     }
 
     /**
@@ -164,6 +166,8 @@ public final class Game {
      */
     private void runEnergizeMode() {
         Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_SCARED_SPEED);
+        Sounds.SIREN.setVolume(CONF_SOUND_SIREN_SCARED_VOLUME);
+
         if (inEnergizedMode) energizeTimerEvent.runTriggers();
 
         energizeTimerEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
@@ -182,6 +186,7 @@ public final class Game {
      */
     public void turnOffEnergizeMode() {
         Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_CHASE_SPEED);
+        Sounds.SIREN.setVolume(CONF_SOUND_SIREN_CHASE_VOLUME);
         inEnergizedMode = false;
         ghostEatenChain = 0;
         deltaEngine.removeGlobalEvent(energizeTimerEvent);
