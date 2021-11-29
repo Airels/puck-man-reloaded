@@ -59,9 +59,11 @@ public final class MenuMap implements LoadableMap {
                 .setText("Single player");
         singlePlayerText = textBuilder.build();
 
+        /*
         textBuilder.setCoordinates(2, 11)
                 .setText("Multi player");
         multiPlayerText = textBuilder.build();
+         */
 
         textBuilder.setCoordinates(2, 12)
                 .setText("Quit");
@@ -90,7 +92,7 @@ public final class MenuMap implements LoadableMap {
     public void unload(KernelEngine deltaEngine) {
         deltaEngine.removeHUDElement(title);
         deltaEngine.removeHUDElement(singlePlayerText);
-        deltaEngine.removeHUDElement(multiPlayerText);
+        // deltaEngine.removeHUDElement(multiPlayerText);
         deltaEngine.removeHUDElement(quitText);
         deltaEngine.removeHUDElement(mainImg);
     }

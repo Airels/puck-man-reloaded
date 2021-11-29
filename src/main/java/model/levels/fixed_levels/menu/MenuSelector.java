@@ -29,14 +29,14 @@ public class MenuSelector {
 
         upTrigger = () -> {
             if (currentSelected > 0)
-                currentSelected--;
+                currentSelected -= 2;
 
             selectMenuText();
         };
 
         downTrigger = () -> {
             if (currentSelected < 2)
-                currentSelected++;
+                currentSelected += 2;
 
             selectMenuText();
         };
