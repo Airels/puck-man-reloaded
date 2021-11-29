@@ -26,6 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        System.out.println("Starting game, please wait...");
         Game game = new Game(getEngine(), 60,100);
         MenuLevel menuLevel = new MenuLevel(game);
         PauseMenuLevel pauseMenu = new PauseMenuLevel(game);

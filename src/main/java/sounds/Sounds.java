@@ -24,7 +24,7 @@ public enum Sounds {
     Sounds(String name, String path) {
         try {
             String p = "/sounds/" + path;
-            this.sound = new Sound(name, getClass().getResource(p).getPath());
+            this.sound = new Sound(name, p);
         } catch (Exception e) {
             new Dialog(Main.APPLICATION_NAME, "Sounds loading error", e).show();
         }
