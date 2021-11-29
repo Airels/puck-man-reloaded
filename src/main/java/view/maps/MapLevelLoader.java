@@ -2,6 +2,7 @@ package view.maps;
 
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableMap;
+import model.utils.WallSpriteApplier;
 
 /**
  * Component of Level Loader. Loads the given map of the level.
@@ -28,6 +29,9 @@ public final  class MapLevelLoader {
             this.unloadMapLevel(currentMap);
 
         map.load(deltaEngine);
+
+        WallSpriteApplier.apply(map.getMapLevel());
+
         currentMap = map;
     }
 
