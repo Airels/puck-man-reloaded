@@ -43,7 +43,7 @@ public final class ClydeAI extends BasicGhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,other)) directions.add(other);
         }
         int size = directions.size();
-        return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
+        return (size == 0) ? oppositeDirection : directions.get(random.nextInt(size));
     }
 
     @Override

@@ -1,13 +1,18 @@
 package model.ai;
 
 import config.entities.PacManConfiguration;
+import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
+import fr.r1r0r0.deltaengine.view.colors.Color;
 import main.Main;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
+import model.elements.entities.ghosts.GhostState;
 import model.exceptions.GhostTargetMissingException;
 
 import java.util.ArrayList;
@@ -34,11 +39,13 @@ public abstract class BasicGhostAI extends GhostAI {
         direction = Direction.IDLE;
     }
 
+    static Entity focus = new Entity("focus",new Coordinates<>(0.,0.),new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
+
     @Override
     public final void tick() {
         Ghost ghost = getGhost();
         MapLevel mapLevel = ghost.getMapLevel();
-        if (ghost.getBlockTarget() != null && ! isTargetReach(ghost,mapLevel)) return;
+        if (ghost.getBlockTarget() != null && ghost.getDirection() != Direction.IDLE) return;
         switch (ghost.getState()) {
             case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost,mapLevel);
@@ -47,6 +54,14 @@ public abstract class BasicGhostAI extends GhostAI {
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
+        if (ghost.getName().equals("Clyde")) {
+            try {
+                mapLevel.addEntity(focus);
+            } catch (MapLevelEntityNameStackingException e) {
+                e.printStackTrace();
+            }
+            focus.setCoordinates(new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
+        }
     }
 
     /**
@@ -98,7 +113,7 @@ public abstract class BasicGhostAI extends GhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
-        direction = (escapes.size() == 0) ? Direction.IDLE : escapes.get(random.nextInt(escapes.size()));
+        direction = (escapes.size() == 0) ? shortestDirection : escapes.get(random.nextInt(escapes.size()));
         target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
@@ -112,16 +127,6 @@ public abstract class BasicGhostAI extends GhostAI {
         Coordinates<Integer> destination = new Coordinates<>(point.getX().intValue(),point.getY().intValue());
         direction = Utils.findShortestWay(ghost,mapLevel,destination);
         target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
-    }
-
-    /**
-     * Return if the target is reach
-     * @param ghost a ghost
-     * @param mapLevel a mapLevel
-     * @return if the target is reach
-     */
-    private boolean isTargetReach (Ghost ghost, MapLevel mapLevel) {
-        return Utils.isTargetReach(ghost,mapLevel,target);
     }
 
     /**
