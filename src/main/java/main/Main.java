@@ -26,7 +26,7 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        Game game = new Game(getEngine(), 144);
+        Game game = new Game(getEngine(), 60,100);
         MenuLevel menuLevel = new MenuLevel(game);
         PauseMenuLevel pauseMenu = new PauseMenuLevel(game);
         GameOverLevel gameOverLevel = new GameOverLevel(game);

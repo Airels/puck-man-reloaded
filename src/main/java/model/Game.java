@@ -39,9 +39,10 @@ public final class Game {
      * @param engine      KernelEngine reference
      * @param fps         targeted game fps
      */
-    public Game(KernelEngine engine, int fps) {
+    public Game(KernelEngine engine, int fps, int physicalRate) {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
+        engine.setPhysicalRate(physicalRate);
         engine.printFrameRate(true);
 
         SoundLoader.loadSounds();
