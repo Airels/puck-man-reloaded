@@ -1,5 +1,7 @@
 package model.levels.generators;
 
+import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
+import main.Main;
 import model.Game;
 import model.levels.Level;
 
@@ -14,10 +16,15 @@ public class LevelGenerator {
      * @return newly generated level
      */
     public Level generate(Game game) {
-        LoadableMapBuilder loadableMapBuilder = null;
-        LoadableInputBuilder loadableInputBuilder = LoadableInputBuilder.CLASSIC;
-        GenericLevel genericLevel = new GenericLevel(game,loadableMapBuilder,loadableInputBuilder);
-        return genericLevel;
+        try {
+            LoadableMapBuilder loadableMapBuilder = null;
+            LoadableInputBuilder loadableInputBuilder = LoadableInputBuilder.CLASSIC;
+            GenericLevel genericLevel = new GenericLevel(game,loadableMapBuilder,loadableInputBuilder);
+            return genericLevel;
+        } catch (Exception e) {
+            new Dialog(Main.APPLICATION_NAME, "An error occured on map generation", e).show();
+            return null;
+        }
     }
 
 }
