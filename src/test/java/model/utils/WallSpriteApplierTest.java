@@ -6,13 +6,20 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.model.sprites.InvisibleSprite;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import model.elements.cells.Wall;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class WallSpriteApplierTest {
 
+    static WallSpriteApplier wallSpriteApplier;
     MapLevelBuilder builder;
     Sprite invisibleSprite = InvisibleSprite.getInstance();
+
+    @BeforeAll
+    static void initAll() {
+        wallSpriteApplier = new WallSpriteApplier();
+    }
 
     @BeforeEach
     public void init() {
@@ -26,7 +33,7 @@ class WallSpriteApplierTest {
                 builder.setCell(new Wall(i, j));
 
         MapLevel map = builder.build();
-        WallSpriteApplier.apply(map);
+        wallSpriteApplier.apply(map);
 
         DeltaEngine.launch().addMap(map);
         DeltaEngine.getKernelEngine().setCurrentMap("test");
@@ -44,7 +51,19 @@ class WallSpriteApplierTest {
 
 
         MapLevel map = builder.build();
-        WallSpriteApplier.apply(map);
+        wallSpriteApplier.apply(map);
+
+        DeltaEngine.launch().addMap(map);
+        DeltaEngine.getKernelEngine().setCurrentMap("test");
+        for (; ; ) ;
+    }
+
+    @Test
+    public void soloWall() throws Exception {
+        builder.setCell(new Wall(2, 2));
+
+        MapLevel map = builder.build();
+        wallSpriteApplier.apply(map);
 
         DeltaEngine.launch().addMap(map);
         DeltaEngine.getKernelEngine().setCurrentMap("test");

@@ -7,21 +7,25 @@ import model.utils.WallSpriteApplier;
 /**
  * Component of Level Loader. Loads the given map of the level.
  */
-public final  class MapLevelLoader {
+public final class MapLevelLoader {
 
     private final KernelEngine deltaEngine;
+    private final WallSpriteApplier wallSpriteApplier;
     private LoadableMap currentMap;
 
     /**
      * Default constructor.
+     *
      * @param deltaEngine the Engine
      */
     public MapLevelLoader(KernelEngine deltaEngine) {
         this.deltaEngine = deltaEngine;
+        this.wallSpriteApplier = new WallSpriteApplier();
     }
 
     /**
      * Load given map
+     *
      * @param map LoadableMap to load
      */
     public void loadMapLevel(LoadableMap map) {
@@ -29,13 +33,14 @@ public final  class MapLevelLoader {
             this.unloadMapLevel(currentMap);
 
         map.load(deltaEngine);
-        WallSpriteApplier.apply(map.getMapLevel());
+        wallSpriteApplier.apply(map.getMapLevel());
 
         currentMap = map;
     }
 
     /**
      * Unload given map
+     *
      * @param map LoadableMap to unload
      */
     public void unloadMapLevel(LoadableMap map) {
