@@ -19,4 +19,9 @@ public final class GameConfiguration {
 
     public final static int CONF_GAINED_LIVES = 1;
     public final static int CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES = 1;
+
+    public final static double CONF_SOUND_SIREN_CHASE_SPEED = 0.6;
+    public final static double CONF_SOUND_SIREN_SCARED_SPEED = 8;
+    public final static double CONF_SOUND_SIREN_CHASE_VOLUME = 1;
+    public final static double CONF_SOUND_SIREN_SCARED_VOLUME = 1;
 }

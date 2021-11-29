@@ -81,7 +81,7 @@ public final class MenuMap implements LoadableMap {
 
         deltaEngine.addHUDElement(title);
         deltaEngine.addHUDElement(singlePlayerText);
-        deltaEngine.addHUDElement(multiPlayerText);
+        // deltaEngine.addHUDElement(multiPlayerText);
         deltaEngine.addHUDElement(quitText);
         deltaEngine.addHUDElement(mainImg);
 
