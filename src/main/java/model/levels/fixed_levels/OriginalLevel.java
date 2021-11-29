@@ -128,12 +128,7 @@ public class OriginalLevel implements Level {
 
     @Override
     public void reset() {
-        for (Map.Entry<Entity, Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
-            entry.getKey().setCoordinates(entry.getValue());
-        }
-        for (Ghost ghost : getGhosts()) {
-            ghost.setState(GhostState.NORMAL);
-        }
+
     }
 
     /**

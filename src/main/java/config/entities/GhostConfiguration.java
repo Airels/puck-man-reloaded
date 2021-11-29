@@ -88,7 +88,7 @@ public final class GhostConfiguration {
 
 
     public final static String CONF_CLYDE_NAME = "Clyde";
-    public final static GhostAIs CONF_CLYDE_AI = GhostAIs.CLYDE_AI;
+    public final static GhostAIs CONF_CLYDE_AI = GhostAIs.BLACKY_AI; // TODO CLYDE_AI
     public final static double CONF_CLYDE_SPEED = 5.1;
     public final static double CONF_CLYDE_SCARED_SPEED = CONF_CLYDE_SPEED/2;
     public final static double CONF_CLYDE_FLEEING_SPEED = CONF_BLINKY_SPEED*2;

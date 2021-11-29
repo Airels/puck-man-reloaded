@@ -27,6 +27,9 @@ import java.util.Random;
  */
 public abstract class BasicGhostAI extends GhostAI {
 
+    private static final Entity focus = new Entity("focus",new Coordinates<>(0.,0.),
+            new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
+
     protected final Random random = new Random();
     protected Coordinates<Integer> target;
     protected Direction direction;
@@ -39,28 +42,32 @@ public abstract class BasicGhostAI extends GhostAI {
         direction = Direction.IDLE;
     }
 
-    static Entity focus = new Entity("focus",new Coordinates<>(0.,0.),new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
-
     @Override
     public final void tick() {
         Ghost ghost = getGhost();
         MapLevel mapLevel = ghost.getMapLevel();
+        GhostState ghostState = ghost.getState();
         if (ghost.getBlockTarget() != null && ghost.getDirection() != Direction.IDLE) return;
-        switch (ghost.getState()) {
+        if (ghostState == GhostState.NORMAL && random.nextDouble() < getProbaScatter(ghost)) {
+            ghost.setState(GhostState.SCATTER);
+            ghostState = ghost.getState();
+        }
+        switch (ghostState) {
             case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost,mapLevel);
             case FLEEING -> fleeingModeTick(ghost,mapLevel);
+            case SCATTER -> scatterModeTick(ghost,mapLevel);
             default -> {}
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
-        if (ghost.getName().equals("Clyde")) {
+        if (ghost.getName().equals("")) {
             try {
                 mapLevel.addEntity(focus);
             } catch (MapLevelEntityNameStackingException e) {
                 e.printStackTrace();
             }
-            focus.setCoordinates(new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
+            if (target != null) focus.setCoordinates(new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
         }
     }
 
@@ -130,6 +137,16 @@ public abstract class BasicGhostAI extends GhostAI {
     }
 
     /**
+     * Action when the ghost is in scatter mode
+     * @param ghost a ghost
+     * @param mapLevel a mapLevel
+     */
+    private void scatterModeTick (Ghost ghost, MapLevel mapLevel) {
+        scaryModeTick(ghost,mapLevel);
+        ghost.setState(GhostState.NORMAL);
+    }
+
+    /**
      * Return the entity pacMan on the mapLevel
      * @param ghost a ghost
      * @param mapLevel a mapLeft
@@ -140,6 +157,16 @@ public abstract class BasicGhostAI extends GhostAI {
         Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
         if (entity == null) throw new GhostTargetMissingException(ghost);
         return (PacMan) entity;
+    }
+
+    private double getProbaScatter (Ghost ghost) {
+        String name = ghost.getName();
+        switch (name) {
+            case "Blinky" -> {return 0.02;}
+            case "Pinky" -> {return 0.05;}
+            case "Inky" -> {return 0.01;}
+            default -> {return 0;}
+        }
     }
 
 }

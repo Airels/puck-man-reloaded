@@ -8,7 +8,8 @@ public enum GhostAIs {
     BLINKY_AI(new BlinkyAI()),
     PINKY_AI(new PinkyAI()),
     INKY_AI(new InkyAI()),
-    CLYDE_AI(new ClydeAI());
+    CLYDE_AI(new ClydeAI()),
+    BLACKY_AI(new BlackyAI());
 
     private final GhostAI ghostAI;
 

@@ -3,11 +3,16 @@ package model;
 import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
+import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Direction;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.elements.entities.PacMan;
+import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
 import model.events.TimedEvent;
@@ -15,10 +20,15 @@ import model.levels.Level;
 import model.levels.fixed_levels.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import org.jetbrains.annotations.Nullable;
+
+import model.loadables.LoadableMap;
 import sounds.SoundLoader;
 import sounds.Sounds;
 
 import static config.game.GameConfiguration.*;
+
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * Main core of the game. Oversees game, and called when special game modes need to be activated and handled.
@@ -227,6 +237,19 @@ public final class Game {
                 lifeCounter--;
 
                 levelLoader.getCurrentLevel().reset();
+
+                LoadableMap loadableMap = levelLoader.getCurrentLevel().getMapLevelLoadable();
+
+                for (Map.Entry<Entity, Coordinates<Double>> entry : loadableMap.getSpawnPoints().entrySet()) {
+                    entry.getKey().setCoordinates(entry.getValue());
+                }
+                for (Ghost ghost : loadableMap.getGeneratedGhosts()) {
+                    ghost.setState(GhostState.NORMAL);
+                }
+                for (Entity entity : loadableMap.getMapLevel().getEntities()) {
+                    entity.setDirection(Direction.IDLE);
+                }
+
                 pacMan.setDead(false);
                 deltaEngine.tick();
                 Thread.sleep(3000);
