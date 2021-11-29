@@ -2,6 +2,7 @@ package model.utils;
 
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
+import fr.r1r0r0.deltaengine.model.elements.cells.UncrossableCell;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.sprites.InvisibleSprite;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
@@ -11,25 +12,6 @@ import view.images.Image;
 import java.util.*;
 
 public class WallSpriteApplier {
-
-    static class Neighbor {
-        private final Cell c;
-
-        private final Direction direction;
-
-        Neighbor(Cell c, Direction direction) {
-            this.c = c;
-            this.direction = direction;
-        }
-
-        Direction getDirection() {
-            return direction;
-        }
-
-        public Cell getCell() {
-            return c;
-        }
-    }
 
     public static void apply(MapLevel mapLevel) {
         Map<Cell, Collection<Neighbor>> cells = new HashMap<>();
@@ -52,22 +34,23 @@ public class WallSpriteApplier {
         for (Map.Entry<Cell, Collection<Neighbor>> entry : cells.entrySet()) {
             int nbNeighbors = 0;
 
-            for (Neighbor neighbor : entry.getValue())
-                if (neighbor.getCell().getClass().equals(Wall.class))
+            for (Neighbor neighbor : entry.getValue()) {
+                if (neighbor.getCell() instanceof UncrossableCell)
                     nbNeighbors++;
+            }
 
             switch (nbNeighbors) {
                 case 0 -> entry.getKey().setSprite(Image.FOUR_SIDED_WALL.getSprite());
                 case 1 -> {
-                    Sprite s = Image.ONE_SIDED_WALL.getSprite();
+                    Sprite s = Image.THREE_SIDED_WALL.getSprite();
                     int rotate = 0;
 
                     for (Neighbor neighbor : entry.getValue()) {
-                        if (!neighbor.getCell().getClass().equals(Wall.class)) {
+                        if (neighbor.getCell() instanceof UncrossableCell) {
                             switch (neighbor.getDirection()) {
-                                case LEFT -> rotate = -90;
-                                case DOWN -> rotate = 180;
-                                case RIGHT -> rotate = 90;
+                                case LEFT -> rotate = 180;
+                                case DOWN -> rotate = 90;
+                                case UP -> rotate = -90;
                             }
 
                             break;
@@ -83,7 +66,7 @@ public class WallSpriteApplier {
                     int rotate = 0;
 
                     for (Neighbor neighbor : entry.getValue()) {
-                        if (!neighbor.getCell().getClass().equals(Wall.class)) continue;
+                        if (!(neighbor.getCell() instanceof UncrossableCell)) continue;
 
                         firstNeighbor = neighbor;
                         break;
@@ -93,7 +76,7 @@ public class WallSpriteApplier {
                         System.exit(1000); // TODO
 
                     for (Neighbor neighbor : entry.getValue()) {
-                        if (neighbor == firstNeighbor || !neighbor.getCell().getClass().equals(Wall.class)) continue;
+                        if (neighbor == firstNeighbor || !(neighbor.getCell() instanceof UncrossableCell)) continue;
 
                         if (neighbor.getDirection().getOpposite().equals(firstNeighbor.getDirection())) {
                             s = Image.TWO_SIDED_WALL_TUBE.getSprite();
@@ -133,13 +116,13 @@ public class WallSpriteApplier {
                     entry.getKey().setSprite(s);
                 }
                 case 3 -> {
-                    Sprite s = Image.THREE_SIDED_WALL.getSprite();
+                    Sprite s = Image.ONE_SIDED_WALL.getSprite();
                     entry.getValue().forEach((neighbor -> {
-                        if (!neighbor.getCell().getClass().equals(Wall.class)) {
-                            switch (neighbor.direction) {
-                                case UP -> s.setRotate(-90);
-                                case DOWN -> s.setRotate(90);
-                                case LEFT -> s.setRotate(180);
+                        if (!(neighbor.getCell() instanceof UncrossableCell)) {
+                            switch (neighbor.getDirection()) {
+                                case DOWN -> s.setRotate(180);
+                                case RIGHT -> s.setRotate(90);
+                                case LEFT -> s.setRotate(-90);
                             }
                         }
                     }));
@@ -149,5 +132,24 @@ public class WallSpriteApplier {
                 case 4 -> entry.getKey().setSprite(InvisibleSprite.getInstance());
             }
         }
+    }
+}
+
+class Neighbor {
+    private final Cell c;
+
+    private final Direction direction;
+
+    Neighbor(Cell c, Direction direction) {
+        this.c = c;
+        this.direction = direction;
+    }
+
+    Direction getDirection() {
+        return direction;
+    }
+
+    public Cell getCell() {
+        return c;
     }
 }

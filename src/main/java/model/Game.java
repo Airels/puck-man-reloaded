@@ -138,6 +138,8 @@ public final class Game {
     public void pauseGame() {
         if (!canPause) return;
 
+        Sounds.SIREN.stop();
+
         if (isInEnergizedMode()) energizeTimerEvent.pause();
         bufferedLevel = levelLoader.getCurrentLevel();
         levelLoader.load(pauseLevel, false);
@@ -147,6 +149,7 @@ public final class Game {
      * Resumes the current level
      */
     public void resumeGame() {
+        Sounds.SIREN.play();
         if (isInEnergizedMode()) energizeTimerEvent.unpause();
         levelLoader.load(bufferedLevel);
         bufferedLevel = null;
@@ -237,19 +240,6 @@ public final class Game {
                 lifeCounter--;
 
                 levelLoader.getCurrentLevel().reset();
-
-                LoadableMap loadableMap = levelLoader.getCurrentLevel().getMapLevelLoadable();
-
-                for (Map.Entry<Entity, Coordinates<Double>> entry : loadableMap.getSpawnPoints().entrySet()) {
-                    entry.getKey().setCoordinates(entry.getValue());
-                }
-                for (Ghost ghost : loadableMap.getGeneratedGhosts()) {
-                    ghost.setState(GhostState.NORMAL);
-                }
-                for (Entity entity : loadableMap.getMapLevel().getEntities()) {
-                    entity.setDirection(Direction.IDLE);
-                }
-
                 pacMan.setDead(false);
                 deltaEngine.tick();
                 Thread.sleep(3000);

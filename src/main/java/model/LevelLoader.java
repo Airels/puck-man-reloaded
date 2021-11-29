@@ -47,11 +47,6 @@ public final class LevelLoader {
 
         MapLevel mapLevel = level.getMapLevelLoadable().getMapLevel();
 
-        Collection<Entity> entities = mapLevel.getEntities();
-        for (Entity entity : entities) {
-            entity.setDirection(Direction.IDLE);
-        }
-
         double x = 0,
                 y = mapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE,
                 width = mapLevel.getWidth(),

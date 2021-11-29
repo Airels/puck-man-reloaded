@@ -29,7 +29,6 @@ public final  class MapLevelLoader {
             this.unloadMapLevel(currentMap);
 
         map.load(deltaEngine);
-
         WallSpriteApplier.apply(map.getMapLevel());
 
         currentMap = map;

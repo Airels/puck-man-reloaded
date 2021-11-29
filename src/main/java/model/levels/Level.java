@@ -1,10 +1,12 @@
 package model.levels;
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
 import model.elements.entities.ghosts.Ghost;
+import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
 import model.loadables.Loadable;
 import model.loadables.LoadableInput;
@@ -95,7 +97,17 @@ public interface Level extends Loadable {
     /**
      * reset to initial position ghosts and pacman
      */
-    void reset();
+    default void reset() {
+        for (Map.Entry<Entity, Coordinates<Double>> entry : getSpawnPoints().entrySet()) {
+            entry.getKey().setCoordinates(entry.getValue());
+        }
+        for (Ghost ghost : getGhosts()) {
+            ghost.setState(GhostState.NORMAL);
+        }
+        for (Entity entity : getMapLevelLoadable().getMapLevel().getEntities()) {
+            entity.setDirection(Direction.IDLE);
+        }
+    }
 
     /**
      * Returns the level changer of the level
