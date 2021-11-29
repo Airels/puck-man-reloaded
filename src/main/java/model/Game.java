@@ -178,10 +178,10 @@ public final class Game {
      * Run energized mode for configured amount of time, allowing to PacMan to eat ghosts
      */
     private void runEnergizeMode() {
+        if (inEnergizedMode) energizeTimerEvent.runTriggers();
+
         Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_SCARED_SPEED);
         Sounds.SIREN.setVolume(CONF_SOUND_SIREN_SCARED_VOLUME);
-
-        if (inEnergizedMode) energizeTimerEvent.runTriggers();
 
         energizeTimerEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
         energizeTimerEvent.addTrigger(this::turnOffEnergizeMode);
