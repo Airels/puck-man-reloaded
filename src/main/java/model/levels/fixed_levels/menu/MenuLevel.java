@@ -94,11 +94,6 @@ public class MenuLevel implements Level {
         return map.getSpawnPoints();
     }
 
-    @Override
-    public void reset() {
-
-    }
-
     /**
      * Returns the level changer of the level
      *

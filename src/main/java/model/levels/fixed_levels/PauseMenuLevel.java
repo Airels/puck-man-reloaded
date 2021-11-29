@@ -127,14 +127,6 @@ public class PauseMenuLevel implements Level {
     }
 
     /**
-     * reset to initial position ghosts and pacman
-     */
-    @Override
-    public void reset() {
-
-    }
-
-    /**
      * Returns the level changer of the level
      *
      * @return Level Changer instance

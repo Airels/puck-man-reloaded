@@ -126,11 +126,6 @@ public class OriginalLevel implements Level {
         return mapLevel.getSpawnPoints();
     }
 
-    @Override
-    public void reset() {
-
-    }
-
     /**
      * Returns the level changer of the level
      *

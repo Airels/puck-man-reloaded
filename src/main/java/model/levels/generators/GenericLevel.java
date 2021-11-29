@@ -80,16 +80,6 @@ public class GenericLevel implements Level {
         return mapLevel.getSpawnPoints();
     }
 
-    @Override
-    public void reset () {
-        for (Map.Entry<Entity,Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
-            entry.getKey().setCoordinates(entry.getValue());
-        }
-        for (Ghost ghost : getGhosts()) {
-            ghost.setState(GhostState.NORMAL);
-        }
-    }
-
     /**
      * Returns the level changer of the level
      *
