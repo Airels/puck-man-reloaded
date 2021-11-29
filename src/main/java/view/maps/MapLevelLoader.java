@@ -1,5 +1,6 @@
 package view.maps;
 
+import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.loadables.LoadableMap;
 import model.utils.WallSpriteApplier;
@@ -34,6 +35,8 @@ public final class MapLevelLoader {
 
         map.load(deltaEngine);
         wallSpriteApplier.apply(map.getMapLevel());
+
+        map.getGeneratedGhosts().forEach((ghost -> ghost.setDirection(Direction.IDLE)));
 
         currentMap = map;
     }

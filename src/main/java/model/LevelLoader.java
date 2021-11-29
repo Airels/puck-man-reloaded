@@ -46,12 +46,10 @@ public final class LevelLoader {
         level.load(deltaEngine);
 
         MapLevel mapLevel = level.getMapLevelLoadable().getMapLevel();
-
         double x = 0,
                 y = mapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE,
                 width = mapLevel.getWidth(),
                 height = mapLevel.getHeight();
-
         if (loadGlobalHUD) {
             globalHUD = new GlobalHUD(level.getGame(), new Coordinates<>(x, y), width, height);
             globalHUD.load(deltaEngine);
