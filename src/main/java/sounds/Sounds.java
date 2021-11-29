@@ -83,6 +83,10 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Set if the sound must be looped
+     * @param loop boolean true to bool, false otherwise
+     */
     public void setLoop(boolean loop){
         try {
             Main.getEngine().getSoundEngine().setLoop(this.getName(),loop);
@@ -91,9 +95,25 @@ public enum Sounds {
         }
     }
 
+    /**
+     * Allowing to set the speed of the sound
+     * @param speed double speed to set (must be between 0 and 8)
+     */
     public void setSpeed(double speed) {
         try {
             Main.getEngine().getSoundEngine().setSpeed(getName(), speed);
+        } catch (SoundDoesNotExistException e) {
+            new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
+        }
+    }
+
+    /**
+     * Allowing to set the volume of the sound
+     * @param volume double volume to set (must be between 0 and 1)
+     */
+    public void setVolume(double volume) {
+        try {
+            Main.getEngine().getSoundEngine().setVolume(getName(), volume);
         } catch (SoundDoesNotExistException e) {
             new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
         }
