@@ -2,6 +2,7 @@ package model;
 
 import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
+import fr.r1r0r0.deltaengine.exceptions.SoundDoesNotExistException;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
@@ -15,6 +16,9 @@ import model.levels.fixed_levels.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import org.jetbrains.annotations.Nullable;
 import sounds.SoundLoader;
+import sounds.Sounds;
+
+import static config.game.GameConfiguration.*;
 
 /**
  * Main core of the game. Oversees game, and called when special game modes need to be activated and handled.
@@ -159,6 +163,7 @@ public final class Game {
      * Run energized mode for configured amount of time, allowing to PacMan to eat ghosts
      */
     private void runEnergizeMode() {
+        Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_SCARED_SPEED);
         if (inEnergizedMode) energizeTimerEvent.runTriggers();
 
         energizeTimerEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
@@ -176,6 +181,7 @@ public final class Game {
      * Toggle off energize mode, all scared ghosts returns to normal state.
      */
     public void turnOffEnergizeMode() {
+        Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_CHASE_SPEED);
         inEnergizedMode = false;
         ghostEatenChain = 0;
         deltaEngine.removeGlobalEvent(energizeTimerEvent);
@@ -201,6 +207,7 @@ public final class Game {
      */
     public void gameOver() {
         try {
+            Sounds.SIREN.stop();
             this.canPause = false;
 
             deltaEngine.haltCurrentMap();
@@ -208,6 +215,7 @@ public final class Game {
 
             pacMan.setDead(true); // TODO Changement de sprite Pacman
             deltaEngine.tick(Engines.GRAPHICS_ENGINE); // TODO animation
+            Sounds.GAME_OVER.play();
             // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
             Thread.sleep(3000);
             if (lifeCounter > 0) {
@@ -218,14 +226,14 @@ public final class Game {
                 deltaEngine.tick();
                 Thread.sleep(3000);
                 deltaEngine.resumeCurrentMap();
+                Sounds.SIREN.play();
             } else {
                 levelLoader.load(gameOverLevel, false);
             }
 
             this.canPause = true;
         } catch (InterruptedException e) {
-            new Dialog(Main.APPLICATION_NAME, "Game over event error", e).show();
-        }
+            new Dialog(Main.APPLICATION_NAME, "Game over event error", e).show();}
     }
 
     /**

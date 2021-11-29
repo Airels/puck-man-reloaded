@@ -30,7 +30,7 @@ public class PacMan extends Entity {
 
         this.getAttributes().addDirectionListener((direction, t1) -> {
             Sprite s = CONF_PACMAN_SPRITE;
-            switch (this.getAttributes().getDirection()) { // TODO a refactor
+            switch (this.getAttributes().getDirection()) {
                 case UP -> {
                     s.setScale(1, s.getScale().getScaleY());
                     s.setRotate(-90);

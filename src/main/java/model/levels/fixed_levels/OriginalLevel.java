@@ -81,6 +81,9 @@ public class OriginalLevel implements Level {
                 } finally {
                     deltaEngine.removeHUDElement(readyText);
                     deltaEngine.resumeCurrentMap();
+                    Sounds.SIREN.setLoop(true);
+                    Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_CHASE_SPEED);
+                    Sounds.SIREN.play();
                 }
             }).start();
 
