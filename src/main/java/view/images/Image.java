@@ -42,9 +42,6 @@ public enum Image {
     ONE_SIDED_WALL("wall_1.png");
 
 
-
-
-
     private final String path;
 
     Image(String path) {
@@ -58,7 +55,7 @@ public enum Image {
      */
     public fr.r1r0r0.deltaengine.model.sprites.Image getSprite() {
         try {
-            return new fr.r1r0r0.deltaengine.model.sprites.Image(Objects.requireNonNull(getClass().getResource(path)).getPath());
+            return new fr.r1r0r0.deltaengine.model.sprites.Image(path);
         } catch (Exception e) {
             new Dialog(Main.APPLICATION_NAME, "Image loading error", e).show();
             return null;
