@@ -16,8 +16,8 @@ import java.util.concurrent.*;
 
 public class WallSpriteApplier {
 
-    private Executor executor;
-    private CompletionService<Void> completionService;
+    private final Executor executor;
+    private final CompletionService<Void> completionService;
 
     public WallSpriteApplier() {
         executor = Executors.newWorkStealingPool();
