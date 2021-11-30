@@ -29,18 +29,14 @@ public final class PinkyAI extends BasicGhostAI {
     private static final String[] FORBIDDEN_TARGET_NAMES = new String[]{
             GhostConfiguration.CONF_BLINKY_NAME,
             GhostConfiguration.CONF_INKY_NAME,
-            GhostConfiguration.CONF_CLYDE_NAME};
+            GhostConfiguration.CONF_CLYDE_NAME,
+            GhostConfiguration.CONF_BLACKY_NAME};
 
     /**
      * Constructor
      */
     public PinkyAI () {
         super();
-    }
-
-    @Override
-    public GhostAI clone() {
-        return new PinkyAI();
     }
 
     @Override
@@ -54,9 +50,7 @@ public final class PinkyAI extends BasicGhostAI {
         Collection<Coordinates<Integer>> forbiddenWays = findForbiddenWays(mapLevel);
         Coordinates<Integer> ghostCoordinate = Utils.getIntegerCoordinates(ghost);
         for (Coordinates<Integer> forbiddenWay : forbiddenWays) {
-            if (forbiddenWay.equals(ghostCoordinate)) {
-                return Direction.IDLE;
-            }
+            if (forbiddenWay.equals(ghostCoordinate)) return Direction.IDLE;
         }
         return Utils.findShortestWay(ghost,mapLevel,destination,forbiddenWays);
     }
@@ -72,7 +66,6 @@ public final class PinkyAI extends BasicGhostAI {
         PacMan pacMan = findPacMan(ghost,mapLevel);
         Coordinates<Integer> pacManPosition = Utils.getIntegerCoordinates(pacMan);
         return Utils.findNextCross(ghost,mapLevel,pacManPosition,pacMan.getDirection());
-
     }
 
     /**
@@ -91,9 +84,7 @@ public final class PinkyAI extends BasicGhostAI {
 
     @Override
     protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
-        Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
-        return new Coordinates<>(position.getX() + direction.getX(),
-                position.getY() + direction.getY());
+        return Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction);
     }
 
 }

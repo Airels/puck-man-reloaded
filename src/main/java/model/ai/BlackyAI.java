@@ -9,19 +9,29 @@ import main.Main;
 import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
+/**
+ * A custom IA, is color is black.
+ * He has 2 different states :
+ *      - if pacMan is in same corridor, he run to him with a high speed
+ *          when he cannot longer see pacMan, he run the previous position where he saw him
+ *      - if pacMan is not in same corridor, he move randomly like Clyde, and he have slowness
+ */
 public class BlackyAI extends BasicGhostAI {
 
-    private static double sentinelModeSpeed = 0.5;
-    private static double hunterModeSpeed = 1.5;
+    private static final double sentinelModeSpeed = 0.5;
+    private static final double hunterModeSpeed = 1.5;
 
+    private Double defaultSpeed;
     private Coordinates<Integer> lastViewPacManCoordinate;
 
     public BlackyAI () {
+        defaultSpeed = null;
         lastViewPacManCoordinate = null;
     }
 
     @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
+        if (defaultSpeed == null) defaultSpeed = ghost.getSpeed();
         Direction directionChoose;
         try {
             directionChoose = chooseDirectionAux(ghost,mapLevel);
@@ -41,7 +51,7 @@ public class BlackyAI extends BasicGhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
-        return (escapes.size() == 0) ? oppositeDirection : escapes.get(random.nextInt(escapes.size()));
+        return (escapes.size() == 0) ? oppositeDirection : escapes.get(RANDOM.nextInt(escapes.size()));
     }
 
     private Direction chooseDirectionAux (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
@@ -65,11 +75,8 @@ public class BlackyAI extends BasicGhostAI {
         return null;
     }
 
-    private Double defaultSpeed;
-
     @Override
     protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
-        if (defaultSpeed == null) defaultSpeed = ghost.getSpeed();
         if (lastViewPacManCoordinate != null) {
             ghost.setSpeed(defaultSpeed * hunterModeSpeed);
             try {
@@ -83,11 +90,6 @@ public class BlackyAI extends BasicGhostAI {
         Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
         return new Coordinates<>(position.getX() + direction.getX(),
                 position.getY() + direction.getY());
-    }
-
-    @Override
-    public GhostAI clone () {
-        return new BlackyAI();
     }
 
 }

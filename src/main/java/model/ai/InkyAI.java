@@ -32,11 +32,6 @@ public final class InkyAI extends BasicGhostAI {
     }
 
     @Override
-    public GhostAI clone () {
-        return new InkyAI();
-    }
-
-    @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         PacMan pacMan;
         try {
@@ -54,7 +49,7 @@ public final class InkyAI extends BasicGhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,otherDirection)) directions.add(otherDirection);
         }
         int size = directions.size();
-        return (size == 0) ? opposingDirection : directions.get(random.nextInt(size));
+        return (size == 0) ? opposingDirection : directions.get(RANDOM.nextInt(size));
     }
 
     @Override

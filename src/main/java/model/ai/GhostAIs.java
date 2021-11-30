@@ -5,23 +5,49 @@ package model.ai;
  */
 public enum GhostAIs {
 
-    BLINKY_AI(new BlinkyAI()),
-    PINKY_AI(new PinkyAI()),
-    INKY_AI(new InkyAI()),
-    CLYDE_AI(new ClydeAI()),
-    BLACKY_AI(new BlackyAI());
+    BLINKY_AI(){
+        @Override
+        public GhostAI build() {
+            return new BlinkyAI();
+        }
+    },
+    PINKY_AI(){
+        @Override
+        public GhostAI build() {
+            return new PinkyAI();
+        }
+    },
+    INKY_AI(){
+        @Override
+        public GhostAI build() {
+            return new InkyAI();
+        }
+    },
+    CLYDE_AI(){
+        @Override
+        public GhostAI build() {
+            return new ClydeAI();
+        }
+    },
+    BLACKY_AI(){
+        @Override
+        public GhostAI build() {
+            return new BlackyAI();
+        }
+    },
+    SKEAZLY(){
+        @Override
+        public GhostAI build() {
+            return new SkeazlyAI();
+        }
+    };
 
-    private final GhostAI ghostAI;
-
-    GhostAIs(GhostAI ai) {
-        this.ghostAI = ai;
-    }
+    GhostAIs () {}
 
     /**
      * Creates a new instance of the AI and returns it
      * @return new GhostAI instance
      */
-    public GhostAI build() {
-        return ghostAI.clone();
-    }
+    public abstract GhostAI build();
+
 }

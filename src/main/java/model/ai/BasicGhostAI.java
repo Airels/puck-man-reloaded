@@ -27,10 +27,10 @@ import java.util.Random;
  */
 public abstract class BasicGhostAI extends GhostAI {
 
+    protected static final Random RANDOM = new Random();
     private static final Entity focus = new Entity("focus",new Coordinates<>(0.,0.),
             new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
 
-    protected final Random random = new Random();
     protected Coordinates<Integer> target;
     protected Direction direction;
 
@@ -48,7 +48,7 @@ public abstract class BasicGhostAI extends GhostAI {
         MapLevel mapLevel = ghost.getMapLevel();
         GhostState ghostState = ghost.getState();
         if (ghost.getBlockTarget() != null && ghost.getDirection() != Direction.IDLE) return;
-        if (ghostState == GhostState.NORMAL && random.nextDouble() < getProbaScatter(ghost)) {
+        if (ghostState == GhostState.NORMAL && RANDOM.nextDouble() < getProbaScatter(ghost)) {
             ghost.setState(GhostState.SCATTER);
             ghostState = ghost.getState();
         }
@@ -61,7 +61,7 @@ public abstract class BasicGhostAI extends GhostAI {
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
-        if (ghost.getName().equals("Clyde")) {
+        if (ghost.getName().equals("___")) {
             try {
                 mapLevel.addEntity(focus);
             } catch (MapLevelEntityNameStackingException e) {
@@ -120,7 +120,7 @@ public abstract class BasicGhostAI extends GhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
-        direction = (escapes.size() == 0) ? shortestDirection : escapes.get(random.nextInt(escapes.size()));
+        direction = (escapes.size() == 0) ? shortestDirection : escapes.get(RANDOM.nextInt(escapes.size()));
         target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
@@ -153,13 +153,14 @@ public abstract class BasicGhostAI extends GhostAI {
      * @return the entity pacMan on the mapLevel
      * @throws GhostTargetMissingException throw if the entity pacMan is not in the mapLevel
      */
-    protected PacMan findPacMan (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
+    protected static PacMan findPacMan (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
         Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
         if (entity == null) throw new GhostTargetMissingException(ghost);
         return (PacMan) entity;
     }
 
     private double getProbaScatter (Ghost ghost) {
+        // TODO
         String name = ghost.getName();
         switch (name) {
             case "Blinky" -> {return 0.02;}

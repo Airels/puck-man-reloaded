@@ -30,11 +30,6 @@ public final class BlinkyAI extends BasicGhostAI {
     }
 
     @Override
-    public GhostAI clone () {
-        return new BlinkyAI();
-    }
-
-    @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         Coordinates<Integer> destination;
         try {
@@ -62,9 +57,7 @@ public final class BlinkyAI extends BasicGhostAI {
 
     @Override
     protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
-        Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
-        return new Coordinates<>(position.getX() + direction.getX(),
-                position.getY() + direction.getY());
+        return Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction);
     }
 
 }

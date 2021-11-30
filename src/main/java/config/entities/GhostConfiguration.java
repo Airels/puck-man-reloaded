@@ -88,7 +88,7 @@ public final class GhostConfiguration {
 
 
     public final static String CONF_CLYDE_NAME = "Clyde";
-    public final static GhostAIs CONF_CLYDE_AI = GhostAIs.BLACKY_AI; // TODO CLYDE_AI
+    public final static GhostAIs CONF_CLYDE_AI = GhostAIs.CLYDE_AI;
     public final static double CONF_CLYDE_SPEED = 5.1;
     public final static double CONF_CLYDE_SCARED_SPEED = CONF_CLYDE_SPEED/2;
     public final static double CONF_CLYDE_FLEEING_SPEED = CONF_BLINKY_SPEED*2;
@@ -112,4 +112,12 @@ public final class GhostConfiguration {
     );
     public final static double CONF_CLYDE_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY = 0.1;
     public final static int CONF_CLYDE_MAXIMUM_SCATTER_TRAVEL_CELLS = 50;
+
+
+    public final static String CONF_BLACKY_NAME = "Blacky";
+    public final static GhostAIs CONF_BLACKY_AI = GhostAIs.BLACKY_AI;
+
+
+    public final static String CONF_SKEAZLY_NAME = "Skeazly";
+    public final static GhostAIs CONF_SKEAZLY_AI = GhostAIs.SKEAZLY;
 }
