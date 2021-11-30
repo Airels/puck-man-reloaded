@@ -4,11 +4,14 @@ import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.Game;
 import model.levels.Level;
+import model.levels.generators.vidal.GenericLevel;
 
 /**
  * The Level Generator, allowing to generate new level randomly
  */
 public class LevelGenerator {
+
+
 
     /**
      * Generate a new level randomly
@@ -17,7 +20,7 @@ public class LevelGenerator {
      */
     public Level generate(Game game) {
         try {
-            LoadableMapBuilder loadableMapBuilder = null;
+            LoadableMapBuilder loadableMapBuilder = LoadableMapBuilder.RANDOM;
             LoadableInputBuilder loadableInputBuilder = LoadableInputBuilder.CLASSIC;
             GenericLevel genericLevel = new GenericLevel(game,loadableMapBuilder,loadableInputBuilder);
             return genericLevel;

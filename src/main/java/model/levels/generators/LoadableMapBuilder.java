@@ -1,6 +1,7 @@
 package model.levels.generators;
 
 import model.levels.Level;
+import model.levels.generators.vidal.RandomLevel;
 import model.loadables.LoadableMap;
 import view.maps.OriginalLevelMap;
 
@@ -15,7 +16,7 @@ public enum LoadableMapBuilder {
     RANDOM(){
         @Override
         public LoadableMap build (Level level) {
-            return new RandomLevel(level);
+            return new RandomMapLevel(level);
         }
     };
 

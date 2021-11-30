@@ -1,6 +1,7 @@
 package model.levels.generators;
 
 import model.levels.Level;
+import model.levels.generators.vidal.ClassicLoadableInput;
 import model.loadables.LoadableInput;
 
 /**
