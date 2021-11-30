@@ -61,7 +61,7 @@ public abstract class BasicGhostAI extends GhostAI {
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
-        if (ghost.getName().equals("")) {
+        if (ghost.getName().equals("Clyde")) {
             try {
                 mapLevel.addEntity(focus);
             } catch (MapLevelEntityNameStackingException e) {

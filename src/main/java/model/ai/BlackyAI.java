@@ -11,28 +11,29 @@ import model.exceptions.GhostTargetMissingException;
 
 public class BlackyAI extends BasicGhostAI {
 
-    private static double speedMultiplier1 = 0.5;
-    private static double speedMultiplier2 = 1.33;
+    private static double sentinelModeSpeed = 0.5;
+    private static double hunterModeSpeed = 1.5;
 
-    private boolean findPacMan;
+    private Coordinates<Integer> lastViewPacManCoordinate;
 
     public BlackyAI () {
-        findPacMan = false;
+        lastViewPacManCoordinate = null;
     }
 
     @Override
-    protected Direction chooseDirection(Ghost ghost, MapLevel mapLevel) {
-        findPacMan = false;
-        Direction direction;
+    protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
+        Direction directionChoose;
         try {
-            direction = chooseDirectionAux(ghost,mapLevel);
+            directionChoose = chooseDirectionAux(ghost,mapLevel);
         } catch (GhostTargetMissingException e) {
             return Direction.IDLE;
         }
-        if (direction != null) {
-            findPacMan = true;
-            return direction;
-        }
+        if (directionChoose != null) return directionChoose;
+        if (lastViewPacManCoordinate != null
+                && ! Utils.getIntegerCoordinates(ghost).equals(lastViewPacManCoordinate)
+                && Main.getEngine().canGoToNextCell(ghost,direction)
+        ) return direction;
+        lastViewPacManCoordinate = null;
         ArrayList<Direction> escapes = new ArrayList<>();
         Direction oppositeDirection = this.direction.getOpposite();
         for (Direction escape : Direction.values()) {
@@ -46,12 +47,19 @@ public class BlackyAI extends BasicGhostAI {
     private Direction chooseDirectionAux (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
         Coordinates<Integer> pacManCoordinates = Utils.getIntegerCoordinates(findPacMan(ghost,mapLevel));
         Coordinates<Integer> ghostCoordinate = Utils.getIntegerCoordinates(ghost);
-        for (Direction direction : Direction.values()) {
-            if (direction == Direction.IDLE) continue;
+        if (pacManCoordinates.equals(ghostCoordinate)) {
+            lastViewPacManCoordinate = pacManCoordinates;
+            return direction;
+        }
+        for (Direction directionChoose : Direction.values()) {
+            if (directionChoose == Direction.IDLE) continue;
             for (Coordinates<Integer> coordinates = ghostCoordinate.copy();
                  mapLevel.getCell(coordinates.getX(),coordinates.getY()).isCrossableBy(ghost);
-                    coordinates = Utils.calcNextPosition(coordinates,direction)) {
-                if (pacManCoordinates.equals(coordinates)) return direction;
+                    coordinates = Utils.calcNextPosition(coordinates,directionChoose)) {
+                if (pacManCoordinates.equals(coordinates)) {
+                    lastViewPacManCoordinate = pacManCoordinates;
+                    return directionChoose;
+                }
             }
         }
         return null;
@@ -60,24 +68,25 @@ public class BlackyAI extends BasicGhostAI {
     private Double defaultSpeed;
 
     @Override
-    protected Coordinates<Integer> selectTarget(Ghost ghost, MapLevel mapLevel) {
+    protected Coordinates<Integer> selectTarget (Ghost ghost, MapLevel mapLevel) {
         if (defaultSpeed == null) defaultSpeed = ghost.getSpeed();
-        if (findPacMan) {
-            ghost.setSpeed(defaultSpeed * speedMultiplier2);
+        if (lastViewPacManCoordinate != null) {
+            ghost.setSpeed(defaultSpeed * hunterModeSpeed);
             try {
-                return Utils.getIntegerCoordinates(findPacMan(ghost,mapLevel));
+                Utils.getIntegerCoordinates(findPacMan(ghost,mapLevel));
+                return Utils.calcNextPosition(Utils.getIntegerCoordinates(ghost),direction);
             } catch (GhostTargetMissingException e) {
                 return null;
             }
         }
-        ghost.setSpeed(defaultSpeed * speedMultiplier1);
+        ghost.setSpeed(defaultSpeed * sentinelModeSpeed);
         Coordinates<Integer> position = Utils.getIntegerCoordinates(ghost);
         return new Coordinates<>(position.getX() + direction.getX(),
                 position.getY() + direction.getY());
     }
 
     @Override
-    public GhostAI clone() {
+    public GhostAI clone () {
         return new BlackyAI();
     }
 
