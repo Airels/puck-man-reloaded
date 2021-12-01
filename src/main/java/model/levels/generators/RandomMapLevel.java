@@ -12,6 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * A Random Map Level
+ */
 public class RandomMapLevel implements LoadableMap {
 
     private final Level level;

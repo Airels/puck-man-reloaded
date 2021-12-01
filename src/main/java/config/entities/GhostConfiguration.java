@@ -4,6 +4,9 @@ import model.ai.GhostAIs;
 import view.SpriteContainer;
 import view.images.Image;
 
+/**
+ * All Ghosts configurations and parameters
+ */
 public final class GhostConfiguration {
 
     public final static String CONF_BLINKY_NAME = "Blinky";

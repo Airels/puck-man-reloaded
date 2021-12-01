@@ -14,16 +14,28 @@ import view.images.Image;
 import java.util.*;
 import java.util.concurrent.*;
 
+/**
+ * The Wall Sprite Applier. Apply a specific sprite to all walls of the map,
+ * according to other walls.
+ * Walls after treatment is like the real Game
+ */
 public class WallSpriteApplier {
 
     private final Executor executor;
     private final CompletionService<Void> completionService;
 
+    /**
+     * Default constructor
+     */
     public WallSpriteApplier() {
         executor = Executors.newWorkStealingPool();
         completionService = new ExecutorCompletionService<>(executor);
     }
 
+    /**
+     * Apply treatment to the given map
+     * @param mapLevel map to modify
+     */
     public void apply(MapLevel mapLevel) {
         Map<Cell, Collection<Neighbor>> cells = new HashMap<>();
 

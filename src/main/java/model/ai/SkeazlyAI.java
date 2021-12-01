@@ -7,7 +7,7 @@ import model.elements.entities.ghosts.Ghost;
 
 import java.util.Arrays;
 
-public class SkeazlyAI extends BasicGhostAI {
+public final class SkeazlyAI extends BasicGhostAI {
 
     private enum BrainMode {
         DUMB(null,1,2,0.33){

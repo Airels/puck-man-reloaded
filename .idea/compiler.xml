@@ -14,5 +14,6 @@
       <entry name="!?*.wav" />
       <entry name="!?*.mp3" />
     </wildcardResourcePatterns>
+    <bytecodeTargetLevel target="15" />
   </component>
 </project>

@@ -16,7 +16,7 @@ import model.exceptions.GhostTargetMissingException;
  *          when he cannot longer see pacMan, he run the previous position where he saw him
  *      - if pacMan is not in same corridor, he move randomly like Clyde, and he have slowness
  */
-public class BlackyAI extends BasicGhostAI {
+public final class BlackyAI extends BasicGhostAI {
 
     private static final double sentinelModeSpeed = 0.5;
     private static final double hunterModeSpeed = 1.5;

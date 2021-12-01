@@ -23,6 +23,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Map Of the Pause Menu, contains only HUD elements, such as texts
+ */
 public final class PauseMenuMap implements LoadableMap {
 
     private final String mapName = "PuckMan Reloaded - Pause";
@@ -31,6 +34,10 @@ public final class PauseMenuMap implements LoadableMap {
     private MapLevel map;
     private HUDElement title, pauseText, livesText, scoreText, instructionsText, mainImg;
 
+    /**
+     * Default constructor
+     * @param game
+     */
     public PauseMenuMap(Game game) {
         this.game = game;
         this.map = new MapLevelBuilder(mapName, 30, 15).build();

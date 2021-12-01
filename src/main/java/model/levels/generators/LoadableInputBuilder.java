@@ -5,7 +5,7 @@ import model.levels.generators.vidal.ClassicLoadableInput;
 import model.loadables.LoadableInput;
 
 /**
- * TODO
+ * A loadable inputs builder, allowing to build default LoadableInputs
  */
 public enum LoadableInputBuilder {
 

@@ -13,7 +13,6 @@ import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import fr.r1r0r0.deltaengine.view.colors.Color;
 import main.Main;
-import model.actions.events.PacGumEatEvent;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -23,6 +22,9 @@ import model.levels.Level;
 
 import java.util.*;
 
+/**
+ * Generator of Map Level
+ */
 public class MapLevelGenerator {
 
     private static int id = 0;
@@ -118,7 +120,7 @@ public class MapLevelGenerator {
 
             for (int x = 1; x <= 15; x += 2) {
                 for (int y = 1; y <= 17; y += 2) {
-                    Case[][] cases = test();
+                    Chunk[][] cases = test();
                     Cell[][] cells = generateChunk(x, y, cases[0][0]);
                     for (int i = 0; i < cells.length; i++) {
                         for (int j = 0; j < cells.length; j++) {
@@ -158,7 +160,7 @@ public class MapLevelGenerator {
         }
     }
 
-    private Cell[][] generateChunk(int x, int y, Case c) {
+    private Cell[][] generateChunk(int x, int y, Chunk c) {
         Cell[][] cells = new Cell[3][3];
         for (int a = 0; a < 3; a++)
             for (int b = 0; b < 3; b++)
@@ -187,12 +189,12 @@ public class MapLevelGenerator {
         return cells;
     }
 
-    public static Case[][] test() {
-        Case[][] cases = new Case[1][2];
+    public static Chunk[][] test() {
+        Chunk[][] cases = new Chunk[1][2];
 
         for (int x = 0; x < cases.length; x++) {
             for (int y = 0; y < cases[x].length; y++) {
-                cases[x][y] = new Case();
+                cases[x][y] = new Chunk();
             }
         }
 
