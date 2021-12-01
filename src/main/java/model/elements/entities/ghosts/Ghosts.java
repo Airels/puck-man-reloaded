@@ -10,7 +10,7 @@ import model.ai.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
 
-import java.util.Random;
+import java.util.*;
 
 import static config.entities.GhostConfiguration.*;
 
@@ -119,10 +119,16 @@ public enum Ghosts {
 
     /**
      * Returns a random ghost of the enumeration
-     * @return random Ghost
+     * @param undesiredGhosts All ghosts that must not return (if empty, any ghost can be returned)
+     * @return random Ghost or null if no one can be chosen
      */
-    public static Ghosts getRandomGhost() {
-        int randomNumber = new Random().nextInt(Ghosts.values().length);
-        return Ghosts.values()[randomNumber];
+    public static Ghosts getRandomGhost(Ghosts... undesiredGhosts) {
+        List<Ghosts> ghosts = new LinkedList<>(Arrays.asList(Ghosts.values()));
+        ghosts.removeAll(Arrays.asList(undesiredGhosts));
+        if (ghosts.size() == 0)
+            return null;
+
+        int randomNumber = new Random().nextInt(ghosts.size());
+        return ghosts.get(randomNumber);
     }
 }

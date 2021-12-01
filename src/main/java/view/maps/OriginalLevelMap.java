@@ -15,14 +15,14 @@ import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.actions.events.PacGumEatEvent;
-import model.elements.teleporter.TeleportPoint;
-import model.elements.teleporter.Teleporter;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
+import model.elements.teleporter.TeleportPoint;
+import model.elements.teleporter.Teleporter;
 import model.events.GhostRegenerationPoint;
 import model.levels.Level;
 import model.loadables.LoadableMap;
@@ -46,15 +46,16 @@ public final class OriginalLevelMap implements LoadableMap {
     private Teleporter tunnelTeleporter;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
-    private boolean generated;
+    private boolean generated, randomGhosts;
 
     /**
      * Default constructor
      *
-     * @param level  The Level of the Map
-     * @param pacMan PacMan
+     * @param level        The Level of the Map
+     * @param pacMan       PacMan
+     * @param randomGhosts boolean, if true, will generate random ghosts in it
      */
-    public OriginalLevelMap(Level level, PacMan pacMan) {
+    public OriginalLevelMap(Level level, PacMan pacMan, boolean randomGhosts) {
         this.level = level;
         this.pacMan = pacMan;
         zonesSpawnPacGumsProhibited = new ArrayList<>();
@@ -64,6 +65,7 @@ public final class OriginalLevelMap implements LoadableMap {
         spawnPoints = new HashMap<>();
         ghostRegenerationPoints = new LinkedList<>();
         this.generated = false;
+        this.randomGhosts = randomGhosts;
     }
 
     @Override
@@ -137,21 +139,52 @@ public final class OriginalLevelMap implements LoadableMap {
      */
     private void generateGhosts() {
         try {
-            Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9., 8.), new Coordinates<>(9.5, 10.5));
-            originalMapLevel.addEntity(blinky);
-            generatedGhosts.add(blinky);
+            if (randomGhosts) {
+                Coordinates<Double> retreatPoint = new Coordinates<>(9.5, 10.5),
+                        firstSpawn = new Coordinates<>(9., 8.),
+                        secondSpawn = new Coordinates<>(9., 10.),
+                        thirdSpawn = new Coordinates<>(8., 10.),
+                        fourthSpawn = new Coordinates<>(10., 10.);
 
-            Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9., 10.), new Coordinates<>(9.5, 10.5));
-            originalMapLevel.addEntity(pinky);
-            generatedGhosts.add(pinky);
+                Ghosts firstGhost = Ghosts.getRandomGhost(),
+                        secondGhost = Ghosts.getRandomGhost(firstGhost),
+                        thirdGhost = Ghosts.getRandomGhost(firstGhost, secondGhost),
+                        fourthGhost = Ghosts.getRandomGhost(firstGhost, secondGhost, thirdGhost);
 
-            Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8., 10.), new Coordinates<>(9.5, 10.5));
-            originalMapLevel.addEntity(inky);
-            generatedGhosts.add(inky);
+                Ghost firstGhostEntity = firstGhost.build(level, firstSpawn, retreatPoint.copy());
+                Ghost secondGhostEntity = secondGhost.build(level, secondSpawn, retreatPoint.copy());
+                Ghost thirdGhostEntity = thirdGhost.build(level, thirdSpawn, retreatPoint.copy());
+                Ghost fourthGhostEntity = fourthGhost.build(level, fourthSpawn, retreatPoint.copy());
 
-            Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10., 10.), new Coordinates<>(9.5, 10.5));
-            originalMapLevel.addEntity(clyde);
-            generatedGhosts.add(clyde);
+                originalMapLevel.addEntity(firstGhostEntity);
+                generatedGhosts.add(firstGhostEntity);
+
+                originalMapLevel.addEntity(secondGhostEntity);
+                generatedGhosts.add(secondGhostEntity);
+
+                originalMapLevel.addEntity(thirdGhostEntity);
+                generatedGhosts.add(thirdGhostEntity);
+
+                originalMapLevel.addEntity(fourthGhostEntity);
+                generatedGhosts.add(fourthGhostEntity);
+            } else {
+                Ghost blinky = Ghosts.BLINKY.build(level, new Coordinates<>(9., 8.), new Coordinates<>(9.5, 10.5));
+                originalMapLevel.addEntity(blinky);
+                generatedGhosts.add(blinky);
+
+                Ghost pinky = Ghosts.PINKY.build(level, new Coordinates<>(9., 10.), new Coordinates<>(9.5, 10.5));
+                originalMapLevel.addEntity(pinky);
+                generatedGhosts.add(pinky);
+
+                Ghost inky = Ghosts.INKY.build(level, new Coordinates<>(8., 10.), new Coordinates<>(9.5, 10.5));
+                originalMapLevel.addEntity(inky);
+                generatedGhosts.add(inky);
+
+                Ghost clyde = Ghosts.CLYDE.build(level, new Coordinates<>(10., 10.), new Coordinates<>(9.5, 10.5));
+                originalMapLevel.addEntity(clyde);
+                generatedGhosts.add(clyde);
+
+            }
         } catch (MapLevelEntityNameStackingException e) {
             new Dialog(Main.APPLICATION_NAME, "Original level map ghost generation error", e).show();
         }

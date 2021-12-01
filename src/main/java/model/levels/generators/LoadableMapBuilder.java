@@ -13,7 +13,7 @@ public enum LoadableMapBuilder {
     ORIGINAL(){
         @Override
         public LoadableMap build (Level level) {
-            return new OriginalLevelMap(level,level.getGame().getPacMan());
+            return new OriginalLevelMap(level,level.getGame().getPacMan(), true);
         }
     },
     RANDOM(){

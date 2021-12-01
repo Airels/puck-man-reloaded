@@ -42,13 +42,13 @@ public class OriginalLevel implements Level {
      * Default constructor.
      *
      * @param game the Game
-     * @param firstTime if true, plays the introduction music and the "READY!" text
+     * @param firstTime if true, plays the introduction music and the "READY!" text, otherwise, will generate a newly map with random ghosts
      */
     public OriginalLevel(Game game, boolean firstTime) {
         this.game = game;
         this.pacMan = game.getPacMan();
 
-        this.mapLevel = new OriginalLevelMap(this, pacMan);
+        this.mapLevel = new OriginalLevelMap(this, pacMan, !firstTime);
         this.inputLevel = new OriginalLevelInputs(game);
         this.firstTime = firstTime;
         this.generated = false;
