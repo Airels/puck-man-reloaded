@@ -221,10 +221,9 @@ public final class Game {
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
 
-            pacMan.setDead(true); // TODO Changement de sprite Pacman
-            deltaEngine.tick(Engines.GRAPHICS_ENGINE); // TODO animation
+            pacMan.setDead(true);
+            deltaEngine.tick(Engines.GRAPHICS_ENGINE);
             Sounds.GAME_OVER.play();
-            // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
             Thread.sleep(3000);
             if (lifeCounter > 0) {
                 lifeCounter--;
