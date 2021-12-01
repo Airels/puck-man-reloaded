@@ -36,40 +36,40 @@ public class OriginalLevel implements Level {
     private final PacMan pacMan;
     private int nbOfPacGums;
     private HUDElement readyText;
-    private boolean firstTime;
+    private boolean generated, firstTime;
 
     /**
      * Default constructor.
      *
      * @param game the Game
+     * @param firstTime if true, plays the introduction music and the "READY!" text
      */
-    public OriginalLevel(Game game) {
+    public OriginalLevel(Game game, boolean firstTime) {
         this.game = game;
         this.pacMan = game.getPacMan();
 
         this.mapLevel = new OriginalLevelMap(this, pacMan);
         this.inputLevel = new OriginalLevelInputs(game);
+        this.firstTime = firstTime;
+        this.generated = false;
 
-
-        Text rText = new Text(CONF_READY_TEXT);
-        rText.setSize(CONF_READY_SIZE);
-        rText.setColor(CONF_READY_COLOR.getEngineColor());
-        readyText = new HUDElement(
-                "Ready Text",
-                CONF_READY_POSITION,
-                rText,
-                Dimension.DEFAULT_DIMENSION
-        );
-
-        firstTime = true;
+        if (firstTime) {
+            Text rText = new Text(CONF_READY_TEXT);
+            rText.setSize(CONF_READY_SIZE);
+            rText.setColor(CONF_READY_COLOR.getEngineColor());
+            readyText = new HUDElement(
+                    "Ready Text",
+                    CONF_READY_POSITION,
+                    rText,
+                    Dimension.DEFAULT_DIMENSION
+            );
+        }
     }
 
     @Override
     public void load(KernelEngine deltaEngine) {
         if (firstTime) {
             deltaEngine.addHUDElement(readyText);
-
-            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
 
             new Thread(() -> {
                 Sounds.GAME_BEGIN.play();
@@ -88,6 +88,11 @@ public class OriginalLevel implements Level {
             }).start();
 
             firstTime = false;
+        }
+
+        if (!generated) {
+            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
+            generated = true;
         }
     }
 

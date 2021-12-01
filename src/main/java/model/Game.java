@@ -4,11 +4,13 @@ import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
+import model.events.LevelChangerTrigger;
 import model.events.TimedEvent;
 import model.levels.Level;
 import model.levels.fixed_levels.OriginalLevel;
@@ -83,7 +85,7 @@ public final class Game {
         this.ghostEatenChain = 0;
         this.levelCounter = 1;
 
-        OriginalLevel originalLevel = new OriginalLevel(this);
+        OriginalLevel originalLevel = new OriginalLevel(this, true);
         levelLoader.load(originalLevel);
         deltaEngine.haltCurrentMap();
 
@@ -95,7 +97,7 @@ public final class Game {
                     new RuntimeException("Level changer can't be null")
             ).show();
         }
-        levelChanger.addTrigger(this::nextLevel);
+        levelChanger.addTrigger(new LevelChangerTrigger(this, "1"));
         deltaEngine.addGlobalEvent(levelChanger);
     }
 
@@ -149,18 +151,25 @@ public final class Game {
      * Transfers player character to the next generated level (in singleplayer)
      */
     public void nextLevel() {
-        System.out.println("NEXT LEVEL"); // TODO
+        deltaEngine.haltCurrentMap();
+
+        if (levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
+            lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
+        levelCounter++;
 
         deltaEngine.removeGlobalEvent(levelChanger);
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
 
-        if(levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
-            lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
-        levelCounter++;
-
         levelChanger = nextLevel.getLevelChanger();
-        levelChanger.addTrigger(this::nextLevel);
+        if (levelChanger == null) {
+            new Dialog(
+                    Main.APPLICATION_NAME,
+                    "Launch single player mode failed",
+                    new RuntimeException("Level changer can't be null")
+            ).show();
+        }
+        levelChanger.addTrigger(new LevelChangerTrigger(this, "2"));
         deltaEngine.addGlobalEvent(levelChanger);
     }
 
