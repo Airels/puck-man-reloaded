@@ -10,6 +10,8 @@ import model.ai.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
 
+import java.util.Random;
+
 import static config.entities.GhostConfiguration.*;
 
 /**
@@ -111,5 +113,14 @@ public enum Ghosts {
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
 
         return ghost;
+    }
+
+    /**
+     * Returns a random ghost of the enumeration
+     * @return random Ghost
+     */
+    public static Ghosts getRandomGhost() {
+        int randomNumber = new Random().nextInt(Ghosts.values().length);
+        return Ghosts.values()[randomNumber];
     }
 }
