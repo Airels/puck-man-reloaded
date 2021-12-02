@@ -25,7 +25,7 @@ public class PacMan extends Entity {
      * @param coordinates initial coordinates
      */
     public PacMan(Coordinates<Double> coordinates) {
-        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
+        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN_IDLE.getSprite(), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
         spawnPoint = coordinates;
         isDead = false;
 
@@ -98,14 +98,24 @@ public class PacMan extends Entity {
     public void setDead(boolean dead) {
         isDead = dead;
 
-        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE.getSprite() : CONF_PACMAN_SPRITE.getSprite());
+        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE.getSprite() : CONF_PACMAN_IDLE_SPRITE.getSprite());
     }
 
-    public void setSpawnPoint(Coordinates<Double> coords) {
-        this.spawnPoint = coords;
-    }
-
+    /**
+     * Return the spawn point of PacMan (where pacman needs to spawn when it dies)
+     *
+     * @return Coordinates of the spawn point
+     */
     public Coordinates<Double> getSpawnPoint() {
         return spawnPoint;
+    }
+
+    /**
+     * Allows to set the spawn point of PacMan (where it spawns when dies
+     *
+     * @param coords Coordinates of the new spawn point
+     */
+    public void setSpawnPoint(Coordinates<Double> coords) {
+        this.spawnPoint = coords;
     }
 }
