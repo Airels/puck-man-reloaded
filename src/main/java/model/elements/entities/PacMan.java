@@ -3,6 +3,7 @@ package model.elements.entities;
 import config.entities.CharactersConfiguration;
 import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import view.images.Image;
@@ -28,9 +29,18 @@ public class PacMan extends Entity {
         spawnPoint = coordinates;
         isDead = false;
 
-        this.getAttributes().addDirectionListener((direction, t1) -> {
-            Sprite s = CONF_PACMAN_SPRITE.getSprite();
-            switch (this.getAttributes().getDirection()) {
+        this.getAttributes().addDirectionListener((oldDirection, newDirection) -> {
+            Sprite s;
+            Direction direction;
+            if (newDirection == Direction.IDLE) {
+                s = CONF_PACMAN_IDLE_SPRITE.getSprite();
+                direction = oldDirection;
+            } else {
+                s = CONF_PACMAN_SPRITE.getSprite();
+                direction = newDirection;
+            }
+
+            switch (direction) {
                 case UP -> {
                     s.setScale(1, s.getScale().getScaleY());
                     s.setRotate(-90);
