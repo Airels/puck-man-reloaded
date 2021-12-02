@@ -39,8 +39,6 @@ public final class LevelLoader {
         if (currentLevel != null)
             unload(currentLevel);
 
-        deltaEngine.haltCurrentMap();
-
         mapLoader.loadMapLevel(level.getMapLevelLoadable());
         inputsLoader.loadInputs(level.getInputsLoadable());
         level.load(deltaEngine);
@@ -56,8 +54,6 @@ public final class LevelLoader {
         }
 
         currentLevel = level;
-
-        deltaEngine.resumeCurrentMap();
     }
 
     /**
@@ -75,8 +71,6 @@ public final class LevelLoader {
      * @param level Level to unload
      */
     public synchronized void unload(Level level) {
-        deltaEngine.haltCurrentMap();
-
         level.unload(deltaEngine);
         mapLoader.unloadMapLevel(level.getMapLevelLoadable());
         inputsLoader.unloadInputs(level.getInputsLoadable());
@@ -87,8 +81,6 @@ public final class LevelLoader {
         }
 
         currentLevel = null;
-
-        deltaEngine.resumeCurrentMap();
     }
 
     /**
