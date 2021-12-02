@@ -21,17 +21,18 @@ import static config.entities.GhostConfiguration.*;
  */
 public enum Ghosts {
 
-    BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITES, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_FLEEING_SPRITES, CONF_BLINKY_AI, CONF_BLINKY_SPEED, CONF_BLINKY_SCARED_SPEED, CONF_BLINKY_FLEEING_SPEED),
-    PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITES, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_FLEEING_SPRITES, CONF_PINKY_AI, CONF_PINKY_SPEED, CONF_PINKY_SCARED_SPEED, CONF_PINKY_FLEEING_SPEED),
-    INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITES, CONF_INKY_SCARED_SPRITE, CONF_INKY_FLEEING_SPRITES, CONF_INKY_AI, CONF_INKY_SPEED, CONF_INKY_SCARED_SPEED, CONF_INKY_FLEEING_SPEED),
-    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_FLEEING_SPRITES, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED, CONF_CLYDE_FLEEING_SPEED),
-    BLACKY(CONF_BLACKY_NAME, CONF_BLACKY_NORMAL_SPRITES, CONF_BLACKY_SCARED_SPRITE, CONF_BLACKY_FLEEING_SPRITES, CONF_BLACKY_AI, CONF_BLACKY_SPEED, CONF_BLACKY_SCARED_SPEED, CONF_BLACKY_FLEEING_SPEED),
-    SKEAZLY(CONF_SKEAZLY_NAME, CONF_SKEAZLY_NORMAL_SPRITES, CONF_SKEAZLY_SCARED_SPRITE, CONF_SKEAZLY_FLEEING_SPRITES, CONF_SKEAZLY_AI, CONF_SKEAZLY_SPEED, CONF_SKEAZLY_SCARED_SPEED, CONF_SKEAZLY_FLEEING_SPEED);
+    BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITES, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_FLEEING_SPRITES, CONF_BLINKY_AI, CONF_BLINKY_SPEED, CONF_BLINKY_SCARED_SPEED, CONF_BLINKY_FLEEING_SPEED, CONF_BLINKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY),
+    PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITES, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_FLEEING_SPRITES, CONF_PINKY_AI, CONF_PINKY_SPEED, CONF_PINKY_SCARED_SPEED, CONF_PINKY_FLEEING_SPEED, CONF_PINKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY),
+    INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITES, CONF_INKY_SCARED_SPRITE, CONF_INKY_FLEEING_SPRITES, CONF_INKY_AI, CONF_INKY_SPEED, CONF_INKY_SCARED_SPEED, CONF_INKY_FLEEING_SPEED, CONF_INKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY),
+    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_FLEEING_SPRITES, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED, CONF_CLYDE_FLEEING_SPEED, CONF_CLYDE_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY),
+    BLACKY(CONF_BLACKY_NAME, CONF_BLACKY_NORMAL_SPRITES, CONF_BLACKY_SCARED_SPRITE, CONF_BLACKY_FLEEING_SPRITES, CONF_BLACKY_AI, CONF_BLACKY_SPEED, CONF_BLACKY_SCARED_SPEED, CONF_BLACKY_FLEEING_SPEED, CONF_BLACKY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY),
+    SKEAZLY(CONF_SKEAZLY_NAME, CONF_SKEAZLY_NORMAL_SPRITES, CONF_SKEAZLY_SCARED_SPRITE, CONF_SKEAZLY_FLEEING_SPRITES, CONF_SKEAZLY_AI, CONF_SKEAZLY_SPEED, CONF_SKEAZLY_SCARED_SPEED, CONF_SKEAZLY_FLEEING_SPEED, CONF_SKEAZLY_SWITCHING_NORMAL_TO_SCATTER_PROBABILITY);
 
     private final String name;
     private final GhostAIs ai;
     private final SpriteContainer normalSprites, scaredSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
+    private final double probaScatter;
 
     /**
      * Default ghost constructor.
@@ -44,8 +45,9 @@ public enum Ghosts {
      * @param normalSpeed    double speed when Ghost is in Normal state
      * @param scaredSpeed    double speed when Ghost is in Scared state
      * @param fleeingSpeed   double speed when Ghost is in Fleeing state
+     * @param probaScatter   double probability to go in scatter mode
      */
-    Ghosts(String name, SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed) {
+    Ghosts(String name, SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites, GhostAIs ai, double normalSpeed, double scaredSpeed, double fleeingSpeed, double probaScatter) {
         this.name = name;
         this.normalSprites = normalSprites;
         this.scaredSprites = scaredSprites;
@@ -54,6 +56,7 @@ public enum Ghosts {
         this.normalSpeed = normalSpeed;
         this.scaredSpeed = scaredSpeed;
         this.fleeingSpeed = fleeingSpeed;
+        this.probaScatter = probaScatter;
     }
 
     /**
@@ -109,7 +112,8 @@ public enum Ghosts {
                 .setFleeingSpeed(fleeingSpeed)
                 .setCoordinates(coords)
                 .setSpawnPoint(spawnPoint)
-                .setRetreatPoint(retreatPoint);
+                .setRetreatPoint(retreatPoint)
+                .setProbaScatter(probaScatter);
 
         Ghost ghost = ghostBuilder.build();
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
