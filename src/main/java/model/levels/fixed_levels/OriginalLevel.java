@@ -91,7 +91,7 @@ public class OriginalLevel implements Level {
         }
 
         if (!generated) {
-            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
+            nbOfPacGums = 1;
             generated = true;
         }
     }
