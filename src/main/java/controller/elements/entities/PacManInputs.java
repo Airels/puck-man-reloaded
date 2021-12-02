@@ -18,7 +18,7 @@ import model.loadables.LoadableInput;
  */
 public class PacManInputs implements LoadableInput {
 
-    private PacMan pacMan;
+    private final PacMan pacMan;
     private Direction desiredDirection;
     private Event inputEvent;
 

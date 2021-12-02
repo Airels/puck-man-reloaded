@@ -12,9 +12,11 @@ import view.maps.MenuMap;
 public class MenuSelector {
 
     private int currentSelected;
-    private MenuMap menuMap;
-    private Trigger upTrigger, downTrigger, enterTrigger;
-    private Game game;
+    private final MenuMap menuMap;
+    private final Trigger upTrigger;
+    private final Trigger downTrigger;
+    private final Trigger enterTrigger;
+    private final Game game;
 
     /**
      * Default constructor

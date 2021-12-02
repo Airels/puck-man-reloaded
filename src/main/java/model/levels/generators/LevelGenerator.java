@@ -5,7 +5,6 @@ import main.Main;
 import model.Game;
 import model.levels.Level;
 import model.levels.fixed_levels.OriginalLevel;
-import model.levels.generators.vidal.GenericLevel;
 
 /**
  * The Level Generator, allowing to generate new level randomly
@@ -20,6 +19,7 @@ public class LevelGenerator {
      * @return newly generated level
      */
     public Level generate(Game game) {
+        //noinspection CommentedOutCode
         try {
             // LoadableMapBuilder loadableMapBuilder = LoadableMapBuilder.ORIGINAL; // LoadableMapBuilder.RANDOM;
             // LoadableInputBuilder loadableInputBuilder = LoadableInputBuilder.CLASSIC;

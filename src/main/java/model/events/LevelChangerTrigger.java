@@ -2,13 +2,12 @@ package model.events;
 
 import fr.r1r0r0.deltaengine.model.events.Trigger;
 import model.Game;
-import model.levels.Level;
 
 public class LevelChangerTrigger implements Trigger {
 
     private boolean called;
-    private Game game;
-    private String str;
+    private final Game game;
+    private final String str;
 
     public LevelChangerTrigger(Game game, String str) {
         this.game = game;

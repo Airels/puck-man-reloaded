@@ -5,8 +5,6 @@ import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import fr.r1r0r0.deltaengine.view.colors.Color;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class GhostTest {

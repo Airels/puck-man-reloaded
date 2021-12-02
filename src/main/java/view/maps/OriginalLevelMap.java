@@ -42,11 +42,11 @@ public final class OriginalLevelMap implements LoadableMap {
     private final PacMan pacMan;
     private final Level level;
     private final Map<Entity, Coordinates<Double>> spawnPoints;
-    private final Collection<GhostRegenerationPoint> ghostRegenerationPoints;
     private Teleporter tunnelTeleporter;
     private MapLevel originalMapLevel;
     private int nbOfGeneratedPacGums;
-    private boolean generated, randomGhosts;
+    private boolean generated;
+    private final boolean randomGhosts;
 
     /**
      * Default constructor
@@ -63,7 +63,6 @@ public final class OriginalLevelMap implements LoadableMap {
 
         generatedGhosts = new LinkedList<>();
         spawnPoints = new HashMap<>();
-        ghostRegenerationPoints = new LinkedList<>();
         this.generated = false;
         this.randomGhosts = randomGhosts;
     }
@@ -113,7 +112,6 @@ public final class OriginalLevelMap implements LoadableMap {
         try {
             for (Ghost g : getGeneratedGhosts()) {
                 GhostRegenerationPoint ghostRegenerationPoint = new GhostRegenerationPoint(g);
-                ghostRegenerationPoints.add(ghostRegenerationPoint);
                 originalMapLevel.addEntity(ghostRegenerationPoint);
             }
         } catch (MapLevelEntityNameStackingException e) {

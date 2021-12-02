@@ -9,6 +9,7 @@ import model.Game;
 import model.levels.fixed_levels.GameOverLevel;
 import model.levels.fixed_levels.PauseMenuLevel;
 import model.levels.fixed_levels.menu.MenuLevel;
+import org.jetbrains.annotations.NotNull;
 import view.images.Image;
 
 import java.io.FileNotFoundException;
@@ -28,7 +29,7 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) {
         System.out.println("Starting game, please wait...");
         getEngine().setGameIcon(Image.GAME_LOGO.getPath());
         Game game = new Game(getEngine(), 60,100);
@@ -38,13 +39,13 @@ public class Main {
         game.start(menuLevel, pauseMenu, gameOverLevel);
     }
 
+    @NotNull
     public static KernelEngine getEngine() {
         try {
             return DeltaEngine.getKernelEngine();
         } catch (NotInitializedException e) {
             new Dialog(APPLICATION_NAME, "Critical application error", e).show();
+            return null;
         }
-
-        return null;
     }
 }

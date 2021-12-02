@@ -5,8 +5,6 @@ import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.elements.entities.ghosts.Ghost;
 
-import java.util.Arrays;
-
 public final class SkeazlyAI extends BasicGhostAI {
 
     private enum BrainMode {

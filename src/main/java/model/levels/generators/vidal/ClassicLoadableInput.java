@@ -11,8 +11,8 @@ import model.loadables.LoadableInput;
  */
 public class ClassicLoadableInput implements LoadableInput {
 
-    private PacMan pacMan;
-    private PacManInputs pacManInputs;
+    private final PacMan pacMan;
+    private final PacManInputs pacManInputs;
 
     public ClassicLoadableInput (Level level) {
         pacMan = level.getGame().getPacMan();

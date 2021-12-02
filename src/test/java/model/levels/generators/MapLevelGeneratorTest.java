@@ -1,6 +1,5 @@
 package model.levels.generators;
 
-import fr.r1r0r0.deltaengine.exceptions.AlreadyInitializedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
@@ -11,7 +10,6 @@ import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.events.LevelChanger;
 import model.levels.Level;
-import model.levels.generators.vidal.RandomLevel;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import model.utils.WallSpriteApplier;
@@ -22,8 +20,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+@SuppressWarnings("ALL")
 class MapLevelGeneratorTest {
 
     @Test

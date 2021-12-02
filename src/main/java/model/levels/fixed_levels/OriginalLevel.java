@@ -10,7 +10,6 @@ import fr.r1r0r0.deltaengine.model.sprites.Text;
 import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
-import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
 import model.levels.Level;
 import model.loadables.LoadableInput;

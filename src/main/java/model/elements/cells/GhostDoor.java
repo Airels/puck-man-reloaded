@@ -4,7 +4,6 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
-import fr.r1r0r0.deltaengine.model.elements.cells.RestrictiveCell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import model.elements.entities.ghosts.Ghost;
