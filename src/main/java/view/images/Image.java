@@ -11,6 +11,7 @@ public enum Image {
     MAIN_IMG("main.jpg"),
     GAME_LOGO("logo.png"),
     PAC_MAN("pac.gif"),
+    PAC_MAN_IDLE("pac_idle.png"),
     PAC_MAN_DEATH("dead.gif"),
     BLINKY_LEFT("blinky_left.png"),
     BLINKY_RIGHT("blinky_right.png"),
