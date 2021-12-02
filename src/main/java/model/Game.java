@@ -69,7 +69,10 @@ public final class Game {
         this.menuLevel = menuLevel;
         this.pauseLevel = pauseLevel;
         this.gameOverLevel = gameOverLevel;
+
+        deltaEngine.haltCurrentMap();
         levelLoader.load(menuLevel, false);
+        deltaEngine.resumeCurrentMap();
 
         Sounds.SIREN.setLoop(true);
     }
@@ -78,6 +81,8 @@ public final class Game {
      * When called, launch the game in single player mode.
      */
     public void launchSinglePlayerGame() {
+        deltaEngine.haltCurrentMap();
+
         this.pacMan = new PacMan();
 
         this.lifeCounter = 2;
@@ -87,12 +92,13 @@ public final class Game {
 
         OriginalLevel originalLevel = new OriginalLevel(this, true);
         levelLoader.load(originalLevel);
-        deltaEngine.haltCurrentMap();
+        deltaEngine.tick(Engines.GRAPHICS_ENGINE);
 
         levelChanger = originalLevel.getLevelChanger();
         if (levelChanger == null) {
             new Dialog(
                     Main.APPLICATION_NAME,
+
                     "Launch single player mode failed",
                     new RuntimeException("Level changer can't be null")
             ).show();
@@ -121,7 +127,9 @@ public final class Game {
      * Reload Game Menu when called
      */
     public void returnToMenu() {
+        deltaEngine.haltCurrentMap();
         levelLoader.load(menuLevel, false);
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
@@ -129,22 +137,26 @@ public final class Game {
      */
     public void pauseGame() {
         if (!canPause) return;
+        deltaEngine.haltCurrentMap();
 
         Sounds.SIREN.stop();
 
         if (isInEnergizedMode()) energizeTimerEvent.pause();
         bufferedLevel = levelLoader.getCurrentLevel();
         levelLoader.load(pauseLevel, false);
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
      * Resumes the current level
      */
     public void resumeGame() {
+        deltaEngine.haltCurrentMap();
         Sounds.SIREN.play();
         if (isInEnergizedMode()) energizeTimerEvent.unpause();
         levelLoader.load(bufferedLevel);
         bufferedLevel = null;
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
@@ -155,6 +167,7 @@ public final class Game {
 
         if (inEnergizedMode) energizeTimerEvent.runTriggers();
 
+        //noinspection ConstantConditions
         if (levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
             lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
         levelCounter++;
@@ -167,12 +180,14 @@ public final class Game {
         if (levelChanger == null) {
             new Dialog(
                     Main.APPLICATION_NAME,
-                    "Launch single player mode failed",
+                    "Next level loading error",
                     new RuntimeException("Level changer can't be null")
             ).show();
         }
         levelChanger.addTrigger(new LevelChangerTrigger(this, "2"));
         deltaEngine.addGlobalEvent(levelChanger);
+
+        deltaEngine.resumeCurrentMap();
     }
 
     /**
@@ -247,6 +262,7 @@ public final class Game {
                 Sounds.SIREN.play();
             } else {
                 levelLoader.load(gameOverLevel, false);
+                deltaEngine.resumeCurrentMap();
             }
 
             this.canPause = true;
