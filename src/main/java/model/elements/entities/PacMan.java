@@ -88,15 +88,7 @@ public class PacMan extends Entity {
     public void setDead(boolean dead) {
         isDead = dead;
 
-        double rotate = 0;
-        switch (this.getAttributes().getDirection()){
-            case UP -> rotate = -90;
-            case DOWN -> rotate = 90;
-            case LEFT -> rotate = 180;
-        }
-        Sprite deadSprite = CONF_PACMAN_DEAD_SPRITE.getSprite();
-        deadSprite.setRotate(rotate);
-        this.setSprite((isDead) ? deadSprite : CONF_PACMAN_SPRITE.getSprite());
+        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE.getSprite() : CONF_PACMAN_SPRITE.getSprite());
     }
 
     public void setSpawnPoint(Coordinates<Double> coords) {

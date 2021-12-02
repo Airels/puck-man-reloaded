@@ -21,6 +21,7 @@ public class Ghost extends Entity {
     private final SpriteContainer normalSprites, scaredSprites, fleeingSprites;
     private final double normalSpeed, scaredSpeed, fleeingSpeed;
     private final Coordinates<Double> spawnPoint, retreatPoint;
+    private final double probaScatter;
     private GhostState ghostState;
 
     /**
@@ -38,13 +39,15 @@ public class Ghost extends Entity {
      * @param coords         Initial Coordinates of the Ghost
      * @param spawnPoint     Spawn point of the Ghost, who Ghost will be teleported if the map is reset (usually when PacMan dies)
      * @param retreatPoint   Retreat point of the Ghost, who Ghost will go to regenerate itself from FLEEING to NORMAL state (when PacMan eats it)
+     * @param probaScatter Probability to switch in scatter mode
      */
     Ghost(String name,
           MapLevel currentMap,
           SpriteContainer normalSprites, SpriteContainer scaredSprites, SpriteContainer fleeingSprites,
           GhostAI ghostAI,
           double normalSpeed, double scaredSpeed, double fleeingSpeed,
-          Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint) {
+          Coordinates<Double> coords, Coordinates<Double> spawnPoint, Coordinates<Double> retreatPoint,
+          double probaScatter) {
 
         super(name, coords, normalSprites.getSprite(Direction.IDLE), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
         this.currentMap = currentMap;
@@ -56,6 +59,7 @@ public class Ghost extends Entity {
         this.fleeingSpeed = fleeingSpeed;
         this.spawnPoint = spawnPoint;
         this.retreatPoint = retreatPoint;
+        this.probaScatter = probaScatter;
 
 
         try {
@@ -157,4 +161,13 @@ public class Ghost extends Entity {
 
         return this.normalSprites.getSprite(this.getDirection());
     }
+
+    /**
+     * Return the attribute probaScatter
+     * @return the attribute probaScatter
+     */
+    public double getProbaScatter () {
+        return probaScatter;
+    }
+
 }

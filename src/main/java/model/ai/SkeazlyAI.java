@@ -8,7 +8,7 @@ import model.elements.entities.ghosts.Ghost;
 public final class SkeazlyAI extends BasicGhostAI {
 
     private enum BrainMode {
-        DUMB(null,1,2,0.33){
+        DUMB(null,2,1,0.33){
             @Override
             public Direction chooseDirection (Ghost ghost, MapLevel mapLevel, Direction direction) {
                 return direction.getOpposite();
@@ -56,6 +56,8 @@ public final class SkeazlyAI extends BasicGhostAI {
         }
 
         public BrainMode pickOtherBrain () {
+            if (this == DUMB) return INTELLECTUAL;
+            if (this == CHAOTIC) return HUNTER;
             int sumProbabilityToAppear = 0;
             for (BrainMode brainMode : BrainMode.values()) {
                 if (brainMode != this) sumProbabilityToAppear += brainMode.probabilityToAppear;
@@ -88,13 +90,13 @@ public final class SkeazlyAI extends BasicGhostAI {
             nbUsage = 0;
             System.out.println(brainMode);
         }
+        nbUsage++;
     }
 
     @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         if (defaultSpeed == null) defaultSpeed = ghost.getSpeed();
         changeBrain();
-        nbUsage++;
         return brainMode.chooseDirection(ghost,mapLevel,direction);
     }
 

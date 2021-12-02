@@ -19,6 +19,7 @@ public class GhostBuilder implements Builder<Ghost> {
     private GhostAI ai;
     private double normalSpeed, scaredSpeed, fleeingSpeed;
     private Coordinates<Double> coordinates, spawnPoint, retreatPoint;
+    private double probaScatter;
 
     /**
      * Default constructor, with required attributes for a Ghost that must be unique for each.
@@ -125,8 +126,18 @@ public class GhostBuilder implements Builder<Ghost> {
         return this;
     }
 
+    /**
+     * Set ProbaScatter of the Ghost
+     * @param probaScatter Probability to switch in scatter mode
+     * @return the current builder
+     */
+    public GhostBuilder setProbaScatter (double probaScatter) {
+        this.probaScatter = probaScatter;
+        return this;
+    }
+
     @Override
     public Ghost build() {
-        return new Ghost(name, mapLevel, normalSprites, scaredSprites, fleeingSprites, ai, normalSpeed, scaredSpeed, fleeingSpeed, coordinates, spawnPoint, retreatPoint);
+        return new Ghost(name, mapLevel, normalSprites, scaredSprites, fleeingSprites, ai, normalSpeed, scaredSpeed, fleeingSpeed, coordinates, spawnPoint, retreatPoint, probaScatter);
     }
 }

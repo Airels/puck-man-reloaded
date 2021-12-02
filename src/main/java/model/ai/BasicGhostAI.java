@@ -28,7 +28,7 @@ import java.util.Random;
 public abstract class BasicGhostAI extends GhostAI {
 
     protected static final Random RANDOM = new Random();
-    private static final Entity focus = new Entity("focus",new Coordinates<>(0.,0.),
+    private static final Entity test__focus = new Entity("focus",new Coordinates<>(0.,0.),
             new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
 
     protected Coordinates<Integer> target;
@@ -48,10 +48,7 @@ public abstract class BasicGhostAI extends GhostAI {
         MapLevel mapLevel = ghost.getMapLevel();
         GhostState ghostState = ghost.getState();
         if (ghost.getBlockTarget() != null && ghost.getDirection() != Direction.IDLE) return;
-        if (ghostState == GhostState.NORMAL && RANDOM.nextDouble() < getProbaScatter(ghost)) {
-            ghost.setState(GhostState.SCATTER);
-            ghostState = ghost.getState();
-        }
+        ghostState = tryToScatter(ghost,ghostState);
         switch (ghostState) {
             case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost,mapLevel);
@@ -61,14 +58,21 @@ public abstract class BasicGhostAI extends GhostAI {
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
-        if (ghost.getName().equals("___")) {
-            try {
-                mapLevel.addEntity(focus);
-            } catch (MapLevelEntityNameStackingException e) {
-                e.printStackTrace();
-            }
-            if (target != null) focus.setCoordinates(new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
+        test__SeeTarget("___",ghost,mapLevel);
+    }
+
+    /**
+     * TODO
+     * @param ghost
+     * @param ghostState
+     * @return
+     */
+    private GhostState tryToScatter (Ghost ghost, GhostState ghostState) {
+        if (ghostState == GhostState.NORMAL && RANDOM.nextDouble() < ghost.getProbaScatter()) {
+            ghost.setState(GhostState.SCATTER);
+            return GhostState.SCATTER;
         }
+        return ghostState;
     }
 
     /**
@@ -142,7 +146,8 @@ public abstract class BasicGhostAI extends GhostAI {
      * @param mapLevel a mapLevel
      */
     private void scatterModeTick (Ghost ghost, MapLevel mapLevel) {
-        scaryModeTick(ghost,mapLevel);
+        direction = direction.getOpposite();
+        target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
         ghost.setState(GhostState.NORMAL);
     }
 
@@ -159,14 +164,15 @@ public abstract class BasicGhostAI extends GhostAI {
         return (PacMan) entity;
     }
 
-    private double getProbaScatter (Ghost ghost) {
-        // TODO
-        String name = ghost.getName();
-        switch (name) {
-            case "Blinky" -> {return 0.02;}
-            case "Pinky" -> {return 0.05;}
-            case "Inky" -> {return 0.01;}
-            default -> {return 0;}
+    private void test__SeeTarget (String ghostName, Ghost ghost, MapLevel mapLevel) {
+        if (ghost.getName().equals(ghostName)) {
+            try {
+                mapLevel.addEntity(test__focus);
+            } catch (MapLevelEntityNameStackingException e) {
+                e.printStackTrace();
+            }
+            if (target != null) test__focus.setCoordinates(
+                    new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
         }
     }
 
