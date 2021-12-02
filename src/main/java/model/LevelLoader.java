@@ -1,11 +1,8 @@
 package model;
 
-import java.util.Collection;
 import config.game.GlobalHUDConfiguration;
 import controller.InputsLoader;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Direction;
-import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.levels.Level;

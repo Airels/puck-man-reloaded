@@ -152,8 +152,7 @@ public final class GlobalHUD implements Loadable {
     /**
      * Convert coordinates to relative coordinates to fit with HUD
      *
-     * @param x abscissa position
-     * @param y ordinate position
+     * @param coordinates Coordinates to convert
      * @return new Coordinates relative to the HUD
      */
     private Coordinates<Double> coordinatesConvert(Coordinates<Double> coordinates) {

@@ -11,7 +11,7 @@ import model.loadables.LoadableInput;
 public final class InputsLoader {
 
     private LoadableInput currentInputs;
-    private KernelEngine deltaEngine;
+    private final KernelEngine deltaEngine;
 
     /**
      * Default constructor.

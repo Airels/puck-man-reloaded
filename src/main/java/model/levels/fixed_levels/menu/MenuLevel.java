@@ -27,9 +27,9 @@ import java.util.Map;
  */
 public class MenuLevel implements Level {
 
-    private Game game;
-    private LoadableMap map;
-    private LoadableInput inputs;
+    private final Game game;
+    private final LoadableMap map;
+    private final LoadableInput inputs;
 
     /**
      * Default constructor.

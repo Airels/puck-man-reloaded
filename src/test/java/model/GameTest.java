@@ -4,12 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
-import fr.r1r0r0.deltaengine.exceptions.AlreadyInitializedException;
-import fr.r1r0r0.deltaengine.exceptions.NotInitializedException;
-import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
-import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import main.Main;
 
 class GameTest {

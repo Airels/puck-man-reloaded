@@ -9,7 +9,7 @@ import model.elements.entities.ghosts.GhostState;
  */
 public class GhostRegenerationPointTrigger implements Trigger {
 
-    private Ghost ghost;
+    private final Ghost ghost;
 
     /**
      * Default constructor

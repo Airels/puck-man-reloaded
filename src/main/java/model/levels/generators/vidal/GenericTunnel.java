@@ -11,8 +11,8 @@ public class GenericTunnel extends Entity {
 
     public static int ID = 0;
 
-    private Coordinates<Double> source;
-    private Coordinates<Double> destination;
+    private final Coordinates<Double> source;
+    private final Coordinates<Double> destination;
 
     private GenericTunnel (Coordinates<Double> source, Coordinates<Double> destination) {
         super("tunnel" + ID,source, InvisibleSprite.getInstance(),Dimension.DEFAULT_DIMENSION);

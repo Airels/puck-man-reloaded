@@ -15,8 +15,8 @@ import model.loadables.LoadableInput;
  */
 public class MenuInputs implements LoadableInput {
 
-    private MenuSelector menuSelector;
-    public MenuMap menuMap;
+    private final MenuSelector menuSelector;
+    public final MenuMap menuMap;
 
     public MenuInputs(MenuMap menuMap, Game game) {
         this.menuMap = menuMap;

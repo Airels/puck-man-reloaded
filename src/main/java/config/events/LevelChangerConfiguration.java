@@ -1,6 +1,5 @@
 package config.events;
 
-import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;

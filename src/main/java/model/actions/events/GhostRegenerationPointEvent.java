@@ -9,7 +9,7 @@ import model.elements.entities.ghosts.Ghost;
  */
 public class GhostRegenerationPointEvent extends Event {
 
-    private Ghost ghost;
+    private final Ghost ghost;
 
     public GhostRegenerationPointEvent(Ghost ghost) {
         this.ghost = ghost;

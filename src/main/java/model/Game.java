@@ -4,7 +4,6 @@ import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.elements.entities.PacMan;

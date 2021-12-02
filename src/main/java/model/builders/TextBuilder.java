@@ -14,7 +14,7 @@ public class TextBuilder implements Builder<HUDElement> {
 
     private String name, text, font;
     private Coordinates<Double> coords;
-    private Dimension dimension;
+    private final Dimension dimension;
     private int size;
     private Color color;
 

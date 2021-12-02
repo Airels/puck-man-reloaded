@@ -31,7 +31,7 @@ public final class PauseMenuMap implements LoadableMap {
     private final String mapName = "PuckMan Reloaded - Pause";
 
     private final Game game;
-    private MapLevel map;
+    private final MapLevel map;
     private HUDElement title, pauseText, livesText, scoreText, instructionsText, mainImg;
 
     /**

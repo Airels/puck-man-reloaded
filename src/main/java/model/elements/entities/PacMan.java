@@ -29,7 +29,7 @@ public class PacMan extends Entity {
         isDead = false;
 
         this.getAttributes().addDirectionListener((direction, t1) -> {
-            Sprite s = CONF_PACMAN_SPRITE;
+            Sprite s = CONF_PACMAN_SPRITE.getSprite();
             switch (this.getAttributes().getDirection()) {
                 case UP -> {
                     s.setScale(1, s.getScale().getScaleY());
@@ -88,7 +88,7 @@ public class PacMan extends Entity {
     public void setDead(boolean dead) {
         isDead = dead;
 
-        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE : CONF_PACMAN_SPRITE);
+        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE.getSprite() : CONF_PACMAN_SPRITE.getSprite());
     }
 
     public void setSpawnPoint(Coordinates<Double> coords) {

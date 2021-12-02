@@ -19,6 +19,7 @@ import fr.r1r0r0.deltaengine.view.colors.Color;
 import model.elements.entities.ghosts.Ghost;
 import model.elements.entities.ghosts.Ghosts;
 
+@SuppressWarnings("ALL")
 public class Main {
 
     public static void main(String[] args) throws Exception {
@@ -137,8 +138,8 @@ public class Main {
 
     public static class ChangeMove implements Trigger {
 
-        private Direction direction;
-        private Entity e;
+        private final Direction direction;
+        private final Entity e;
 
         public ChangeMove(Entity e, Direction direction) {
             this.direction = direction;
