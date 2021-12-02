@@ -122,11 +122,11 @@ public final class GhostConfiguration {
     public final static double CONF_BLACKY_SPEED = 5.1;
     public final static double CONF_BLACKY_SCARED_SPEED = CONF_BLACKY_SPEED/2;
     public final static double CONF_BLACKY_FLEEING_SPEED = CONF_BLACKY_SPEED*2;
-    public final static SpriteContainer CONF_BLACKY_NORMAL_SPRITES = new SpriteContainer( // TODO
-            Image.CLYDE_LEFT.getSprite(),
-            Image.CLYDE_UP.getSprite(),
-            Image.CLYDE_DOWN.getSprite(),
-            Image.CLYDE_RIGHT.getSprite()
+    public final static SpriteContainer CONF_BLACKY_NORMAL_SPRITES = new SpriteContainer(
+            Image.BLACKY_LEFT.getSprite(),
+            Image.BLACKY_UP.getSprite(),
+            Image.BLACKY_DOWN.getSprite(),
+            Image.BLACKY_RIGHT.getSprite()
     );
     public final static SpriteContainer CONF_BLACKY_SCARED_SPRITE = new SpriteContainer(
             Image.SCARED_GHOST.getSprite(),
@@ -149,11 +149,11 @@ public final class GhostConfiguration {
     public final static double CONF_SKEAZLY_SPEED = 5.1;
     public final static double CONF_SKEAZLY_SCARED_SPEED = CONF_SKEAZLY_SPEED/2;
     public final static double CONF_SKEAZLY_FLEEING_SPEED = CONF_SKEAZLY_SPEED*2;
-    public final static SpriteContainer CONF_SKEAZLY_NORMAL_SPRITES = new SpriteContainer( // TODO
-            Image.CLYDE_LEFT.getSprite(),
-            Image.CLYDE_UP.getSprite(),
-            Image.CLYDE_DOWN.getSprite(),
-            Image.CLYDE_RIGHT.getSprite()
+    public final static SpriteContainer CONF_SKEAZLY_NORMAL_SPRITES = new SpriteContainer(
+            Image.SKEAZLY_LEFT.getSprite(),
+            Image.SKEAZLY_UP.getSprite(),
+            Image.SKEAZLY_DOWN.getSprite(),
+            Image.SKEAZLY_RIGHT.getSprite()
     );
     public final static SpriteContainer CONF_SKEAZLY_SCARED_SPRITE = new SpriteContainer(
             Image.SCARED_GHOST.getSprite(),
