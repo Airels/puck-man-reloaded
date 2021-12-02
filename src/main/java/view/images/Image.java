@@ -2,9 +2,6 @@ package view.images;
 
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
-import model.elements.cells.Wall;
-
-import java.util.Objects;
 
 /**
  * All games Images
@@ -12,6 +9,7 @@ import java.util.Objects;
 public enum Image {
 
     MAIN_IMG("main.jpg"),
+    GAME_LOGO("logo.png"),
     PAC_MAN("pac.gif"),
     PAC_MAN_DEATH("dead.gif"),
     BLINKY_LEFT("blinky_left.png"),
@@ -60,5 +58,14 @@ public enum Image {
             new Dialog(Main.APPLICATION_NAME, "Image loading error", e).show();
             return null;
         }
+    }
+
+    /**
+     * Returns the path of the Image
+     *
+     * @return String path of the image
+     */
+    public String getPath() {
+        return path;
     }
 }

@@ -9,6 +9,9 @@ import model.Game;
 import model.levels.fixed_levels.GameOverLevel;
 import model.levels.fixed_levels.PauseMenuLevel;
 import model.levels.fixed_levels.menu.MenuLevel;
+import view.images.Image;
+
+import java.io.FileNotFoundException;
 
 /**
  * Main class of the program.
@@ -25,8 +28,9 @@ public class Main {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         System.out.println("Starting game, please wait...");
+        getEngine().setGameIcon(Image.GAME_LOGO.getPath());
         Game game = new Game(getEngine(), 60,100);
         MenuLevel menuLevel = new MenuLevel(game);
         PauseMenuLevel pauseMenu = new PauseMenuLevel(game);
