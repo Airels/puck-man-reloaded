@@ -3,6 +3,7 @@ package model.elements.entities;
 import config.entities.CharactersConfiguration;
 import config.entities.PacManConfiguration;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import view.images.Image;
@@ -24,13 +25,22 @@ public class PacMan extends Entity {
      * @param coordinates initial coordinates
      */
     public PacMan(Coordinates<Double> coordinates) {
-        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN.getSprite(), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
+        super(CONF_PACMAN_NAME, coordinates, Image.PAC_MAN_IDLE.getSprite(), CharactersConfiguration.CONF_DEFAULT_CHARACTERS_DIMENSION, CharactersConfiguration.CONF_DEFAULT_CHARACTERS_HITBOX_DIMENSION);
         spawnPoint = coordinates;
         isDead = false;
 
-        this.getAttributes().addDirectionListener((direction, t1) -> {
-            Sprite s = CONF_PACMAN_SPRITE.getSprite();
-            switch (this.getAttributes().getDirection()) {
+        this.getAttributes().addDirectionListener((oldDirection, newDirection) -> {
+            Sprite s;
+            Direction direction;
+            if (newDirection == Direction.IDLE) {
+                s = CONF_PACMAN_IDLE_SPRITE.getSprite();
+                direction = oldDirection;
+            } else {
+                s = CONF_PACMAN_SPRITE.getSprite();
+                direction = newDirection;
+            }
+
+            switch (direction) {
                 case UP -> {
                     s.setScale(1, s.getScale().getScaleY());
                     s.setRotate(-90);
@@ -88,22 +98,37 @@ public class PacMan extends Entity {
     public void setDead(boolean dead) {
         isDead = dead;
 
-        double rotate = 0;
-        switch (getAttributes().getDirection()){
-            case UP -> rotate = -90;
-            case DOWN -> rotate = 90;
-            case LEFT -> rotate = 180;
+        if (isDead) {
+            double rotate = switch (this.getAttributes().getDirection()) {
+                case UP -> -90;
+                case DOWN -> 90;
+                case LEFT -> 180;
+                default -> 0;
+            };
+
+            Sprite deadSprite = CONF_PACMAN_DEAD_SPRITE.getSprite();
+            deadSprite.setRotate(rotate);
+            this.setSprite(deadSprite);
+        } else {
+            setSprite(CONF_PACMAN_IDLE_SPRITE.getSprite());
         }
-        Sprite deadSprite = CONF_PACMAN_DEAD_SPRITE.getSprite();
-        deadSprite.setRotate(rotate);
-        this.setSprite((isDead) ? deadSprite : CONF_PACMAN_SPRITE.getSprite());
     }
 
-    public void setSpawnPoint(Coordinates<Double> coords) {
-        this.spawnPoint = coords;
-    }
-
+    /**
+     * Return the spawn point of PacMan (where pacman needs to spawn when it dies)
+     *
+     * @return Coordinates of the spawn point
+     */
     public Coordinates<Double> getSpawnPoint() {
         return spawnPoint;
+    }
+
+    /**
+     * Allows to set the spawn point of PacMan (where it spawns when dies
+     *
+     * @param coords Coordinates of the new spawn point
+     */
+    public void setSpawnPoint(Coordinates<Double> coords) {
+        this.spawnPoint = coords;
     }
 }
