@@ -153,6 +153,8 @@ public final class Game {
     public void nextLevel() {
         deltaEngine.haltCurrentMap();
 
+        if (inEnergizedMode) energizeTimerEvent.runTriggers();
+
         if (levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
             lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
         levelCounter++;
