@@ -1,4 +1,4 @@
-package model.levels.generators;
+package model.levels.generators.vidal;
 
 import controller.elements.entities.PacManInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;

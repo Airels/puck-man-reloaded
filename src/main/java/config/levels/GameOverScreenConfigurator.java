@@ -3,6 +3,9 @@ package config.levels;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import view.colors.Color;
 
+/**
+ * Game Over Screen configuration
+ */
 public final class GameOverScreenConfigurator {
     public final static String CONF_GAME_OVER_TITLE = "GAME OVER";
     public final static Coordinates<Double> CONF_GAME_OVER_TITLE_POSITION = new Coordinates<>(10.0, 1.0);

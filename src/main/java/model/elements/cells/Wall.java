@@ -17,4 +17,5 @@ public class Wall extends UncrossableCell {
     public Wall(int x, int y) {
         super(x, y, new Rectangle(Color.BLUE));
     }
+
 }

@@ -4,6 +4,9 @@ import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 import view.images.Image;
 
+/**
+ * PacMan configuration
+ */
 public final class PacManConfiguration {
     public final static String CONF_PACMAN_NAME = "PacMan";
     public final static double CONF_PACMAN_SPEED = 5;

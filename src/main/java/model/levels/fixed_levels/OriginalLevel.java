@@ -36,40 +36,40 @@ public class OriginalLevel implements Level {
     private final PacMan pacMan;
     private int nbOfPacGums;
     private HUDElement readyText;
-    private boolean firstTime;
+    private boolean generated, firstTime;
 
     /**
      * Default constructor.
      *
      * @param game the Game
+     * @param firstTime if true, plays the introduction music and the "READY!" text, otherwise, will generate a newly map with random ghosts
      */
-    public OriginalLevel(Game game) {
+    public OriginalLevel(Game game, boolean firstTime) {
         this.game = game;
         this.pacMan = game.getPacMan();
 
-        this.mapLevel = new OriginalLevelMap(this, pacMan);
+        this.mapLevel = new OriginalLevelMap(this, pacMan, !firstTime);
         this.inputLevel = new OriginalLevelInputs(game);
+        this.firstTime = firstTime;
+        this.generated = false;
 
-
-        Text rText = new Text(CONF_READY_TEXT);
-        rText.setSize(CONF_READY_SIZE);
-        rText.setColor(CONF_READY_COLOR.getEngineColor());
-        readyText = new HUDElement(
-                "Ready Text",
-                CONF_READY_POSITION,
-                rText,
-                Dimension.DEFAULT_DIMENSION
-        );
-
-        firstTime = true;
+        if (firstTime) {
+            Text rText = new Text(CONF_READY_TEXT);
+            rText.setSize(CONF_READY_SIZE);
+            rText.setColor(CONF_READY_COLOR.getEngineColor());
+            readyText = new HUDElement(
+                    "Ready Text",
+                    CONF_READY_POSITION,
+                    rText,
+                    Dimension.DEFAULT_DIMENSION
+            );
+        }
     }
 
     @Override
     public void load(KernelEngine deltaEngine) {
         if (firstTime) {
             deltaEngine.addHUDElement(readyText);
-
-            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
 
             new Thread(() -> {
                 Sounds.GAME_BEGIN.play();
@@ -81,10 +81,18 @@ public class OriginalLevel implements Level {
                 } finally {
                     deltaEngine.removeHUDElement(readyText);
                     deltaEngine.resumeCurrentMap();
+                    Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_CHASE_SPEED);
+                    Sounds.SIREN.setVolume(CONF_SOUND_SIREN_CHASE_VOLUME);
+                    Sounds.SIREN.play();
                 }
             }).start();
 
             firstTime = false;
+        }
+
+        if (!generated) {
+            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
+            generated = true;
         }
     }
 
@@ -121,16 +129,6 @@ public class OriginalLevel implements Level {
     @Override
     public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
         return mapLevel.getSpawnPoints();
-    }
-
-    @Override
-    public void reset() {
-        for (Map.Entry<Entity, Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
-            entry.getKey().setCoordinates(entry.getValue());
-        }
-        for (Ghost ghost : getGhosts()) {
-            ghost.setState(GhostState.NORMAL);
-        }
     }
 
     /**

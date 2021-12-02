@@ -16,9 +16,4 @@ public abstract class GhostAI extends AI {
         return (Ghost) super.getEntity();
     }
 
-    /**
-     * Returns a new instance of itself, ready to be used for another entity
-     * @return new GhostAI instance
-     */
-    public abstract GhostAI clone();
 }

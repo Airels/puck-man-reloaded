@@ -10,6 +10,8 @@ import model.ai.GhostAIs;
 import model.levels.Level;
 import view.SpriteContainer;
 
+import java.util.*;
+
 import static config.entities.GhostConfiguration.*;
 
 /**
@@ -22,7 +24,9 @@ public enum Ghosts {
     BLINKY(CONF_BLINKY_NAME, CONF_BLINKY_NORMAL_SPRITES, CONF_BLINKY_SCARED_SPRITE, CONF_BLINKY_FLEEING_SPRITES, CONF_BLINKY_AI, CONF_BLINKY_SPEED, CONF_BLINKY_SCARED_SPEED, CONF_BLINKY_FLEEING_SPEED),
     PINKY(CONF_PINKY_NAME, CONF_PINKY_NORMAL_SPRITES, CONF_PINKY_SCARED_SPRITE, CONF_PINKY_FLEEING_SPRITES, CONF_PINKY_AI, CONF_PINKY_SPEED, CONF_PINKY_SCARED_SPEED, CONF_PINKY_FLEEING_SPEED),
     INKY(CONF_INKY_NAME, CONF_INKY_NORMAL_SPRITES, CONF_INKY_SCARED_SPRITE, CONF_INKY_FLEEING_SPRITES, CONF_INKY_AI, CONF_INKY_SPEED, CONF_INKY_SCARED_SPEED, CONF_INKY_FLEEING_SPEED),
-    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_FLEEING_SPRITES, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED, CONF_CLYDE_FLEEING_SPEED);
+    CLYDE(CONF_CLYDE_NAME, CONF_CLYDE_NORMAL_SPRITES, CONF_CLYDE_SCARED_SPRITE, CONF_CLYDE_FLEEING_SPRITES, CONF_CLYDE_AI, CONF_CLYDE_SPEED, CONF_CLYDE_SCARED_SPEED, CONF_CLYDE_FLEEING_SPEED),
+    BLACKY(CONF_BLACKY_NAME, CONF_BLACKY_NORMAL_SPRITES, CONF_BLACKY_SCARED_SPRITE, CONF_BLACKY_FLEEING_SPRITES, CONF_BLACKY_AI, CONF_BLACKY_SPEED, CONF_BLACKY_SCARED_SPEED, CONF_BLACKY_FLEEING_SPEED),
+    SKEAZLY(CONF_SKEAZLY_NAME, CONF_SKEAZLY_NORMAL_SPRITES, CONF_SKEAZLY_SCARED_SPRITE, CONF_SKEAZLY_FLEEING_SPRITES, CONF_SKEAZLY_AI, CONF_SKEAZLY_SPEED, CONF_SKEAZLY_SCARED_SPEED, CONF_SKEAZLY_FLEEING_SPEED);
 
     private final String name;
     private final GhostAIs ai;
@@ -111,5 +115,20 @@ public enum Ghosts {
         ghost.setCollisionEvent(currentMap.getEntity(PacManConfiguration.CONF_PACMAN_NAME), new PacManTouchedByGhostEvent(game, ghost));
 
         return ghost;
+    }
+
+    /**
+     * Returns a random ghost of the enumeration
+     * @param undesiredGhosts All ghosts that must not return (if empty, any ghost can be returned)
+     * @return random Ghost or null if no one can be chosen
+     */
+    public static Ghosts getRandomGhost(Ghosts... undesiredGhosts) {
+        List<Ghosts> ghosts = new LinkedList<>(Arrays.asList(Ghosts.values()));
+        ghosts.removeAll(Arrays.asList(undesiredGhosts));
+        if (ghosts.size() == 0)
+            return null;
+
+        int randomNumber = new Random().nextInt(ghosts.size());
+        return ghosts.get(randomNumber);
     }
 }

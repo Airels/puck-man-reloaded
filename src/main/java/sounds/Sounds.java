@@ -15,14 +15,16 @@ public enum Sounds {
     MAIN_THEME("main-theme", "main-theme.mp3"), // TODO CREDITS : https://www.youtube.com/watch?v=qtZ0hl-unM4
     GAME_BEGIN("game-begin", "pacman_beginning.wav"),
     PACMAN_WA("pacman-wa", "pacman_wa.wav"),
-    PACMAN_KA("pacman-ka", "pacman_ka.wav");
+    PACMAN_KA("pacman-ka", "pacman_ka.wav"),
+    GAME_OVER("game-over","dead.wav"),
+    SIREN("siren","sirene.wav");
 
     private Sound sound;
 
     Sounds(String name, String path) {
         try {
             String p = "/sounds/" + path;
-            this.sound = new Sound(name, getClass().getResource(p).getPath());
+            this.sound = new Sound(name, p);
         } catch (Exception e) {
             new Dialog(Main.APPLICATION_NAME, "Sounds loading error", e).show();
         }
@@ -78,6 +80,42 @@ public enum Sounds {
             soundEngine.stop(getName());
         } catch (SoundDoesNotExistException e) {
             new Dialog(Main.APPLICATION_NAME, "Sound control error", e).show();
+        }
+    }
+
+    /**
+     * Set if the sound must be looped
+     * @param loop boolean true to bool, false otherwise
+     */
+    public void setLoop(boolean loop){
+        try {
+            Main.getEngine().getSoundEngine().setLoop(this.getName(),loop);
+        } catch (SoundDoesNotExistException e) {
+            new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
+        }
+    }
+
+    /**
+     * Allowing to set the speed of the sound
+     * @param speed double speed to set (must be between 0 and 8)
+     */
+    public void setSpeed(double speed) {
+        try {
+            Main.getEngine().getSoundEngine().setSpeed(getName(), speed);
+        } catch (SoundDoesNotExistException e) {
+            new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
+        }
+    }
+
+    /**
+     * Allowing to set the volume of the sound
+     * @param volume double volume to set (must be between 0 and 1)
+     */
+    public void setVolume(double volume) {
+        try {
+            Main.getEngine().getSoundEngine().setVolume(getName(), volume);
+        } catch (SoundDoesNotExistException e) {
+            new Dialog(Main.APPLICATION_NAME,"Sound property error", e).show();
         }
     }
 }

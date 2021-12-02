@@ -1,38 +1,46 @@
-package model.levels.fixed_levels;
+package model.levels.generators;
 
-import controller.inputs.levels.PauseMenuInputs;
+import fr.r1r0r0.deltaengine.exceptions.AlreadyInitializedException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
+import fr.r1r0r0.deltaengine.model.engines.DeltaEngine;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.Game;
+import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
 import model.events.LevelChanger;
 import model.levels.Level;
+import model.levels.generators.vidal.RandomLevel;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
+import model.utils.WallSpriteApplier;
 import org.jetbrains.annotations.NotNull;
-import sounds.Sounds;
-import view.maps.PauseMenuMap;
+import org.jetbrains.annotations.Nullable;
+import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The Pause level, when players want to pause the Game
- */
-public class PauseMenuLevel implements Level {
+import static org.junit.jupiter.api.Assertions.*;
 
-    private final Game game;
-    private final LoadableMap map;
-    private final LoadableInput inputs;
+class MapLevelGeneratorTest {
 
-    public PauseMenuLevel(Game game) {
-        this.game = game;
-        map = new PauseMenuMap(game);
-        inputs = new PauseMenuInputs(game);
+    @Test
+    void generate() throws Exception {
+        KernelEngine engine = DeltaEngine.launch();
+        MapLevelGenerator generator = new MapLevelGenerator(new TestLevel(), new PacMan());
+        MapLevel mapLevel = generator.generate();
+
+        new WallSpriteApplier().apply(mapLevel);
+
+        engine.addMap(mapLevel);
+        engine.setCurrentMap(mapLevel.getName());
+        for (;;);
     }
+}
+
+class TestLevel implements Level {
 
     /**
      * Load the level
@@ -41,8 +49,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public void load(KernelEngine deltaEngine) {
-        // TODO stop siren sound
-        Sounds.MAIN_THEME.play();
+
     }
 
     /**
@@ -52,8 +59,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public void unload(KernelEngine deltaEngine) {
-        Sounds.MAIN_THEME.stop();
-        // TODO Reactivate siren
+
     }
 
     /**
@@ -63,7 +69,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public @NotNull LoadableMap getMapLevelLoadable() {
-        return map;
+        return null;
     }
 
     /**
@@ -73,7 +79,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public @NotNull LoadableInput getInputsLoadable() {
-        return inputs;
+        return null;
     }
 
     /**
@@ -103,7 +109,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public @NotNull Collection<Ghost> getGhosts() {
-        return new ArrayList<>();
+        return null;
     }
 
     /**
@@ -113,7 +119,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public @NotNull Game getGame() {
-        return game;
+        return null;
     }
 
     /**
@@ -123,7 +129,7 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public @NotNull Map<Entity, Coordinates<Double>> getSpawnPoints() {
-        return new HashMap<>();
+        return null;
     }
 
     /**
@@ -132,7 +138,7 @@ public class PauseMenuLevel implements Level {
      * @return Level Changer instance
      */
     @Override
-    public LevelChanger getLevelChanger() {
+    public @Nullable LevelChanger getLevelChanger() {
         return null;
     }
 }

@@ -30,11 +30,6 @@ public final class ClydeAI extends BasicGhostAI {
     }
 
     @Override
-    public GhostAI clone () {
-        return new ClydeAI();
-    }
-
-    @Override
     protected Direction chooseDirection (Ghost ghost, MapLevel mapLevel) {
         ArrayList<Direction> directions = new ArrayList<>();
         Direction oppositeDirection = direction.getOpposite();
@@ -43,7 +38,7 @@ public final class ClydeAI extends BasicGhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,other)) directions.add(other);
         }
         int size = directions.size();
-        return (size == 0) ? Direction.IDLE : directions.get(random.nextInt(size));
+        return (size == 0) ? oppositeDirection : directions.get(RANDOM.nextInt(size));
     }
 
     @Override

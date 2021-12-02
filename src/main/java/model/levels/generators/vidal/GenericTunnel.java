@@ -1,4 +1,4 @@
-package model.levels.generators;
+package model.levels.generators.vidal;
 
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
@@ -6,7 +6,6 @@ import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.sprites.InvisibleSprite;
-import fr.r1r0r0.deltaengine.model.sprites.Sprite;
 
 public class GenericTunnel extends Entity {
 

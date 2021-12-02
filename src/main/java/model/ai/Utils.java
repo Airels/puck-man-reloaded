@@ -6,6 +6,7 @@ import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.CollisionPositions;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import main.Main;
 import model.elements.entities.ghosts.Ghost;
 
 import java.util.*;
@@ -31,25 +32,6 @@ public final class Utils {
         Coordinates<Double> botRight = CollisionPositions.RIGHT_BOT.calcPosition(coordinates,dimension);
         return new Coordinates<>((int) ((topLeft.getX() + botRight.getX()) / 2),
                 (int) ((topLeft.getY() + botRight.getY()) / 2));
-    }
-
-    /**
-     * TODO
-     * @param ghost
-     * @param mapLevel
-     * @param target
-     * @return
-     */
-    public static boolean isTargetReach (Ghost ghost, MapLevel mapLevel, Coordinates<Integer> target) {
-        Coordinates<Double> topLeft = ghost.getCoordinates();
-        Coordinates<Integer> topLeftInteger = Coordinates.doubleToInteger(topLeft);
-        Coordinates<Integer> botRightInteger = Coordinates.doubleToInteger(
-                CollisionPositions.RIGHT_BOT.calcPosition(topLeft,ghost.getDimension()));
-        if ( ! topLeftInteger.equals(botRightInteger)) return false;
-        if (topLeftInteger.equals(target)) return true;
-        Direction direction = ghost.getDirection();
-        return mapLevel.getCell(topLeftInteger.getX() + direction.getX(),
-                topLeftInteger.getY() + direction.getY()).isCrossableBy(ghost);
     }
 
     /**

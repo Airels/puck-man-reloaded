@@ -2,6 +2,9 @@ package config.levels;
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
 
+/**
+ * Configurations for the Original PacMan level
+ */
 public final class OriginalLevelConfigurator {
 
     public final static Coordinates<Double> CONF_LEFT_TUNNEL_SPAWN_POINT = new Coordinates<>(0., 10.);

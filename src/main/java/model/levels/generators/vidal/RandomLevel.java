@@ -1,17 +1,13 @@
-package model.levels.generators;
+package model.levels.generators.vidal;
 
 import config.game.GlobalHUDConfiguration;
-import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelAlreadyExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelBuilderCellCoordinatesStackingException;
-import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelDoesNotExistException;
 import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.cells.Cell;
 import fr.r1r0r0.deltaengine.model.elements.cells.default_cells.VoidCell;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.events.Event;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevelBuilder;
 import model.actions.events.PacGumEatEvent;
@@ -23,6 +19,7 @@ import model.elements.entities.ghosts.Ghosts;
 import model.elements.entities.items.PacGum;
 import model.events.GhostRegenerationPoint;
 import model.levels.Level;
+import model.levels.generators.vidal.GenericTunnel;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
 

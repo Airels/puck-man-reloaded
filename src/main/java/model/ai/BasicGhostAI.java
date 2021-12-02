@@ -1,13 +1,18 @@
 package model.ai;
 
 import config.entities.PacManConfiguration;
+import fr.r1r0r0.deltaengine.exceptions.maplevel.MapLevelEntityNameStackingException;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Dimension;
 import fr.r1r0r0.deltaengine.model.Direction;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
+import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
+import fr.r1r0r0.deltaengine.view.colors.Color;
 import main.Main;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
+import model.elements.entities.ghosts.GhostState;
 import model.exceptions.GhostTargetMissingException;
 
 import java.util.ArrayList;
@@ -22,7 +27,10 @@ import java.util.Random;
  */
 public abstract class BasicGhostAI extends GhostAI {
 
-    protected final Random random = new Random();
+    protected static final Random RANDOM = new Random();
+    private static final Entity focus = new Entity("focus",new Coordinates<>(0.,0.),
+            new Rectangle(Color.GREEN),new Dimension(0.5,0.5));
+
     protected Coordinates<Integer> target;
     protected Direction direction;
 
@@ -38,15 +46,29 @@ public abstract class BasicGhostAI extends GhostAI {
     public final void tick() {
         Ghost ghost = getGhost();
         MapLevel mapLevel = ghost.getMapLevel();
-        if (ghost.getBlockTarget() != null && ! isTargetReach(ghost,mapLevel)) return;
-        switch (ghost.getState()) {
+        GhostState ghostState = ghost.getState();
+        if (ghost.getBlockTarget() != null && ghost.getDirection() != Direction.IDLE) return;
+        if (ghostState == GhostState.NORMAL && RANDOM.nextDouble() < getProbaScatter(ghost)) {
+            ghost.setState(GhostState.SCATTER);
+            ghostState = ghost.getState();
+        }
+        switch (ghostState) {
             case NORMAL -> chaseModeTick(ghost,mapLevel);
             case SCARED -> scaryModeTick(ghost,mapLevel);
             case FLEEING -> fleeingModeTick(ghost,mapLevel);
+            case SCATTER -> scatterModeTick(ghost,mapLevel);
             default -> {}
         }
         ghost.setDirection(direction);
         ghost.setBlockTarget(target);
+        if (ghost.getName().equals("___")) {
+            try {
+                mapLevel.addEntity(focus);
+            } catch (MapLevelEntityNameStackingException e) {
+                e.printStackTrace();
+            }
+            if (target != null) focus.setCoordinates(new Coordinates<>(target.getX().doubleValue(),target.getY().doubleValue()));
+        }
     }
 
     /**
@@ -98,7 +120,7 @@ public abstract class BasicGhostAI extends GhostAI {
             if (Main.getEngine().canGoToNextCell(ghost,escape))
                 escapes.add(escape);
         }
-        direction = (escapes.size() == 0) ? Direction.IDLE : escapes.get(random.nextInt(escapes.size()));
+        direction = (escapes.size() == 0) ? shortestDirection : escapes.get(RANDOM.nextInt(escapes.size()));
         target = Utils.findNextCross(ghost,mapLevel,Utils.getIntegerCoordinates(ghost),direction);
     }
 
@@ -115,13 +137,13 @@ public abstract class BasicGhostAI extends GhostAI {
     }
 
     /**
-     * Return if the target is reach
+     * Action when the ghost is in scatter mode
      * @param ghost a ghost
      * @param mapLevel a mapLevel
-     * @return if the target is reach
      */
-    private boolean isTargetReach (Ghost ghost, MapLevel mapLevel) {
-        return Utils.isTargetReach(ghost,mapLevel,target);
+    private void scatterModeTick (Ghost ghost, MapLevel mapLevel) {
+        scaryModeTick(ghost,mapLevel);
+        ghost.setState(GhostState.NORMAL);
     }
 
     /**
@@ -131,10 +153,21 @@ public abstract class BasicGhostAI extends GhostAI {
      * @return the entity pacMan on the mapLevel
      * @throws GhostTargetMissingException throw if the entity pacMan is not in the mapLevel
      */
-    protected PacMan findPacMan (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
+    protected static PacMan findPacMan (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
         Entity entity = mapLevel.getEntity(PacManConfiguration.CONF_PACMAN_NAME);
         if (entity == null) throw new GhostTargetMissingException(ghost);
         return (PacMan) entity;
+    }
+
+    private double getProbaScatter (Ghost ghost) {
+        // TODO
+        String name = ghost.getName();
+        switch (name) {
+            case "Blinky" -> {return 0.02;}
+            case "Pinky" -> {return 0.05;}
+            case "Inky" -> {return 0.01;}
+            default -> {return 0;}
+        }
     }
 
 }

@@ -4,17 +4,23 @@ import config.game.GameConfiguration;
 import config.score.ScoreConfiguration;
 import fr.r1r0r0.deltaengine.model.engines.Engines;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
+import fr.r1r0r0.deltaengine.model.events.Trigger;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import main.Main;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
+import model.events.LevelChangerTrigger;
 import model.events.TimedEvent;
 import model.levels.Level;
 import model.levels.fixed_levels.OriginalLevel;
 import model.levels.generators.LevelGenerator;
 import org.jetbrains.annotations.Nullable;
+
 import sounds.SoundLoader;
+import sounds.Sounds;
+
+import static config.game.GameConfiguration.*;
 
 /**
  * Main core of the game. Oversees game, and called when special game modes need to be activated and handled.
@@ -39,9 +45,10 @@ public final class Game {
      * @param engine      KernelEngine reference
      * @param fps         targeted game fps
      */
-    public Game(KernelEngine engine, int fps) {
+    public Game(KernelEngine engine, int fps, int physicalRate) {
         this.deltaEngine = engine;
         engine.setFrameRate(fps);
+        engine.setPhysicalRate(physicalRate);
         engine.printFrameRate(true);
 
         SoundLoader.loadSounds();
@@ -63,6 +70,8 @@ public final class Game {
         this.pauseLevel = pauseLevel;
         this.gameOverLevel = gameOverLevel;
         levelLoader.load(menuLevel, false);
+
+        Sounds.SIREN.setLoop(true);
     }
 
     /**
@@ -76,7 +85,7 @@ public final class Game {
         this.ghostEatenChain = 0;
         this.levelCounter = 1;
 
-        OriginalLevel originalLevel = new OriginalLevel(this);
+        OriginalLevel originalLevel = new OriginalLevel(this, true);
         levelLoader.load(originalLevel);
         deltaEngine.haltCurrentMap();
 
@@ -88,7 +97,7 @@ public final class Game {
                     new RuntimeException("Level changer can't be null")
             ).show();
         }
-        levelChanger.addTrigger(this::nextLevel);
+        levelChanger.addTrigger(new LevelChangerTrigger(this, "1"));
         deltaEngine.addGlobalEvent(levelChanger);
     }
 
@@ -121,6 +130,8 @@ public final class Game {
     public void pauseGame() {
         if (!canPause) return;
 
+        Sounds.SIREN.stop();
+
         if (isInEnergizedMode()) energizeTimerEvent.pause();
         bufferedLevel = levelLoader.getCurrentLevel();
         levelLoader.load(pauseLevel, false);
@@ -130,6 +141,7 @@ public final class Game {
      * Resumes the current level
      */
     public void resumeGame() {
+        Sounds.SIREN.play();
         if (isInEnergizedMode()) energizeTimerEvent.unpause();
         levelLoader.load(bufferedLevel);
         bufferedLevel = null;
@@ -139,18 +151,25 @@ public final class Game {
      * Transfers player character to the next generated level (in singleplayer)
      */
     public void nextLevel() {
-        System.out.println("NEXT LEVEL"); // TODO
+        deltaEngine.haltCurrentMap();
+
+        if (levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
+            lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
+        levelCounter++;
 
         deltaEngine.removeGlobalEvent(levelChanger);
         Level nextLevel = levelGenerator.generate(this);
         levelLoader.load(nextLevel);
 
-        if(levelCounter%(GameConfiguration.CONF_NUMBER_OF_LEVELS_TO_PASS_BEFORE_GAIN_LIVES) == 0)
-            lifeCounter+= GameConfiguration.CONF_GAINED_LIVES;
-        levelCounter++;
-
         levelChanger = nextLevel.getLevelChanger();
-        levelChanger.addTrigger(this::nextLevel);
+        if (levelChanger == null) {
+            new Dialog(
+                    Main.APPLICATION_NAME,
+                    "Launch single player mode failed",
+                    new RuntimeException("Level changer can't be null")
+            ).show();
+        }
+        levelChanger.addTrigger(new LevelChangerTrigger(this, "2"));
         deltaEngine.addGlobalEvent(levelChanger);
     }
 
@@ -159,6 +178,9 @@ public final class Game {
      */
     private void runEnergizeMode() {
         if (inEnergizedMode) energizeTimerEvent.runTriggers();
+
+        Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_SCARED_SPEED);
+        Sounds.SIREN.setVolume(CONF_SOUND_SIREN_SCARED_VOLUME);
 
         energizeTimerEvent = new TimedEvent(GameConfiguration.CONF_ENERGIZED_TIME);
         energizeTimerEvent.addTrigger(this::turnOffEnergizeMode);
@@ -175,6 +197,8 @@ public final class Game {
      * Toggle off energize mode, all scared ghosts returns to normal state.
      */
     public void turnOffEnergizeMode() {
+        Sounds.SIREN.setSpeed(CONF_SOUND_SIREN_CHASE_SPEED);
+        Sounds.SIREN.setVolume(CONF_SOUND_SIREN_CHASE_VOLUME);
         inEnergizedMode = false;
         ghostEatenChain = 0;
         deltaEngine.removeGlobalEvent(energizeTimerEvent);
@@ -200,14 +224,15 @@ public final class Game {
      */
     public void gameOver() {
         try {
+            Sounds.SIREN.stop();
             this.canPause = false;
 
             deltaEngine.haltCurrentMap();
             Thread.sleep(1000);
 
-            pacMan.setDead(true); // TODO Changement de sprite Pacman
-            deltaEngine.tick(Engines.GRAPHICS_ENGINE); // TODO animation
-            // TODO deltaEngine.getSoundEngine().play("GameOver.mp4");
+            pacMan.setDead(true);
+            deltaEngine.tick(Engines.GRAPHICS_ENGINE);
+            Sounds.GAME_OVER.play();
             Thread.sleep(3000);
             if (lifeCounter > 0) {
                 lifeCounter--;
@@ -217,14 +242,14 @@ public final class Game {
                 deltaEngine.tick();
                 Thread.sleep(3000);
                 deltaEngine.resumeCurrentMap();
+                Sounds.SIREN.play();
             } else {
                 levelLoader.load(gameOverLevel, false);
             }
 
             this.canPause = true;
         } catch (InterruptedException e) {
-            new Dialog(Main.APPLICATION_NAME, "Game over event error", e).show();
-        }
+            new Dialog(Main.APPLICATION_NAME, "Game over event error", e).show();}
     }
 
     /**

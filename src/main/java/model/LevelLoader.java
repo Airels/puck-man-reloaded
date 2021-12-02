@@ -1,8 +1,11 @@
 package model;
 
+import java.util.Collection;
 import config.game.GlobalHUDConfiguration;
 import controller.InputsLoader;
 import fr.r1r0r0.deltaengine.model.Coordinates;
+import fr.r1r0r0.deltaengine.model.Direction;
+import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import fr.r1r0r0.deltaengine.model.maplevel.MapLevel;
 import model.levels.Level;
@@ -43,12 +46,10 @@ public final class LevelLoader {
         level.load(deltaEngine);
 
         MapLevel mapLevel = level.getMapLevelLoadable().getMapLevel();
-
         double x = 0,
                 y = mapLevel.getHeight() - GlobalHUDConfiguration.CONF_GLOBAL_HUD_HEIGHT_SIZE,
                 width = mapLevel.getWidth(),
                 height = mapLevel.getHeight();
-
         if (loadGlobalHUD) {
             globalHUD = new GlobalHUD(level.getGame(), new Coordinates<>(x, y), width, height);
             globalHUD.load(deltaEngine);

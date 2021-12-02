@@ -1,27 +1,21 @@
-package model.levels.generators;
+package model.levels.generators.vidal;
 
 import fr.r1r0r0.deltaengine.model.Coordinates;
-import fr.r1r0r0.deltaengine.model.Dimension;
-import fr.r1r0r0.deltaengine.model.elements.HUDElement;
 import fr.r1r0r0.deltaengine.model.elements.entity.Entity;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
-import fr.r1r0r0.deltaengine.model.sprites.Text;
 import model.Game;
 import model.elements.entities.PacMan;
 import model.elements.entities.ghosts.Ghost;
-import model.elements.entities.ghosts.GhostState;
 import model.events.LevelChanger;
 import model.levels.Level;
+import model.levels.generators.LoadableInputBuilder;
+import model.levels.generators.LoadableMapBuilder;
 import model.loadables.LoadableInput;
 import model.loadables.LoadableMap;
 import org.jetbrains.annotations.NotNull;
-import sounds.Sounds;
 
 import java.util.Collection;
 import java.util.Map;
-
-import static config.game.GameConfiguration.*;
-import static config.game.GameConfiguration.CONF_READY_POSITION;
 
 public class GenericLevel implements Level {
 
@@ -78,16 +72,6 @@ public class GenericLevel implements Level {
     @Override
     public @NotNull Map<Entity,Coordinates<Double>> getSpawnPoints () {
         return mapLevel.getSpawnPoints();
-    }
-
-    @Override
-    public void reset () {
-        for (Map.Entry<Entity,Coordinates<Double>> entry : mapLevel.getSpawnPoints().entrySet()) {
-            entry.getKey().setCoordinates(entry.getValue());
-        }
-        for (Ghost ghost : getGhosts()) {
-            ghost.setState(GhostState.NORMAL);
-        }
     }
 
     /**
