@@ -4,7 +4,6 @@ import controller.elements.entities.PacManInputs;
 import controller.inputs.GameInputs;
 import fr.r1r0r0.deltaengine.model.engines.KernelEngine;
 import model.Game;
-import model.elements.entities.PacMan;
 import model.loadables.LoadableInput;
 
 /**
@@ -15,10 +14,16 @@ public class OriginalLevelInputs implements LoadableInput {
     private final LoadableInput pacManInputs, gameInputs;
     private boolean firstTime;
 
-    public OriginalLevelInputs(Game game) {
+    /**
+     * Default constructor.
+     *
+     * @param game      The Game
+     * @param firstTime if it's the first time to load
+     */
+    public OriginalLevelInputs(Game game, boolean firstTime) {
         pacManInputs = new PacManInputs(game.getPacMan());
         gameInputs = new GameInputs(game);
-        firstTime = true;
+        this.firstTime = firstTime;
     }
 
     @Override

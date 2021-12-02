@@ -49,7 +49,7 @@ public class OriginalLevel implements Level {
         this.pacMan = game.getPacMan();
 
         this.mapLevel = new OriginalLevelMap(this, pacMan, !firstTime);
-        this.inputLevel = new OriginalLevelInputs(game);
+        this.inputLevel = new OriginalLevelInputs(game, firstTime);
         this.firstTime = firstTime;
         this.generated = false;
 
@@ -91,7 +91,7 @@ public class OriginalLevel implements Level {
         }
 
         if (!generated) {
-            nbOfPacGums = mapLevel.getNbOfGeneratedPacGums();
+            nbOfPacGums = 1;
             generated = true;
         }
     }
