@@ -72,12 +72,12 @@ public class Main {
         InputEvent pauseEvent = new InputEvent(deltaEngine::haltCurrentMap, deltaEngine::resumeCurrentMap);
         deltaEngine.setInput(Key.P, pauseEvent);
 
-        Ghost ghostClyde = Ghosts.CLYDE.build(null); // TODO
+        Ghost ghostClyde = Ghosts.CLYDE.build(null);
         ghostClyde.setCoordinates(new Coordinates<>(8., 8.));
         ghostClyde.setSpeed(10);
         //mapLevel.addEntity(ghostClyde);
 
-        Ghost ghostBlinky = Ghosts.BLINKY.build(null); // TODO
+        Ghost ghostBlinky = Ghosts.BLINKY.build(null);
         ghostBlinky.setCoordinates(new Coordinates<>(8., 8.));
         ghostBlinky.setSpeed(0.5);
         mapLevel.addEntity(ghostBlinky);
@@ -96,7 +96,6 @@ public class Main {
     }
 
     private static MapLevel createMapLevelDamier(String name, int width, int height) {
-        //TODO: faire une erreur generique pour les MapLevel, qui se subdivise en toutes les erreurs actuels
         MapLevelBuilder mapLevelBuilder = new MapLevelBuilder(name, width, height);
         try {
             for (int i = 0; i < width; i++) {

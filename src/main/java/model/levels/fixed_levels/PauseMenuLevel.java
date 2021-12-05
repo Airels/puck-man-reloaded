@@ -41,7 +41,6 @@ public class PauseMenuLevel implements Level {
      */
     @Override
     public void load(KernelEngine deltaEngine) {
-        // TODO stop siren sound
         Sounds.MAIN_THEME.play();
     }
 
@@ -53,7 +52,6 @@ public class PauseMenuLevel implements Level {
     @Override
     public void unload(KernelEngine deltaEngine) {
         Sounds.MAIN_THEME.stop();
-        // TODO Reactivate siren
     }
 
     /**

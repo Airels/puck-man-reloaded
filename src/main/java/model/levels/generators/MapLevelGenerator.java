@@ -13,6 +13,7 @@ import fr.r1r0r0.deltaengine.model.sprites.shapes.Rectangle;
 import fr.r1r0r0.deltaengine.tools.dialog.Dialog;
 import fr.r1r0r0.deltaengine.view.colors.Color;
 import main.Main;
+import model.actions.events.PacGumEatEvent;
 import model.elements.cells.GhostDoor;
 import model.elements.cells.Wall;
 import model.elements.entities.PacMan;
@@ -84,7 +85,7 @@ public class MapLevelGenerator {
 
                 Coordinates<Integer> cellCoords = cell.getCoordinates();
                 PacGum pacGum = new PacGum(new Coordinates<>(cellCoords.getX().doubleValue(), cellCoords.getY().doubleValue()), superPacGum);
-                // todo pacGum.setCollisionEvent(pacMan, new PacGumEatEvent(level, pacGum, superPacGum));
+                // pacGum.setCollisionEvent(pacMan, new PacGumEatEvent(level, pacGum, superPacGum));
                 generatedMap.addEntity(pacGum);
                 nbOfGeneratedPacGums += 1;
             }

@@ -12,7 +12,7 @@ import main.Main;
 public enum Sounds {
 
     MENU_SELECTION("menu-selection", "menu-selection.wav"),
-    MAIN_THEME("main-theme", "main-theme.mp3"), // TODO CREDITS : https://www.youtube.com/watch?v=qtZ0hl-unM4
+    MAIN_THEME("main-theme", "main-theme.mp3"),
     GAME_BEGIN("game-begin", "pacman_beginning.wav"),
     PACMAN_WA("pacman-wa", "pacman_wa.wav"),
     PACMAN_KA("pacman-ka", "pacman_ka.wav"),

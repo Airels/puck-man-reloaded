@@ -108,10 +108,11 @@ public final class Game {
 
     /**
      * When called, launch the game in multiplayer mode.
-     * TODO WIP
+     * Not implemented due to lack of time
+     * @deprecated Not implemented
      */
+    @Deprecated
     public void launchMultiPlayerGame() {
-        // TODO New multiplayer menu
         System.out.println("LAUNCHING MULTIPLAYER MODE!");
     }
 

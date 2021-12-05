@@ -15,6 +15,7 @@ public enum LoadableMapBuilder {
             return new OriginalLevelMap(level,level.getGame().getPacMan(), true);
         }
     },
+    @Deprecated
     RANDOM(){
         @Override
         public LoadableMap build (Level level) {
