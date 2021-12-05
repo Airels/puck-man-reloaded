@@ -98,7 +98,20 @@ public class PacMan extends Entity {
     public void setDead(boolean dead) {
         isDead = dead;
 
-        this.setSprite((isDead) ? CONF_PACMAN_DEAD_SPRITE.getSprite() : CONF_PACMAN_IDLE_SPRITE.getSprite());
+        if (isDead) {
+            double rotate = switch (this.getAttributes().getDirection()) {
+                case UP -> -90;
+                case DOWN -> 90;
+                case LEFT -> 180;
+                default -> 0;
+            };
+
+            Sprite deadSprite = CONF_PACMAN_DEAD_SPRITE.getSprite();
+            deadSprite.setRotate(rotate);
+            this.setSprite(deadSprite);
+        } else {
+            setSprite(CONF_PACMAN_IDLE_SPRITE.getSprite());
+        }
     }
 
     /**

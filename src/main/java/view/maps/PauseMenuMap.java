@@ -80,7 +80,7 @@ public final class PauseMenuMap implements LoadableMap {
                 D or ARROW RIGHT - RIGHT direction
                 """;
 
-        textBuilder.setCoordinates(20, 11)
+        textBuilder.setCoordinates(15, 11)
                 .setSize(25)
                 .setText(instructions);
         instructionsText = textBuilder.build();
