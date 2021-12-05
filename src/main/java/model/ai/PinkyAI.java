@@ -32,6 +32,8 @@ public final class PinkyAI extends BasicGhostAI {
             GhostConfiguration.CONF_CLYDE_NAME,
             GhostConfiguration.CONF_BLACKY_NAME};
 
+
+
     /**
      * Constructor
      */

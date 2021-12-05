@@ -10,7 +10,7 @@ import model.elements.entities.ghosts.Ghost;
 import model.exceptions.GhostTargetMissingException;
 
 /**
- * A custom IA, is color is black.
+ * A custom IA, his color is black.
  * He has 2 different states :
  *      - if pacMan is in same corridor, he run to him with a high speed
  *          when he cannot longer see pacMan, he run the previous position where he saw him
@@ -24,6 +24,9 @@ public final class BlackyAI extends BasicGhostAI {
     private Double defaultSpeed;
     private Coordinates<Integer> lastViewPacManCoordinate;
 
+    /**
+     * Constructor
+     */
     public BlackyAI () {
         defaultSpeed = null;
         lastViewPacManCoordinate = null;
@@ -34,7 +37,7 @@ public final class BlackyAI extends BasicGhostAI {
         if (defaultSpeed == null) defaultSpeed = ghost.getSpeed();
         Direction directionChoose;
         try {
-            directionChoose = chooseDirectionAux(ghost,mapLevel);
+            directionChoose = findPacManDirectionAux(ghost,mapLevel);
         } catch (GhostTargetMissingException e) {
             return Direction.IDLE;
         }
@@ -54,7 +57,14 @@ public final class BlackyAI extends BasicGhostAI {
         return (escapes.size() == 0) ? oppositeDirection : escapes.get(RANDOM.nextInt(escapes.size()));
     }
 
-    private Direction chooseDirectionAux (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
+    /**
+     * Find and return the direction to go to PacMan in a straight movement
+     * @param ghost a ghost
+     * @param mapLevel a mapLevel, that must contain PacMan
+     * @return the direction to go to PacMan in a straight movement, null if this direction does not exist
+     * @throws GhostTargetMissingException throw if PacMan is not in the mapLevel
+     */
+    private Direction findPacManDirectionAux (Ghost ghost, MapLevel mapLevel) throws GhostTargetMissingException {
         Coordinates<Integer> pacManCoordinates = Utils.getIntegerCoordinates(findPacMan(ghost,mapLevel));
         Coordinates<Integer> ghostCoordinate = Utils.getIntegerCoordinates(ghost);
         if (pacManCoordinates.equals(ghostCoordinate)) {

@@ -11,18 +11,22 @@ import model.elements.entities.ghosts.Ghost;
 import java.util.*;
 
 /**
- * TODO
+ * A class used to refactor the common code for all he AI
  */
 public final class Utils {
 
+    /**
+     * Cannot be instanced
+     * @throws InstantiationException throw if a instance he create
+     */
     private Utils () throws InstantiationException {
         throw new InstantiationException("Utils class cannot be instanced");
     }
 
     /**
-     * TODO
-     * @param entity
-     * @return
+     * Return the integer coordinate of the entity, the center of the rectangle
+     * @param entity an entity
+     * @return the integer coordinate of the entity, the center of the rectangle
      */
     public static Coordinates<Integer> getIntegerCoordinates (Entity entity) {
         Coordinates<Double> coordinates = entity.getCoordinates();
@@ -34,12 +38,12 @@ public final class Utils {
     }
 
     /**
-     * TODO
-     * @param entity
-     * @param mapLevel
-     * @param position
-     * @param direction
-     * @return
+     * Return the coordinates of the next cross on the mapLevel according to the position and direction given
+     * @param entity an entity, used to know if the cell can be cross by it
+     * @param mapLevel a mapLevel
+     * @param position a position
+     * @param direction a direction
+     * @return the coordinates of the next cross on the mapLevel according to the position and direction given
      */
     public static Coordinates<Integer> findNextCross (Entity entity, MapLevel mapLevel,
                                                       Coordinates<Integer> position, Direction direction) {

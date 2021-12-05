@@ -24,6 +24,8 @@ import java.util.Random;
  * @see ClydeAI
  * @see InkyAI
  * @see PinkyAI
+ * @see BlackyAI
+ * @see SkeazlyAI
  */
 public abstract class BasicGhostAI extends GhostAI {
 
@@ -62,10 +64,10 @@ public abstract class BasicGhostAI extends GhostAI {
     }
 
     /**
-     * TODO
-     * @param ghost
-     * @param ghostState
-     * @return
+     * A method used to change the state of a ghost to scatter mode
+     * @param ghost a ghost
+     * @param ghostState the current state of the ghost
+     * @return the new state of the ghost
      */
     private GhostState tryToScatter (Ghost ghost, GhostState ghostState) {
         if (ghostState == GhostState.NORMAL && RANDOM.nextDouble() < ghost.getProbaScatter()) {
@@ -164,6 +166,13 @@ public abstract class BasicGhostAI extends GhostAI {
         return (PacMan) entity;
     }
 
+    /**
+     * A function used to test if an AI is working as expected
+     * A special entity appear on the mapLevel to indicate the ghost's target
+     * @param ghostName the name of the ghost
+     * @param ghost a ghost
+     * @param mapLevel a mapLevel
+     */
     private void test__SeeTarget (String ghostName, Ghost ghost, MapLevel mapLevel) {
         if (ghost.getName().equals(ghostName)) {
             try {
