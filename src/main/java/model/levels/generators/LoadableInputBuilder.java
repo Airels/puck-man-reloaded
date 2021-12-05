@@ -1,7 +1,6 @@
 package model.levels.generators;
 
 import model.levels.Level;
-import model.levels.generators.vidal.ClassicLoadableInput;
 import model.loadables.LoadableInput;
 
 /**
@@ -9,15 +8,16 @@ import model.loadables.LoadableInput;
  */
 public enum LoadableInputBuilder {
 
-    CLASSIC(){
+    CLASSIC() {
         @Override
-        public LoadableInput build (Level level) {
+        public LoadableInput build(Level level) {
             return new ClassicLoadableInput(level);
         }
     };
 
-    LoadableInputBuilder () {}
+    LoadableInputBuilder() {
+    }
 
-    public abstract LoadableInput build (Level level);
+    public abstract LoadableInput build(Level level);
 
 }
