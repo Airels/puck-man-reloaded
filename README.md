@@ -39,7 +39,7 @@ There is two ways to play the game :
 
 ## Requirements
 - Java 15
-- Gradle
+- Gradle (for the project)
 
 ## Credits
 - Menu song : https://www.youtube.com/watch?v=qtZ0hl-unM4
