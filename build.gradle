@@ -14,7 +14,7 @@ sourceCompatibility = 15
 targetCompatibility = 15
 
 group 'fr.univ-amu'
-version 'pacmanV1.0'
+version '1.0'
 
 repositories {
     mavenCentral()
